@@ -1,0 +1,59 @@
+﻿@model int?
+@{
+    ViewBag.Title = "Форма списка поставщиков";
+}
+@section Scripts {
+    <script src="~/scripts/app/app.js"></script>
+    <script src="~/scripts/app/directives/pagination_directive.js"></script>
+    <script src="~/scripts/app/services/search_factory.js"></script>
+    <script src="~/scripts/app/supplier/supplier_list_controller.js"></script>
+}
+<div ng-app="app" class="row">
+    <div class="row text-center">
+        <img src="~/Resources/Images/suppliers_icon.jpg" style="height:100px" />
+    </div>
+    <div ng-controller="supplier_list_controller" class="row" ng-init="Init()">
+        <div class="row">
+            <form>
+                <div class="row">
+                    <div class="medium-12">
+                        <div class="row collapse">
+                            <div class="medium-12 columns">
+                                <input type="text" ng-change="form.Search()" ng-model="form.params.searchsupplier" placeholder="БИН,наименование компании..." />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <pagination pg-click="update(page, items)" pg-page="form.$currentPage" pg-count-pages="form.$countPages" pg-count-items="form.params.countItems" pg-count="form.$countItems"></pagination>
+            <div class="row">
+                <table id="auctionlist"  class="alta">
+                        <tr>
+                            <th>Наименование</th>
+                            <th>БИН</th>
+                            <th>E-MAIL</th>
+                            <th>Контакты</th>
+                            <th>Адрес</th>
+                        </tr>
+                        <tr ng-repeat="row in form.rows">
+                            <td><a ng-href="~/Profile/Supplier/{{row.Id}}">{{row.Name}}</a></td>
+                            <td>{{row.BIN}}</td>
+                            <td>{{row.Emails}}</td>
+                            <td>{{row.Contacts}}</td>
+                            <td>{{row.Address}}</td>
+                        </tr>
+                        <tr ng-if="!form.$isLoading && !form.rows.length">
+                            <td class="text-center" colspan="8">Нет записей</td>
+                        </tr>
+                        <tr ng-if="form.$isLoading">
+                            <td class="text-center" colspan="5"><img src="~/Resources/Images/ajax-loader.gif" /> Загрузка...</td>
+                        </tr>
+                </table>
+            </div>
+            <pagination pg-click="update(page, items)" pg-page="form.$currentPage" pg-count-pages="form.$countPages" pg-count-items="form.params.countItems" pg-count="form.$countItems"></pagination>
+            <br />
+        </div>
+    </div>
+</div>

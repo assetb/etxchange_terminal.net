@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Экономические показатели";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/scripts/lib/foundation-datepicker/css/foundation-datepicker.min.css" />
+}
+
+@section Scripts {
+    <script src="~/scripts/app/config.js"></script>
+    <script src="~/scripts/app/controllers/analytic/economyGraph.js"></script>
+}
+
+<div id="economyGraph">
+    <div ng-controller="EconomyCrtl" class="row" ng-init="Init()">
+        <form>
+            <div>
+                <div>
+                    <span class="large-3 columns">
+                        <label>Биржа</label>
+                        <select ng-model="exchanges.exchangeID" ng-options="exchange.id as exchange.value for exchange in exchanges.exchangesEnum"ng-change="search()">
+                            <option value="">Выберите биржу</option>
+                        </select>
+                    </span>
+                </div>
+                <div>
+                    <span class="large-3 columns">
+                        <label>Брокер</label>
+                        <select ng-model="brokers.brokerID" ng-options="broker.id as broker.value for broker in brokers.brokersEnum"ng-change="search()">
+                            <option value="">Выберите брокера</option>
+                        </select>
+                    </span>
+                </div>
+                <div>
+                    <span class="large-3 columns">
+                        <label>Метод</label>
+                        <select ng-model="types.typeID" ng-options="type.id as type.value for type in types.typesEnum" ng-change="search()">
+                            <option value="">Выберите метод</option>
+                        </select>
+                    </span>
+                </div>
+                <div>
+                    <span class="large-6 columns">
+                        <label>Номер аукциона</label>
+                        <input type="text" placeholder="Введите номер аукциона" ng-model="number" ng-change="search()" />
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="large-3 columns">
+                            <label>С</label>
+                            <datepicker dp-changed="search()" dp-value="form.params.fromDate" />
+                        </div>
+                        <div class="large-3 columns">
+                            <label>До</label>
+                            <datepicker dp-changed="search()" dp-value="form.params.toDate" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        <div class="row">
+            <pagination pg-click="update(page, items)" pg-page="form.params.page" pg-count-pages="form.$countPages" pg-count-items="form.params.countItems" pg-count="form.$countItems"></pagination>
+            <div class="row">
+                <table class="alta">
+                        <tr>
+                            <th>Дата</th>
+                            <th>Номер аукциона</th>
+                            <th>Номер лота</th>
+                            <th>Описание</th>
+                            <th>Кол-во</th>
+                            <th>Цена</th>
+                            <th>Сумма</th>
+                            <th>Финальная сумма</th>
+                            <th>Разница</th>
+                        </tr>
+                        <tr ng-repeat="row in form.rows">
+                            <td>{{row.date | date : 'dd.MM.yyyy'}}</td>
+                            <td><b>{{row.aucNumber}}</b></td>
+                            <td>{{row.lotNumber}}</td>
+                            <td>{{row.description}}</td>
+                            <td>{{row.amount}} {{row.unit}}</td>
+                            <td>{{row.unitPrice}}</td>
+                            <td>{{row.startprice}}</td>
+                            <td>{{row.finalprice}}</td>
+                            <td><b>{{(row.startprice-row.finalprice | number:2)}}  ({{((row.startprice-row.finalprice)*100)/row.startprice | number:2}}%)</b></td>
+                        </tr>
+                </table>
+            </div>
+            <pagination pg-click="update(page, items)" pg-page="form.params.page" pg-count-pages="form.$countPages" pg-count-items="form.params.countItems" pg-count="form.$countItems"></pagination>
+        </div>
+    </div>
+</div>
+

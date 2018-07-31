@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CustomerCabinetDemo.Models.Auction>
+
+@{
+    ViewBag.Title = "Общая статистика торгов";
+}
+
+@section Scripts{
+    <script>
+        google.load("visualization", "1", { packages: ["corechart"] });
+
+        $(function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: '@Url.Action("GeneralStatisticChart")',
+                data: '{}',
+                success: function (chartsdata) {
+
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'Name');
+                    data.addColumn('number', 'Number');
+
+                    for (var i = 0; i < chartsdata.length; i++) {
+                        data.addRow([chartsdata[i].Name, chartsdata[i].Number]);
+                    }
+
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                    chart.draw(data,
+                      {
+                          is3D: true,
+                          legend: { position: 'bottom' },
+                      });
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            });
+        })
+    </script>
+}
+
+<div class="row">
+    <div class="medium-7 medium-centered columns">
+        <div id="chartdiv" style="width:600px;height:400px;"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="medium-5 medium-centered columns">
+        <fieldset>
+            <legend>Статистические данные</legend>
+            <label>Ожидаемые: <span>@Model.Where(r => r.status == false).ToList().Count()</span></label>
+            <br />
+            <label>Состоявшиеся: <span>@Model.Where(r => r.status == true).ToList().Count()</span></label>
+            <br />
+            <label>Не состоявшиеся: <span>0</span></label>
+        </fieldset>
+        <br />
+    </div>
+</div>

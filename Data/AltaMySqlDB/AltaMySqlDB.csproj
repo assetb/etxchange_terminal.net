@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DED6298D-FC63-470A-AE29-5DC94549DC08}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AltaMySqlDB</RootNamespace>
+    <AssemblyName>AltaMySqlDB</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug_test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.ProtocolBuffers, Version=2.4.1.555, Culture=neutral, PublicKeyToken=55f7125234beb589, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.ProtocolBuffers.2.4.1.555\lib\net40\Google.ProtocolBuffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.ProtocolBuffers.Serialization, Version=2.4.1.555, Culture=neutral, PublicKeyToken=55f7125234beb589, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.ProtocolBuffers.2.4.1.555\lib\net40\Google.ProtocolBuffers.Serialization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\ContextProgedureHelper.cs" />
+    <Compile Include="model\ArchiveDbContext.cs" />
+    <Compile Include="model\catalogs\QualificationDictionaryEF.cs" />
+    <Compile Include="model\catalogs\EventEF.cs" />
+    <Compile Include="model\tables\AccountingEF.cs" />
+    <Compile Include="model\tables\ArchiveNumberEF.cs" />
+    <Compile Include="model\tables\CaseEF.cs" />
+    <Compile Include="model\tables\EconomyViewEF.cs" />
+    <Compile Include="model\tables\FinalReportEF.cs" />
+    <Compile Include="model\tables\EnvelopContentEF.cs" />
+    <Compile Include="model\tables\EnvelopEF.cs" />
+    <Compile Include="model\tables\ListServEF.cs" />
+    <Compile Include="model\tables\QualificationEF.cs" />
+    <Compile Include="model\tables\NotificationEF.cs" />
+    <Compile Include="model\tables\OtherDocsEF.cs" />
+    <Compile Include="model\tables\ClearingCountingEF.cs" />
+    <Compile Include="model\tables\FileSectionEF.cs" />
+    <Compile Include="model\tables\LotsExtendedEF.cs" />
+    <Compile Include="model\tables\ApplicantEF.cs" />
+    <Compile Include="model\tables\AuctionEF.cs" />
+    <Compile Include="model\tables\AuctionServiceEF.cs" />
+    <Compile Include="model\tables\BankEF.cs" />
+    <Compile Include="model\tables\BrokerEF.cs" />
+    <Compile Include="model\tables\BrokerSiteEF.cs" />
+    <Compile Include="model\tables\BrokersJournalEF.cs" />
+    <Compile Include="model\tables\CompanyEF.cs" />
+    <Compile Include="model\EntityContext.cs" />
+    <Compile Include="model\tables\ConfigurationEF.cs" />
+    <Compile Include="model\tables\ContractTypeEF.cs" />
+    <Compile Include="model\tables\CountryEF.cs" />
+    <Compile Include="model\tables\CustomerEF.cs" />
+    <Compile Include="model\tables\DebtorEF.cs" />
+    <Compile Include="model\tables\DocumentTypeEF.cs" />
+    <Compile Include="model\tables\EmailSettingEF.cs" />
+    <Compile Include="model\tables\EmployeeEF.cs" />
+    <Compile Include="model\tables\DocumentEF.cs" />
+    <Compile Include="model\tables\FilesListEF.cs" />
+    <Compile Include="model\tables\ProductCompanyEF.cs" />
+    <Compile Include="model\tables\ProductEF.cs" />
+    <Compile Include="model\tables\ProductsHasCompaniesEF.cs" />
+    <Compile Include="model\tables\OrderEF.cs" />
+    <Compile Include="model\tables\PersonEF.cs" />
+    <Compile Include="model\tables\PriceOfferEF.cs" />
+    <Compile Include="model\tables\ProcuratoryEF.cs" />
+    <Compile Include="model\tables\RegulationEF.cs" />
+    <Compile Include="model\tables\RequestedDocEF.cs" />
+    <Compile Include="model\tables\RoleEF.cs" />
+    <Compile Include="model\tables\SerialNumberEF.cs" />
+    <Compile Include="model\tables\StatusEF.cs" />
+    <Compile Include="model\tables\SupplierEF.cs" />
+    <Compile Include="model\tables\SupplierOrderEF.cs" />
+    <Compile Include="model\tables\SuppliersJournalEF.cs" />
+    <Compile Include="model\tables\TraderEF.cs" />
+    <Compile Include="model\tables\TypeEF.cs" />
+    <Compile Include="model\tables\VolumeEF.cs" />
+    <Compile Include="model\views\AnaliticCountStatusView.cs" />
+    <Compile Include="model\views\AuctionsResultView.cs" />
+    <Compile Include="model\views\EnvelopsView.cs" />
+    <Compile Include="model\views\ListServView.cs" />
+    <Compile Include="model\views\AuctionsView.cs" />
+    <Compile Include="model\views\ApplicantsView.cs" />
+    <Compile Include="model\views\SuppliersWithContractsView.cs" />
+    <Compile Include="model\views\CompaniesWithContractView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="service\DataManager.cs" />
+    <Compile Include="model\tables\ContractEF.cs" />
+    <Compile Include="model\tables\CurrencyEF.cs" />
+    <Compile Include="model\tables\ScanEF.cs" />
+    <Compile Include="model\tables\UnitEF.cs" />
+    <Compile Include="model\tables\LotEF.cs" />
+    <Compile Include="model\tables\RateEF.cs" />
+    <Compile Include="model\tables\RatesListEF.cs" />
+    <Compile Include="model\tables\SectionEF.cs" />
+    <Compile Include="model\tables\SiteEF.cs" />
+    <Compile Include="model\tables\UserEF.cs" />
+    <Compile Include="service\IArchiveDataManager.cs" />
+    <Compile Include="service\IDataManager.cs" />
+    <Compile Include="service\QueryHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AltaBO\AltaBO.csproj">
+      <Project>{19F4F68E-966A-42FF-936B-9CD435A3F862}</Project>
+      <Name>AltaBO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

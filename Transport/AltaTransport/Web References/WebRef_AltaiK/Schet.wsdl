@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd1="http://192.168.0.91" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12bind="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:tns="http://192.168.0.91" name="Schet" targetNamespace="http://192.168.0.91" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema xmlns:xs1="http://192.168.0.91" elementFormDefault="qualified" targetNamespace="http://192.168.0.91" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="NewSchet">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Zapros" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NewSchetResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NewKontragent">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Zapros" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NewKontragentResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NewDogovor">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Zapros" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="NewDogovorResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="OplataPoDogovoru">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Zapros" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="OplataPoDogovoruResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SaldoDogovora">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Zapros" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SaldoDogovoraResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="NewSchetRequestMessage">
+    <part name="parameters" element="tns:NewSchet" />
+  </message>
+  <message name="NewSchetResponseMessage">
+    <part name="parameters" element="tns:NewSchetResponse" />
+  </message>
+  <message name="NewKontragentRequestMessage">
+    <part name="parameters" element="tns:NewKontragent" />
+  </message>
+  <message name="NewKontragentResponseMessage">
+    <part name="parameters" element="tns:NewKontragentResponse" />
+  </message>
+  <message name="NewDogovorRequestMessage">
+    <part name="parameters" element="tns:NewDogovor" />
+  </message>
+  <message name="NewDogovorResponseMessage">
+    <part name="parameters" element="tns:NewDogovorResponse" />
+  </message>
+  <message name="OplataPoDogovoruRequestMessage">
+    <part name="parameters" element="tns:OplataPoDogovoru" />
+  </message>
+  <message name="OplataPoDogovoruResponseMessage">
+    <part name="parameters" element="tns:OplataPoDogovoruResponse" />
+  </message>
+  <message name="SaldoDogovoraRequestMessage">
+    <part name="parameters" element="tns:SaldoDogovora" />
+  </message>
+  <message name="SaldoDogovoraResponseMessage">
+    <part name="parameters" element="tns:SaldoDogovoraResponse" />
+  </message>
+  <portType name="SchetPortType">
+    <operation name="NewSchet">
+      <input message="tns:NewSchetRequestMessage" />
+      <output message="tns:NewSchetResponseMessage" />
+    </operation>
+    <operation name="NewKontragent">
+      <input message="tns:NewKontragentRequestMessage" />
+      <output message="tns:NewKontragentResponseMessage" />
+    </operation>
+    <operation name="NewDogovor">
+      <input message="tns:NewDogovorRequestMessage" />
+      <output message="tns:NewDogovorResponseMessage" />
+    </operation>
+    <operation name="OplataPoDogovoru">
+      <input message="tns:OplataPoDogovoruRequestMessage" />
+      <output message="tns:OplataPoDogovoruResponseMessage" />
+    </operation>
+    <operation name="SaldoDogovora">
+      <input message="tns:SaldoDogovoraRequestMessage" />
+      <output message="tns:SaldoDogovoraResponseMessage" />
+    </operation>
+  </portType>
+  <binding name="SchetSoapBinding" type="tns:SchetPortType">
+    <soapbind:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="NewSchet">
+      <soapbind:operation soapAction="http://192.168.0.91#Schet:NewSchet" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="NewKontragent">
+      <soapbind:operation soapAction="http://192.168.0.91#Schet:NewKontragent" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="NewDogovor">
+      <soapbind:operation soapAction="http://192.168.0.91#Schet:NewDogovor" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="OplataPoDogovoru">
+      <soapbind:operation soapAction="http://192.168.0.91#Schet:OplataPoDogovoru" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SaldoDogovora">
+      <soapbind:operation soapAction="http://192.168.0.91#Schet:SaldoDogovora" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="SchetSoap12Binding" type="tns:SchetPortType">
+    <soap12bind:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="NewSchet">
+      <soap12bind:operation soapAction="http://192.168.0.91#Schet:NewSchet" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="NewKontragent">
+      <soap12bind:operation soapAction="http://192.168.0.91#Schet:NewKontragent" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="NewDogovor">
+      <soap12bind:operation soapAction="http://192.168.0.91#Schet:NewDogovor" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="OplataPoDogovoru">
+      <soap12bind:operation soapAction="http://192.168.0.91#Schet:OplataPoDogovoru" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SaldoDogovora">
+      <soap12bind:operation soapAction="http://192.168.0.91#Schet:SaldoDogovora" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Schet">
+    <port name="SchetSoap" binding="tns:SchetSoapBinding">
+      <documentation>
+        <wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1" />
+      </documentation>
+      <soapbind:address location="http://10.1.1.4/AltaK/ws/ws2.1cws" />
+    </port>
+    <port name="SchetSoap12" binding="tns:SchetSoap12Binding">
+      <soap12bind:address location="http://10.1.1.4/AltaK/ws/ws2.1cws" />
+    </port>
+  </service>
+</definitions>

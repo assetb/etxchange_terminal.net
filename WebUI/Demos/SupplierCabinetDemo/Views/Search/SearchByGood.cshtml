@@ -1,0 +1,182 @@
+﻿@model IEnumerable<SupplierCabinetDemo.Models.Auction>
+
+@{
+    ViewBag.Title = "Поиск торга по товару";
+}
+
+@section Scripts{
+<script src="~/scripts/Utilits/dataTableFunc.js"></script>
+<script src="~/scripts/Utilits/dropTreeView.js"></script>
+
+    <script>
+        $(function () {
+            var availableTags = [
+              "Смазка", "Канат", "Фильтр", "Термопары", "Кольца", "Изделия из ПВХ", "Инструмент", "Электроды", "Сварочное оборудование", "Осушитель",
+            "Сетка", "Вафельное полотно", "Сторительные материалы", "Электростанция", "Дизельное топливо", "Кронциркуль", "Метизы", "Противопожарное оборудование", "Запасные части", "Огнетушители",
+            "Вкладыш", "Поглотители", "Химические средства", "Электрооборудование", "Кабели", "Чистящие средства", "Перчатки", "Обувь",
+            "Масло", "Изоляция", "Лакокрасочная продукция", "Лента антискольжения", "Трубы", "Вал промежуточный", "Плиты", "Порошки",
+            "Сода", "Подшипники", "Переналадки", "Гипохлорид кальция", "Аппараты"
+            ];
+
+            $("#tags").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
+}
+
+<div id="openModal" class="modalDialog">
+    <div>
+        <a href="#close" title="Закрыть" class="close">X</a>
+
+        <div class="drop" style="overflow-y:auto;height:475px;">
+            <ul class="ul-treefree ul-dropfree">
+                <li>
+                    Раздел оборудование
+                    <ul>
+                        <li>
+                            Аппараты
+                            <ul>
+                                <li>Сварочное оборудование</li>
+                                <li>Электростанция</li>
+                                <li>Противопожарное оборудование</li>
+                                <li>Электро оборудование</li>
+                                <li>Аппараты</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Запасные детали
+                            <ul>
+                                <li>Фильтр</li>
+                                <li>Термопары</li>
+                                <li>Кольца</li>
+                                <li>Запасные части</li>
+                                <li>Вал промежуточный</li>
+                                <li>Подшипники</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Инструменты
+                            <ul>
+                                <li>Инструмент</li>
+                                <li>Осушитель</li>
+                                <li>Кронциркуль</li>
+                                <li>Метизы</li>
+                                <li>Огнетушители</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Раздел расходных материалов
+                    <ul>
+                        <li>
+                            Установочные детали
+                            <ul>
+                                <li>Канат</li>
+                                <li>Электроды</li>
+                                <li>Сетка</li>
+                                <li>Вафельное полотно</li>
+                                <li>Вкладышь</li>
+                                <li>Поглотители</li>
+                                <li>Кабели</li>
+                                <li>Изоляция</li>
+                                <li>Трубы</li>
+                                <li>Плиты</li>
+                                <li>Переналадки</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Расходуемые
+                            <ul>
+                                <li>Смазка</li>
+                                <li>Строительные материалы</li>
+                                <li>Лента антискольжения</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Раздел химии
+                    <ul>
+                        <li>Дизельное топливо</li>
+                        <li>Химические средства</li>
+                        <li>Чистящие средства</li>
+                        <li>Масло</li>
+                        <li>Лакокрасочная продукция</li>
+                        <li>Порошки</li>
+                        <li>Гипохлорид кальция</li>
+                        <li>Сода</li>
+                    </ul>
+                </li>
+                <li>
+                    Раздел одежда
+                    <ul>
+                        <li>Перчатки</li>
+                        <li>Обувь</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@using(Html.BeginForm()) {
+    <div class="row">
+        <div class="small-4 columns">
+            <label for="tags" class="right inline">Введите наименование товара:</label>
+        </div>
+        <div class="small-4 columns">
+            @Html.TextBox("key", null, new { id = "tags" })
+        </div>
+        <div class="small-4 columns">
+            <input type="submit" value="Найти" class="button small round" />
+            <a href="#openModal" class="button small round">По классификатору</a>
+        </div>
+    </div>
+            <br />
+}
+
+<div class="row">
+    <table id="auctionlist" class="display" hidden width="100%">
+        <thead>
+            <tr>
+                <th>ДАТА АУКЦИОНА</th>
+                <th>НОМЕР</th>
+                <th>ЗАКАЗЧИК</th>
+                <th>БИРЖА</th>
+                <th>СТАТУС</th>
+                <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                <th>СТАРТОВАЯ ЦЕНА</th>
+                <th>КОЛИЧЕСТВО</th>
+                <th>ОБЩАЯ СУММА</th>
+                <th>ФАЙЛ ЗАЯВКИ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model) {
+                <tr>
+                    <td>@item.auctionDate.ToShortDateString()</td>
+                    <td>@Html.ActionLink(item.number, "Details", "Auctions", new { auctionNumber = item.number }, null)</td>
+                    <td>@item.customer</td>
+                    <td>@item.source</td>
+                    @if(item.status == true) {
+                        <td>Состоялся</td>
+                    } else {
+                        <td>Ожидается</td>
+                    }
+                    <td>@item.lotName</td>
+                    <td>@Math.Round(item.startPrice, 2)</td>
+                    <td>@item.lotName.Length</td>
+                    <td>@Math.Round(item.startPrice * item.lotName.Length, 2)</td>
+                    @if(item.orderDate.AddDays(5) >= DateTime.Now) {
+                        <td class="text-center"><a href="~/Resources/Files/SupplierOrder.docx"><i class="fi-save"></i></a></td>
+                    } else {
+                        <td>Не доступен</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+</div>

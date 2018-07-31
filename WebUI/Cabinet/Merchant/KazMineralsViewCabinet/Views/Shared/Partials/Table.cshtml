@@ -1,0 +1,57 @@
+﻿@section Scripts {
+    <script></script>
+   @this.RenderSection("Scripts")
+}
+<div class="row">
+    <form ng-keyup="search()">
+        @this.RenderSection("SearchForm")
+    </form>
+</div>
+<div class="row">
+    <div class="large-4 columns">
+        <label>Кол-во элементов</label>
+        <ul class="pagination">
+            <li ng-repeat="item in [10,20,50] track by $index" ng-class="{true: 'current', false: ''}[item == searchParameters.countItems]">
+                <a ng-click="searchParameters.countItems = item; update(1)">{{item}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="large-5 columns">
+        <label>Страницы</label>
+        <ul class="pagination" role="pagination">
+            <li class="pagination-previous">
+                <a ng-click="table.currentPage != 1 && update(1)"><i class="fi-previous"></i></a>
+            </li>
+            <li ng-repeat="page in GetPagesForPagination() track by $index" ng-class="{true: 'current', false: ''}[page == table.currentPage]">
+                <a ng-click="update(page)">{{page}}</a>
+            </li>
+            <li class="pagination-next">
+                <a ng-click="table.countPages != table.currentPage && update(table.countPages)"><i class="fi-next"></i></a>
+            </li>
+        </ul>
+    </div>
+    <div class="large-3 columns">
+        <label>Всего найдено: {{table.countItems}}</label>
+    </div>
+    <div class="row">
+        <table id="auctionlist" style="width: 100%;">
+            <thead>
+                <tr>
+                    @this.RenderSection("TableHead")
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="!isLoading" ng-repeat="auction in table.rows">
+                    @this.RenderBody()
+                </tr>
+                <tr ng-if="!isLoading && !table.rows.length">
+                    <td class="text-center" colspan="8">Нет записей</td>
+                </tr>
+                <tr ng-if="isLoading">
+                    <td class="text-center" colspan="8">Загрузка...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+</div>

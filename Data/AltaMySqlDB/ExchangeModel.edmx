@@ -1,0 +1,1107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ExchangeModel" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="applicants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="auctionid" Type="int" Nullable="false" />
+          <Property Name="companyid" Type="int" Nullable="false" />
+          <Property Name="supplierorderid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="auctions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="date" />
+          <Property Name="sectionid" Type="int" />
+          <Property Name="typeid" Type="int" />
+          <Property Name="number" Type="varchar" MaxLength="50" />
+          <Property Name="status" Type="int" />
+          <Property Name="comments" Type="varchar" MaxLength="200" />
+          <Property Name="ndsincluded" Type="bool" />
+          <Property Name="signstatusid" Type="bool" />
+          <Property Name="published" Type="bool" />
+          <Property Name="ownerid" Type="int" />
+          <Property Name="siteid" Type="int" />
+          <Property Name="regulationid" Type="int" />
+          <Property Name="traderid" Type="int" />
+          <Property Name="customerid" Type="int" />
+          <Property Name="brokerid" Type="int" />
+        </EntityType>
+        <EntityType Name="brokers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="companyid" Type="int" Nullable="false" />
+          <Property Name="name" Type="mediumtext" />
+        </EntityType>
+        <EntityType Name="companies">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="254" />
+          <Property Name="bin" Type="varchar" MaxLength="20" />
+          <Property Name="kbe" Type="tinyint" />
+          <Property Name="residency" Type="smallint" />
+          <Property Name="email" Type="varchar" MaxLength="254" />
+          <Property Name="telephone" Type="varchar" MaxLength="254" />
+          <Property Name="fax" Type="varchar" MaxLength="50" />
+          <Property Name="addresslegal" Type="varchar" MaxLength="254" />
+          <Property Name="addressactual" Type="varchar" MaxLength="254" />
+          <Property Name="postcode" Type="varchar" MaxLength="15" />
+          <Property Name="director" Type="varchar" MaxLength="50" />
+          <Property Name="directorpowers" Type="varchar" MaxLength="50" />
+          <Property Name="coments" Type="varchar" MaxLength="500" />
+          <Property Name="updatedate" Type="datetime" Precision="0" />
+          <Property Name="createdate" Type="datetime" Precision="0" />
+          <Property Name="iik" Type="varchar" MaxLength="50" />
+          <Property Name="bik" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="contracts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="companyid" Type="int" />
+          <Property Name="number" Type="varchar" MaxLength="200" />
+          <Property Name="agreementdate" Type="date" />
+          <Property Name="terminationdate" Type="date" />
+          <Property Name="bankid" Type="int" />
+          <Property Name="scanid" Type="int" />
+          <Property Name="updatedate" Type="datetime" Precision="0" />
+          <Property Name="createdate" Type="datetime" Precision="0" />
+          <Property Name="typesid" Type="int" />
+          <Property Name="currencyid" Type="int" Nullable="false" />
+          <Property Name="brokerid" Type="int" />
+          <Property Name="siteid" Type="int" />
+        </EntityType>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="companiesid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="number" Type="int" />
+          <Property Name="description" Type="varchar" MaxLength="1000" />
+          <Property Name="measure" Type="varchar" MaxLength="50" />
+          <Property Name="amount" Type="decimal" Precision="13" Scale="4" />
+          <Property Name="start_price" Type="decimal" Precision="13" Scale="2" />
+          <Property Name="sum_price" Type="decimal" Precision="13" Scale="2" />
+          <Property Name="payment_term" Type="varchar" MaxLength="100" />
+          <Property Name="delivery_time" Type="varchar" MaxLength="100" />
+          <Property Name="delivery_place" Type="varchar" MaxLength="500" />
+          <Property Name="id_auction" Type="int" />
+          <Property Name="DKS" Type="int" />
+          <Property Name="contract_num" Type="varchar" MaxLength="30" />
+          <Property Name="step" Type="int" />
+          <Property Name="go" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="contains" Type="int" />
+          <Property Name="amount_pr" Type="varchar" MaxLength="50" />
+          <Property Name="start_price_pr" Type="varchar" MaxLength="50" />
+          <Property Name="attachment" Type="int" />
+        </EntityType>
+        <EntityType Name="operauction">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="operauctioncol" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rid" Type="int" />
+          <Property Name="ordercol" Type="varchar" MaxLength="45" />
+          <Property Name="auctionid" Type="int" Nullable="false" />
+          <Property Name="scanid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="tel" Type="varchar" MaxLength="45" />
+          <Property Name="email" Type="varchar" MaxLength="45" />
+          <Property Name="userid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sites">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sitename" Type="mediumtext" />
+          <Property Name="link" Type="varchar" MaxLength="45" />
+          <Property Name="companyid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleid" Type="int" />
+          <Property Name="companyid" Type="int" />
+          <Property Name="login" Type="varchar" MaxLength="11" />
+          <Property Name="pass" Type="varchar" MaxLength="11" />
+          <Property Name="isactive" Type="bool" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_applicants_auctions1">
+          <End Role="auctions" Type="Self.auctions" Multiplicity="1" />
+          <End Role="applicants" Type="Self.applicants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="auctions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="applicants">
+              <PropertyRef Name="auctionid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_applicants_companies1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="applicants" Type="Self.applicants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="applicants">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_auctions_brokers1">
+          <End Role="brokers" Type="Self.brokers" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brokers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="auctions">
+              <PropertyRef Name="brokerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_auctions_companies2">
+          <End Role="companies" Type="Self.companies" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="auctions">
+              <PropertyRef Name="customerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_auctions_person1">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="auctions">
+              <PropertyRef Name="traderid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_auctions_sites1">
+          <End Role="sites" Type="Self.sites" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sites">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="auctions">
+              <PropertyRef Name="siteid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_auctions_to_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="auctions">
+              <PropertyRef Name="ownerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_brokers_companies1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="brokers" Type="Self.brokers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="brokers">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_contracts_brokers1">
+          <End Role="brokers" Type="Self.brokers" Multiplicity="0..1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brokers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="contracts">
+              <PropertyRef Name="brokerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_contracts_sites1">
+          <End Role="sites" Type="Self.sites" Multiplicity="0..1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sites">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="contracts">
+              <PropertyRef Name="siteid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_contracts_to_companies">
+          <End Role="companies" Type="Self.companies" Multiplicity="0..1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="contracts">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_customers_companies1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="customers" Type="Self.customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="customers">
+              <PropertyRef Name="companiesid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_lots_to_auctions">
+          <End Role="auctions" Type="Self.auctions" Multiplicity="0..1" />
+          <End Role="lots" Type="Self.lots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="auctions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="lots">
+              <PropertyRef Name="id_auction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_auctions1">
+          <End Role="auctions" Type="Self.auctions" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="auctions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="auctionid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_person_users1">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="person" Type="Self.person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="person">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sites_companies1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="sites" Type="Self.sites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sites">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_users_to_companies">
+          <End Role="companies" Type="Self.companies" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="companyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ExchangeModelContainer">
+          <EntitySet Name="applicants" EntityType="Self.applicants" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="auctions" EntityType="Self.auctions" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="brokers" EntityType="Self.brokers" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="companies" EntityType="Self.companies" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="contracts" EntityType="Self.contracts" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="customers" EntityType="Self.customers" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="lots" EntityType="Self.lots" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="operauction" EntityType="Self.operauction" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="order" EntityType="Self.order" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="person" EntityType="Self.person" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="sites" EntityType="Self.sites" Schema="brokerbase" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="brokerbase" store:Type="Tables" />
+          <AssociationSet Name="fk_applicants_auctions1" Association="Self.fk_applicants_auctions1">
+            <End Role="auctions" EntitySet="auctions" />
+            <End Role="applicants" EntitySet="applicants" />
+          </AssociationSet>
+          <AssociationSet Name="fk_applicants_companies1" Association="Self.fk_applicants_companies1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="applicants" EntitySet="applicants" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_brokers1" Association="Self.fk_auctions_brokers1">
+            <End Role="brokers" EntitySet="brokers" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_companies2" Association="Self.fk_auctions_companies2">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_person1" Association="Self.fk_auctions_person1">
+            <End Role="person" EntitySet="person" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_sites1" Association="Self.fk_auctions_sites1">
+            <End Role="sites" EntitySet="sites" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_to_users" Association="Self.fk_auctions_to_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_brokers_companies1" Association="Self.fk_brokers_companies1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="brokers" EntitySet="brokers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_contracts_brokers1" Association="Self.fk_contracts_brokers1">
+            <End Role="brokers" EntitySet="brokers" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_contracts_sites1" Association="Self.fk_contracts_sites1">
+            <End Role="sites" EntitySet="sites" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_contracts_to_companies" Association="Self.fk_contracts_to_companies">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customers_companies1" Association="Self.fk_customers_companies1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="customers" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_lots_to_auctions" Association="Self.fk_lots_to_auctions">
+            <End Role="auctions" EntitySet="auctions" />
+            <End Role="lots" EntitySet="lots" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_auctions1" Association="Self.fk_order_auctions1">
+            <End Role="auctions" EntitySet="auctions" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_person_users1" Association="Self.fk_person_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="person" EntitySet="person" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sites_companies1" Association="Self.fk_sites_companies1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="sites" EntitySet="sites" />
+          </AssociationSet>
+          <AssociationSet Name="fk_users_to_companies" Association="Self.fk_users_to_companies">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExchangeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="applicants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="supplierorderid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="auctions" Relationship="Self.fk_applicants_auctions1" FromRole="applicants" ToRole="auctions" />
+          <NavigationProperty Name="companies" Relationship="Self.fk_applicants_companies1" FromRole="applicants" ToRole="companies" />
+        </EntityType>
+        <EntityType Name="auctions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" />
+          <Property Name="sectionid" Type="Int32" />
+          <Property Name="typeid" Type="Int32" />
+          <Property Name="number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="comments" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ndsincluded" Type="Boolean" />
+          <Property Name="signstatusid" Type="Boolean" />
+          <Property Name="published" Type="Boolean" />
+          <Property Name="regulationid" Type="Int32" />
+          <NavigationProperty Name="applicants" Relationship="Self.fk_applicants_auctions1" FromRole="auctions" ToRole="applicants" />
+          <NavigationProperty Name="brokers" Relationship="Self.fk_auctions_brokers1" FromRole="auctions" ToRole="brokers" />
+          <NavigationProperty Name="companies" Relationship="Self.fk_auctions_companies2" FromRole="auctions" ToRole="companies" />
+          <NavigationProperty Name="person" Relationship="Self.fk_auctions_person1" FromRole="auctions" ToRole="person" />
+          <NavigationProperty Name="sites" Relationship="Self.fk_auctions_sites1" FromRole="auctions" ToRole="sites" />
+          <NavigationProperty Name="users" Relationship="Self.fk_auctions_to_users" FromRole="auctions" ToRole="users" />
+          <NavigationProperty Name="lots" Relationship="Self.fk_lots_to_auctions" FromRole="auctions" ToRole="lots" />
+          <NavigationProperty Name="order" Relationship="Self.fk_order_auctions1" FromRole="auctions" ToRole="order" />
+        </EntityType>
+        <EntityType Name="brokers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="auctions" Relationship="Self.fk_auctions_brokers1" FromRole="brokers" ToRole="auctions" />
+          <NavigationProperty Name="companies" Relationship="Self.fk_brokers_companies1" FromRole="brokers" ToRole="companies" />
+          <NavigationProperty Name="contracts" Relationship="Self.fk_contracts_brokers1" FromRole="brokers" ToRole="contracts" />
+        </EntityType>
+        <EntityType Name="companies">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="bin" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="kbe" Type="SByte" />
+          <Property Name="residency" Type="Int16" />
+          <Property Name="email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="telephone" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="addresslegal" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="addressactual" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="postcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="director" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="directorpowers" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="coments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="updatedate" Type="DateTime" />
+          <Property Name="createdate" Type="DateTime" />
+          <Property Name="iik" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="bik" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="applicants" Relationship="Self.fk_applicants_companies1" FromRole="companies" ToRole="applicants" />
+          <NavigationProperty Name="auctions" Relationship="Self.fk_auctions_companies2" FromRole="companies" ToRole="auctions" />
+          <NavigationProperty Name="brokers" Relationship="Self.fk_brokers_companies1" FromRole="companies" ToRole="brokers" />
+          <NavigationProperty Name="contracts" Relationship="Self.fk_contracts_to_companies" FromRole="companies" ToRole="contracts" />
+          <NavigationProperty Name="customers" Relationship="Self.fk_customers_companies1" FromRole="companies" ToRole="customers" />
+          <NavigationProperty Name="sites" Relationship="Self.fk_sites_companies1" FromRole="companies" ToRole="sites" />
+          <NavigationProperty Name="users" Relationship="Self.fk_users_to_companies" FromRole="companies" ToRole="users" />
+        </EntityType>
+        <EntityType Name="contracts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="number" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="agreementdate" Type="DateTime" />
+          <Property Name="terminationdate" Type="DateTime" />
+          <Property Name="bankid" Type="Int32" />
+          <Property Name="scanid" Type="Int32" />
+          <Property Name="updatedate" Type="DateTime" />
+          <Property Name="createdate" Type="DateTime" />
+          <Property Name="typesid" Type="Int32" />
+          <Property Name="currencyid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="brokers" Relationship="Self.fk_contracts_brokers1" FromRole="contracts" ToRole="brokers" />
+          <NavigationProperty Name="companies" Relationship="Self.fk_contracts_to_companies" FromRole="contracts" ToRole="companies" />
+          <NavigationProperty Name="sites" Relationship="Self.fk_contracts_sites1" FromRole="contracts" ToRole="sites" />
+        </EntityType>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="companies" Relationship="Self.fk_customers_companies1" FromRole="customers" ToRole="companies" />
+        </EntityType>
+        <EntityType Name="lots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="number" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="measure" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Decimal" />
+          <Property Name="start_price" Type="Decimal" />
+          <Property Name="sum_price" Type="Decimal" />
+          <Property Name="payment_term" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_time" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="delivery_place" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DKS" Type="Int32" />
+          <Property Name="contract_num" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="step" Type="Int32" />
+          <Property Name="go" Type="Decimal" />
+          <Property Name="contains" Type="Int32" />
+          <Property Name="amount_pr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="start_price_pr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="attachment" Type="Int32" />
+          <NavigationProperty Name="auctions" Relationship="Self.fk_lots_to_auctions" FromRole="lots" ToRole="auctions" />
+        </EntityType>
+        <EntityType Name="operauction">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="operauctioncol" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rid" Type="Int32" />
+          <Property Name="ordercol" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="scanid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="auctions" Relationship="Self.fk_order_auctions1" FromRole="order" ToRole="auctions" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="tel" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="auctions" Relationship="Self.fk_auctions_person1" FromRole="person" ToRole="auctions" />
+          <NavigationProperty Name="users" Relationship="Self.fk_person_users1" FromRole="person" ToRole="users" />
+        </EntityType>
+        <EntityType Name="sites">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sitename" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Name="link" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="auctions" Relationship="Self.fk_auctions_sites1" FromRole="sites" ToRole="auctions" />
+          <NavigationProperty Name="companies" Relationship="Self.fk_sites_companies1" FromRole="sites" ToRole="companies" />
+          <NavigationProperty Name="contracts" Relationship="Self.fk_contracts_sites1" FromRole="sites" ToRole="contracts" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleid" Type="Int32" />
+          <Property Name="login" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="auctions" Relationship="Self.fk_auctions_to_users" FromRole="users" ToRole="auctions" />
+          <NavigationProperty Name="companies" Relationship="Self.fk_users_to_companies" FromRole="users" ToRole="companies" />
+          <NavigationProperty Name="person" Relationship="Self.fk_person_users1" FromRole="users" ToRole="person" />
+        </EntityType>
+        <Association Name="fk_applicants_auctions1">
+          <End Role="auctions" Type="Self.auctions" Multiplicity="1" />
+          <End Role="applicants" Type="Self.applicants" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_applicants_companies1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="applicants" Type="Self.applicants" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_auctions_brokers1">
+          <End Role="brokers" Type="Self.brokers" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_auctions_companies2">
+          <End Role="companies" Type="Self.companies" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_auctions_person1">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_auctions_sites1">
+          <End Role="sites" Type="Self.sites" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_auctions_to_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="auctions" Type="Self.auctions" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_lots_to_auctions">
+          <End Role="auctions" Type="Self.auctions" Multiplicity="0..1" />
+          <End Role="lots" Type="Self.lots" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_order_auctions1">
+          <End Role="auctions" Type="Self.auctions" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_brokers_companies1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="brokers" Type="Self.brokers" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_contracts_brokers1">
+          <End Role="brokers" Type="Self.brokers" Multiplicity="0..1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_contracts_to_companies">
+          <End Role="companies" Type="Self.companies" Multiplicity="0..1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_customers_companies1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="customers" Type="Self.customers" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_sites_companies1">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="sites" Type="Self.sites" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_users_to_companies">
+          <End Role="companies" Type="Self.companies" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_contracts_sites1">
+          <End Role="sites" Type="Self.sites" Multiplicity="0..1" />
+          <End Role="contracts" Type="Self.contracts" Multiplicity="*" />
+        </Association>
+        <Association Name="fk_person_users1">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="person" Type="Self.person" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ExchangeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="applicants" EntityType="Self.applicants" />
+          <EntitySet Name="auctions" EntityType="Self.auctions" />
+          <EntitySet Name="brokers" EntityType="Self.brokers" />
+          <EntitySet Name="companies" EntityType="Self.companies" />
+          <EntitySet Name="contracts" EntityType="Self.contracts" />
+          <EntitySet Name="customers" EntityType="Self.customers" />
+          <EntitySet Name="lots" EntityType="Self.lots" />
+          <EntitySet Name="operauction" EntityType="Self.operauction" />
+          <EntitySet Name="order" EntityType="Self.order" />
+          <EntitySet Name="person" EntityType="Self.person" />
+          <EntitySet Name="sites" EntityType="Self.sites" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="fk_applicants_auctions1" Association="Self.fk_applicants_auctions1">
+            <End Role="auctions" EntitySet="auctions" />
+            <End Role="applicants" EntitySet="applicants" />
+          </AssociationSet>
+          <AssociationSet Name="fk_applicants_companies1" Association="Self.fk_applicants_companies1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="applicants" EntitySet="applicants" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_brokers1" Association="Self.fk_auctions_brokers1">
+            <End Role="brokers" EntitySet="brokers" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_companies2" Association="Self.fk_auctions_companies2">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_person1" Association="Self.fk_auctions_person1">
+            <End Role="person" EntitySet="person" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_sites1" Association="Self.fk_auctions_sites1">
+            <End Role="sites" EntitySet="sites" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_auctions_to_users" Association="Self.fk_auctions_to_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="auctions" EntitySet="auctions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_lots_to_auctions" Association="Self.fk_lots_to_auctions">
+            <End Role="auctions" EntitySet="auctions" />
+            <End Role="lots" EntitySet="lots" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_auctions1" Association="Self.fk_order_auctions1">
+            <End Role="auctions" EntitySet="auctions" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_brokers_companies1" Association="Self.fk_brokers_companies1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="brokers" EntitySet="brokers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_contracts_brokers1" Association="Self.fk_contracts_brokers1">
+            <End Role="brokers" EntitySet="brokers" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_contracts_to_companies" Association="Self.fk_contracts_to_companies">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customers_companies1" Association="Self.fk_customers_companies1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="customers" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sites_companies1" Association="Self.fk_sites_companies1">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="sites" EntitySet="sites" />
+          </AssociationSet>
+          <AssociationSet Name="fk_users_to_companies" Association="Self.fk_users_to_companies">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_contracts_sites1" Association="Self.fk_contracts_sites1">
+            <End Role="sites" EntitySet="sites" />
+            <End Role="contracts" EntitySet="contracts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_person_users1" Association="Self.fk_person_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="person" EntitySet="person" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ExchangeModelContainer" CdmEntityContainer="ExchangeEntities">
+          <EntitySetMapping Name="applicants">
+            <EntityTypeMapping TypeName="ExchangeModel.applicants">
+              <MappingFragment StoreEntitySet="applicants">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="supplierorderid" ColumnName="supplierorderid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="auctions">
+            <EntityTypeMapping TypeName="ExchangeModel.auctions">
+              <MappingFragment StoreEntitySet="auctions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="sectionid" ColumnName="sectionid" />
+                <ScalarProperty Name="typeid" ColumnName="typeid" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="ndsincluded" ColumnName="ndsincluded" />
+                <ScalarProperty Name="signstatusid" ColumnName="signstatusid" />
+                <ScalarProperty Name="published" ColumnName="published" />
+                <ScalarProperty Name="regulationid" ColumnName="regulationid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="brokers">
+            <EntityTypeMapping TypeName="ExchangeModel.brokers">
+              <MappingFragment StoreEntitySet="brokers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="companies">
+            <EntityTypeMapping TypeName="ExchangeModel.companies">
+              <MappingFragment StoreEntitySet="companies">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="bin" ColumnName="bin" />
+                <ScalarProperty Name="kbe" ColumnName="kbe" />
+                <ScalarProperty Name="residency" ColumnName="residency" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="addresslegal" ColumnName="addresslegal" />
+                <ScalarProperty Name="addressactual" ColumnName="addressactual" />
+                <ScalarProperty Name="postcode" ColumnName="postcode" />
+                <ScalarProperty Name="director" ColumnName="director" />
+                <ScalarProperty Name="directorpowers" ColumnName="directorpowers" />
+                <ScalarProperty Name="coments" ColumnName="coments" />
+                <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="iik" ColumnName="iik" />
+                <ScalarProperty Name="bik" ColumnName="bik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contracts">
+            <EntityTypeMapping TypeName="ExchangeModel.contracts">
+              <MappingFragment StoreEntitySet="contracts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="agreementdate" ColumnName="agreementdate" />
+                <ScalarProperty Name="terminationdate" ColumnName="terminationdate" />
+                <ScalarProperty Name="bankid" ColumnName="bankid" />
+                <ScalarProperty Name="scanid" ColumnName="scanid" />
+                <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="typesid" ColumnName="typesid" />
+                <ScalarProperty Name="currencyid" ColumnName="currencyid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="ExchangeModel.customers">
+              <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lots">
+            <EntityTypeMapping TypeName="ExchangeModel.lots">
+              <MappingFragment StoreEntitySet="lots">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="measure" ColumnName="measure" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="start_price" ColumnName="start_price" />
+                <ScalarProperty Name="sum_price" ColumnName="sum_price" />
+                <ScalarProperty Name="payment_term" ColumnName="payment_term" />
+                <ScalarProperty Name="delivery_time" ColumnName="delivery_time" />
+                <ScalarProperty Name="delivery_place" ColumnName="delivery_place" />
+                <ScalarProperty Name="DKS" ColumnName="DKS" />
+                <ScalarProperty Name="contract_num" ColumnName="contract_num" />
+                <ScalarProperty Name="step" ColumnName="step" />
+                <ScalarProperty Name="go" ColumnName="go" />
+                <ScalarProperty Name="contains" ColumnName="contains" />
+                <ScalarProperty Name="amount_pr" ColumnName="amount_pr" />
+                <ScalarProperty Name="start_price_pr" ColumnName="start_price_pr" />
+                <ScalarProperty Name="attachment" ColumnName="attachment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="operauction">
+            <EntityTypeMapping TypeName="ExchangeModel.operauction">
+              <MappingFragment StoreEntitySet="operauction">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="operauctioncol" ColumnName="operauctioncol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order">
+            <EntityTypeMapping TypeName="ExchangeModel.order">
+              <MappingFragment StoreEntitySet="order">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rid" ColumnName="rid" />
+                <ScalarProperty Name="ordercol" ColumnName="ordercol" />
+                <ScalarProperty Name="scanid" ColumnName="scanid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="person">
+            <EntityTypeMapping TypeName="ExchangeModel.person">
+              <MappingFragment StoreEntitySet="person">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sites">
+            <EntityTypeMapping TypeName="ExchangeModel.sites">
+              <MappingFragment StoreEntitySet="sites">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sitename" ColumnName="sitename" />
+                <ScalarProperty Name="link" ColumnName="link" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="ExchangeModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="fk_applicants_auctions1" TypeName="ExchangeModel.fk_applicants_auctions1" StoreEntitySet="applicants">
+            <EndProperty Name="auctions">
+              <ScalarProperty Name="id" ColumnName="auctionid" />
+            </EndProperty>
+            <EndProperty Name="applicants">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_applicants_companies1" TypeName="ExchangeModel.fk_applicants_companies1" StoreEntitySet="applicants">
+            <EndProperty Name="companies">
+              <ScalarProperty Name="id" ColumnName="companyid" />
+            </EndProperty>
+            <EndProperty Name="applicants">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_auctions_brokers1" TypeName="ExchangeModel.fk_auctions_brokers1" StoreEntitySet="auctions">
+            <EndProperty Name="brokers">
+              <ScalarProperty Name="id" ColumnName="brokerid" />
+            </EndProperty>
+            <EndProperty Name="auctions">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="brokerid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_auctions_companies2" TypeName="ExchangeModel.fk_auctions_companies2" StoreEntitySet="auctions">
+            <EndProperty Name="companies">
+              <ScalarProperty Name="id" ColumnName="customerid" />
+            </EndProperty>
+            <EndProperty Name="auctions">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="customerid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_auctions_person1" TypeName="ExchangeModel.fk_auctions_person1" StoreEntitySet="auctions">
+            <EndProperty Name="person">
+              <ScalarProperty Name="id" ColumnName="traderid" />
+            </EndProperty>
+            <EndProperty Name="auctions">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="traderid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_auctions_sites1" TypeName="ExchangeModel.fk_auctions_sites1" StoreEntitySet="auctions">
+            <EndProperty Name="sites">
+              <ScalarProperty Name="id" ColumnName="siteid" />
+            </EndProperty>
+            <EndProperty Name="auctions">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="siteid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_auctions_to_users" TypeName="ExchangeModel.fk_auctions_to_users" StoreEntitySet="auctions">
+            <EndProperty Name="users">
+              <ScalarProperty Name="id" ColumnName="ownerid" />
+            </EndProperty>
+            <EndProperty Name="auctions">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="ownerid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_lots_to_auctions" TypeName="ExchangeModel.fk_lots_to_auctions" StoreEntitySet="lots">
+            <EndProperty Name="auctions">
+              <ScalarProperty Name="id" ColumnName="id_auction" />
+            </EndProperty>
+            <EndProperty Name="lots">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="id_auction" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_order_auctions1" TypeName="ExchangeModel.fk_order_auctions1" StoreEntitySet="order">
+            <EndProperty Name="auctions">
+              <ScalarProperty Name="id" ColumnName="auctionid" />
+            </EndProperty>
+            <EndProperty Name="order">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_brokers_companies1" TypeName="ExchangeModel.fk_brokers_companies1" StoreEntitySet="brokers">
+            <EndProperty Name="companies">
+              <ScalarProperty Name="id" ColumnName="companyid" />
+            </EndProperty>
+            <EndProperty Name="brokers">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_contracts_brokers1" TypeName="ExchangeModel.fk_contracts_brokers1" StoreEntitySet="contracts">
+            <EndProperty Name="brokers">
+              <ScalarProperty Name="id" ColumnName="brokerid" />
+            </EndProperty>
+            <EndProperty Name="contracts">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="brokerid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_contracts_to_companies" TypeName="ExchangeModel.fk_contracts_to_companies" StoreEntitySet="contracts">
+            <EndProperty Name="companies">
+              <ScalarProperty Name="id" ColumnName="companyid" />
+            </EndProperty>
+            <EndProperty Name="contracts">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="companyid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_customers_companies1" TypeName="ExchangeModel.fk_customers_companies1" StoreEntitySet="customers">
+            <EndProperty Name="companies">
+              <ScalarProperty Name="id" ColumnName="companiesid" />
+            </EndProperty>
+            <EndProperty Name="customers">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_sites_companies1" TypeName="ExchangeModel.fk_sites_companies1" StoreEntitySet="sites">
+            <EndProperty Name="companies">
+              <ScalarProperty Name="id" ColumnName="companyid" />
+            </EndProperty>
+            <EndProperty Name="sites">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_users_to_companies" TypeName="ExchangeModel.fk_users_to_companies" StoreEntitySet="users">
+            <EndProperty Name="companies">
+              <ScalarProperty Name="id" ColumnName="companyid" />
+            </EndProperty>
+            <EndProperty Name="users">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="companyid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_contracts_sites1" TypeName="ExchangeModel.fk_contracts_sites1" StoreEntitySet="contracts">
+            <EndProperty Name="sites">
+              <ScalarProperty Name="id" ColumnName="siteid" />
+            </EndProperty>
+            <EndProperty Name="contracts">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="siteid" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="fk_person_users1" TypeName="ExchangeModel.fk_person_users1" StoreEntitySet="person">
+            <EndProperty Name="users">
+              <ScalarProperty Name="id" ColumnName="userid" />
+            </EndProperty>
+            <EndProperty Name="person">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

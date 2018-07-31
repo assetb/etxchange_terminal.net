@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Товары и услуги";
+    ViewBag.BackUrl = Url.Action("Index");
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/company-products-controller.js"></script>
+}
+
+
+@section ControlPanel {
+    <a class="button success small" href="@Url.Action("AddProduct")">Добавить услугу/товар</a>
+}
+
+<div ng-controller="ProductCtrl">
+    <div class="row" ng-init="updateModel()">
+        <div class="medium-12">
+            <table style="width: 100%;">
+                <tr>
+                    <th>№</th>
+                    <th>Наименование</th>
+                    <th>Описание</th>
+                    <th>Сертификат</th>
+                    <th>Удалить</th>
+                </tr>
+                <tr ng-repeat="product in model.products track by $index">
+                    <td>{{$index + 1}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.description}}</td>
+                    <td>
+                        <a ng-if="product.fileId" ng-href="{{URL_ARCHIVE}}/{{product.fileId}}">
+                            <i class="fi-paperclip">Скачать</i>
+                        </a>
+                        <span ng-if="!product.fileId">Нет файла</span>
+                    </td>
+                    <td>
+                        <a ng-click="remove(product.id)">
+                            <i class="fi-trash" title="Удалить"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="!model.products.length">
+                    <td colspan="5" class="text-center">Товары не указаны</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

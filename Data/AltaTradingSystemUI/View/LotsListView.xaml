@@ -1,0 +1,155 @@
+﻿<UserControl x:Class="AltaTradingSystemUI.View.LotsListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaTradingSystemUI.View"
+             xmlns:mw="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:vm="clr-namespace:AltaTradingSystemUI.VM"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto" MaxWidth="600">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="GrayButton">
+            <Style.Setters>
+                <Setter Property="Button.Width" Value="100" />
+                <Setter Property="Button.Height" Value="35" />
+                <Setter Property="Button.Background" Value="Gainsboro" />
+                <Setter Property="Button.Foreground" Value="Gray" />
+                <Setter Property="Button.BorderBrush" Value="White" />
+                <Setter Property="Button.Margin" Value="5"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.FontSize" Value="13" />
+                    <Setter Property="Button.Background" Value="Gray" />
+                    <Setter Property="Button.FontWeight" Value="Bold" />
+                    <Setter Property="Button.Foreground" Value="Gainsboro" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="СПИСОК ЛОТОВ" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Background="WhiteSmoke">
+            <StackPanel.Effect>
+                <DropShadowEffect ShadowDepth="5" BlurRadius="10" 
+                                      Direction="300" Opacity="0.25"/>
+            </StackPanel.Effect>
+            <DataGrid Margin="5" ItemsSource="{Binding LotsList}"
+                      SelectedItem="{Binding SelectedLot}" AutoGenerateColumns="False"
+                      CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding UpdateLotCmd}"/>
+                </DataGrid.InputBindings>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер" Binding="{Binding Path=Number}"/>
+                    <DataGridTextColumn Header="Наименование" Binding="{Binding Path=Name}"/>
+                    <DataGridTextColumn Header="Сумма" Binding="{Binding Path=Sum}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource GrayButton}" Command="{Binding CreateLotCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Create"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding UpdateLotCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Update"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding DeleteLotCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Delete"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Visibility="{Binding LotDetailsVis}">
+            <TextBlock Text="ДЕТАЛИ ЛОТА" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Vertical" Background="WhiteSmoke" Visibility="{Binding LotDetailsVis}">
+            <StackPanel.Effect>
+                <DropShadowEffect ShadowDepth="5" BlurRadius="10" 
+                                      Direction="300" Opacity="0.25"/>
+            </StackPanel.Effect>
+            <local:LotDetailsView DataContext="{Binding LotDetailsVM}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding LotDetailsVis}">
+            <Button Style="{StaticResource GrayButton}" Command="{Binding SaveLotCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Save"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding CancelLotCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Cancel"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="6" Orientation="Horizontal">
+            <TextBlock Text="ТЕХНИЧЕСКАЯ СПЕЦИФИКАЦИЯ - РАЗБИВКА" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="7" Orientation="Vertical" Background="WhiteSmoke">
+            <StackPanel.Effect>
+                <DropShadowEffect ShadowDepth="5" BlurRadius="10" 
+                                      Direction="300" Opacity="0.25"/>
+            </StackPanel.Effect>
+            <DataGrid Margin="5" ItemsSource="{Binding TechSpecList}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Binding="{Binding Path=serialnumber}"/>
+                    <DataGridTextColumn Header="Наименование" Binding="{Binding Path=name}"/>
+                    <DataGridTextColumn Header="Ед. изм." Binding="{Binding Path=unit}"/>
+                    <DataGridTextColumn Header="Кол-во" Binding="{Binding Path=quantity}"/>
+                    <DataGridTextColumn Header="Цена за ед." Binding="{Binding Path=price}"/>
+                    <DataGridTextColumn Header="Сумма" Binding="{Binding Path=sum}"/>
+                    <DataGridTextColumn Header="Страна" Binding="{Binding Path=country}"/>
+                    <DataGridTextColumn Header="Техническая спецификация" Binding="{Binding Path=techspec}"/>
+                    <DataGridTextColumn Header="Условия поставки" Binding="{Binding Path=terms}"/>
+                    <DataGridTextColumn Header="Условия оплаты" Binding="{Binding Path=paymentterm}"/>
+                    <DataGridTextColumn Header="ДКС" Binding="{Binding Path=dks}"/>
+                    <DataGridTextColumn Header="Номер контракта недропользователя" Binding="{Binding Path=contractnumber}"/>
+                    <DataGridTextColumn Header="Выигрышная цена" Binding="{Binding Path=endprice}"/>
+                    <DataGridTextColumn Header="Выигрышная сумма" Binding="{Binding Path=endsum}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</UserControl>

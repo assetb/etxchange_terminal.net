@@ -1,0 +1,18 @@
+﻿@using AltaBO
+
+@model Broker
+
+<div class="row">
+    <div class="medium-4 columns">
+        @Html.LabelFor(m => m.Code, "Код брокера")
+        @Html.EditorFor(m => m.Code, new { @readonly = "readonly" })
+    </div>
+    <div class="medium-4 columns">
+        @Html.LabelFor(m => m.Name, "Наименование")
+        @Html.EditorFor(m => m.Name, new { @readonly = "readonly" })
+    </div>
+    <div class="medium-4 columns">
+        @Html.LabelFor(m => m.Requisites, "Реквизиты")
+        @Html.EditorFor(m => m.Requisites, new { @readonly = "readonly" })
+    </div>
+</div>

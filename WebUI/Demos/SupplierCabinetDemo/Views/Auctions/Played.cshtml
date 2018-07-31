@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SupplierCabinetDemo.Models.Auction>
+
+@{
+    ViewBag.Title = "Проведенные торги";    
+}
+
+@section Scripts{
+<script src="~/scripts/Utilits/dataTableFunc.js"></script>
+}
+
+<div class="row">
+    <table id="auctionlist" class="display" hidden width="100%">
+        <thead>
+            <tr>
+                <th>ДАТА АУКЦИОНА</th>
+                <th>НОМЕР</th>
+                <th>ЗАКАЗЧИК</th>
+                <th>БИРЖА</th>
+                <th>СТАТУС</th>
+                <th>РЕЗУЛЬТАТ</th>
+                <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                <th>СТАРТОВАЯ ЦЕНА</th>
+                <th>ФИНАЛЬНАЯ СТАВКА</th>
+                <th>ФАЙЛ ОТЧЕТА</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model) {
+                <tr>
+                    <td>@item.auctionDate.ToShortDateString()</td>
+                    <td><a href="Details?auctionNumber=@item.number">@item.number</a></td>
+                    <td>@item.customer</td>
+                    <td>@item.source</td>
+                    <td>Состоялся</td>
+                    <td>Победил</td>
+                    <td>@item.lotName</td>
+                    <td>@Math.Round(item.startPrice, 2)</td>
+                    <td>@Math.Round(item.startPrice - item.startPrice / 100 * 4, 2)</td>
+                    <td class="text-center"><a href="~/Resources/Files/SupplierReport.docx"><i class="fi-save"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+</div>

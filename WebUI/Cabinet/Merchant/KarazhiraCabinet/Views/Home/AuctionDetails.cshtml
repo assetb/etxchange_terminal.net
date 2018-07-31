@@ -1,0 +1,77 @@
+﻿@model AltaBO.Order
+
+@{
+    ViewBag.Title = "Аукцион (развернутая информация)";
+}
+
+<!--Top image-->
+<div class="row text-center">
+    <img src="~/Resources/Images/auctionDetails.jpg" style="height:100px" />
+</div>
+
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        <fieldset>
+            <legend>Общая информация</legend>
+            <label>Дата аукциона</label>
+            <h6>@Model.Auction.Date.ToShortDateString()</h6>
+            <label>Дата заявки</label>
+            <h6>@Model.Date.ToShortDateString()</h6>
+            <label>Номер</label>
+            <h6>@Model.Auction.Number</h6>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Лот</legend>
+            <label>Наименование товара</label>
+            <h6>@Model.Auction.Lots[0].Name</h6>
+            <label>Единица измерения</label>
+            <h6>@Model.Auction.Lots[0].Unit</h6>
+            <label>Количество</label>
+            <h6>@Model.Auction.Lots[0].Quantity</h6>
+            <label>Цена за единицу</label>
+            <h6>@Model.Auction.Lots[0].Price</h6>
+            <label>Общая сумма</label>
+            <h6>@Model.Auction.Lots[0].Sum</h6>
+            <label>Условия оплаты</label>
+            <h6>@Model.Auction.Lots[0].PaymentTerm</h6>
+            <label>Время поставки</label>
+            <h6>@Model.Auction.Lots[0].DeliveryTime</h6>
+            <label>Место поставки и условие</label>
+            <h6>@Model.Auction.Lots[0].DeliveryPlace</h6>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Поставщики</legend>
+            <label>Список участников</label>
+            @foreach(var item in Model.Auction.SupplierOrders) {
+                <h6>@item.Name</h6>
+            }
+        </fieldset>
+        <br />
+
+        @if(Model.Auction.StatusId == 2) {
+            <fieldset>
+                <legend>Победитель</legend>
+                @if(Model.Auction.SupplierOrders[0].Name != Model.Auction.SupplierOrders[0].BrokerName) {
+                    <label>Наименование участника</label>
+                    <h6>@Model.Auction.SupplierOrders[0].Name</h6>
+                    <label>Брокер участника</label>
+                    <h6>@Model.Auction.SupplierOrders[0].BrokerName</h6>
+                    <label>Финальная сумма</label>
+                    <h6>@Model.Auction.SupplierOrders[0].MinimalPrice</h6>
+                } else {
+                    <label>Наименование участника</label>
+                    <h6>@Model.Auction.SupplierOrders[1].Name</h6>
+                    <label>Брокер участника</label>
+                    <h6>@Model.Auction.SupplierOrders[1].BrokerName</h6>
+                    <label>Финальная сумма</label>
+                    <h6>@Model.Auction.SupplierOrders[1].MinimalPrice</h6>
+                }
+            </fieldset>
+            <br />
+        }
+    </div>
+</div>

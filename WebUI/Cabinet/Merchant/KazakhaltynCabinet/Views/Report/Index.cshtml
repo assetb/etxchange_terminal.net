@@ -1,0 +1,97 @@
+﻿@using KazakhaltynCabinet.Models
+@using KazakhaltynCabinet.utils
+
+@model List<OrderForReport>
+
+@{
+    ViewBag.Title = "Экономии";
+}
+
+@section Scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="~/Scripts/utils/table.js"></script>
+    <script>
+        $(document).ready(function () {
+            var SUCCESS_STATUS = @Html.Raw(DataManagerTest.STATUS_OK);
+            
+            var table = NewTable("#reportSum");
+            var orders = @Html.Raw(Json.Encode(Model));
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Наименование');
+                data.addColumn('number', 'Экономия');
+
+                var maxSum = 0;
+                var currentSum = 0;
+                for (var i = 0; i < orders.length; i++) {
+                    if(orders[i].statusId == SUCCESS_STATUS) {
+                    maxSum += orders[i].sum;
+                    currentSum += orders[i].sumFinal;
+                }
+            }
+
+            data.addRow(["Экономия", (maxSum - currentSum)]);
+
+            data.addRow(["Итоговая сумма",currentSum]);
+
+            var options = {
+                title: "Процент экономии по торгам.\n Планируемая сумма закупки составляет "+maxSum+" тг.",
+                pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+            chart.draw(data, options);
+        };
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+
+        });
+    </script>
+}
+
+<div class="row text-center">
+    <img src="~/Resources/Images/economySum.jpg" style="height:100px" />
+</div>
+<div class="row">
+    <div class="medium-2 columns">
+        @Html.Partial("Partials/LeftMenu")
+    </div>
+    <div class="medium-10 columns">
+        <div class="row text-center">
+            <table id="reportSum" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Номер аукциона</th>
+                        <th>Статус</th>
+                        <th>Планируемая сумма (тг.)</th>
+                        <th>Итоговая сумма (тг.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                            <tr>
+                                <td>@item.number</td>
+                                <td>@item.status</td>
+                                <td>@item.sum</td>
+                                <td>@item.sumFinal</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="medium-6 columns">
+                <div id="chartdiv"></div>
+            </div>
+            <div class="medium-6 columns">
+                {Описание графика}
+            </div>
+        </div>
+    </div>
+</div>

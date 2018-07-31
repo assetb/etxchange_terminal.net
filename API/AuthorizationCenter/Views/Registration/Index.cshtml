@@ -1,0 +1,40 @@
+﻿//
+@{
+    ViewBag.Title = "Форма регистрации";
+}
+
+@section Scripts {
+    <script>
+        $("#CheckBinBtn").on("click", function (ev) {
+            @*$.get({
+                url: @Url.RouteUrl("Api", new { httproute = true, controller = "Albums", id = 3 })
+            });*@
+        });
+    </script>
+}
+<div class="text-center">
+    <form id="registration" method="post">
+        <div class="row collapse">
+            <div class="medium-2 columns">
+                <label>БИН компании</label>
+            </div>
+            <div class="medium-6 columns">
+                @Html.TextBoxFor(t => )
+                <input type="text" name="bin" class="expand" placeholder="Введите бин компании" />
+            </div>
+            <div class="medium-4 columns">
+                <button id="CheckBinBtn" type="button" class="button postfix">Проверить БИН</button>
+            </div>
+        </div>
+        <div id="hiddenForm">
+            <div class="row">
+                <div class="medium-2 columns">
+                    <label>Логин</label>
+                </div>
+                <div class="medium-6 end">
+                    <input type="text" name=""
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

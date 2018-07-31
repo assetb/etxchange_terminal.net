@@ -1,0 +1,42 @@
+﻿@using PerpetuumSoft.Knockout
+@model PersonalCabinetSupplier.Areas.Auctions.Models.Message
+@{
+    ViewBag.Title = "Форма списка аукционов";
+    var ko = Html.CreateKnockoutContext();
+}
+@section Scripts {
+    @ko.LazyApply(Model, "Orders", null, null)
+}
+<div class="row">
+    <div class="row">
+        <div class="medium-10 columns">@ko.Html.TextBox(text => text.searchText, new { style = "width: 100%;" })</div>
+        <div class="medium-2 columns">@ko.Html.Button("Найти", "Search", null)</div>
+    </div>
+    <div class="row">
+        @using (var orders = ko.With(m => m.orders))
+        {
+            <table>
+                <tr>
+                    <th>ДАТА АУКЦИОНА</th>
+                    <th>НОМЕР</th>
+                    <th>СТАТУС</th>
+                    <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                    <th>СУММА</th>
+                    @*<th>ДАТА ЗАЯВКИ</th>
+                        <th>ФАЙЛ ЗАЯВКИ</th>
+                        <th>ФАЙЛ ОТЧЕТА</th>*@
+                </tr>
+                @using (var item = orders.Foreach(o => o))
+                {
+                    <tr>
+                        <td @item.Bind.Text(i => i.Date)></td>
+                        <td @item.Bind.Text(i => i.Number)></td>
+                        <td @item.Bind.Text(i => i.Status)></td>
+                        <td @item.Bind.Text(i => i.Name)></td>
+                        <td @item.Bind.Text(i => i.Sum)></td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>

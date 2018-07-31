@@ -1,0 +1,63 @@
+﻿@*<div class="button-group">
+        <button class="hollow button" href="http://kgd.gov.kz/ru/app/culs-taxarrear-search-web">Сведения об отсутствии (наличии) налоговой задолженности</button>
+        <button class="hollow button" href="http://kgd.gov.kz/ru/services/taxpayer_search_unreliable">Поиск неблагонадежных налогоплательщиков</button>
+        <button class="hollow button" href="http://kgd.gov.kz/ru/taxpayer">Поиск налогоплательщиков, сделки (операции) с которыми совершены без фактического выполнения работ, оказания услуг, отгрузки товаров</button>
+        <button class="hollow button" href="">Поиск налогоплательщиков, находящихся на стадии ликвидации</button>
+        <button class="hollow button" href="http://kgd.gov.kz/ru/services/taxpayer_search/legal_entity">Поиск налогоплательщиков</button>
+        <button class="hollow button" href="http://kgd.gov.kz/ru/services/ndspayer_search">Поиск данных о плательщике НДС</button>
+    </div>*@
+
+<div class="row">
+    <div class="row">
+        <div class="row">
+            <div class="small-offset-2 small-4 columns end">
+                <img src="{{img}}" />
+            </div>
+            <div class="small-offset-2 small-4 end columns">
+                <a class="button ad-unit-button" ng-click="UpdateImg()">Обновить код на картинке</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-offset-2 small-4 end columns">
+                <input type="text" ng-model="captcha_res" />
+                @*<a class="button ad-unit-button" ng-if="img != null" ng-click="GetData()">Отправить</a>*@
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-offset-1 small-2 large-offset-1 large-3 columns end ad-unit">
+            <p class="ad-unit-text" style="color: #ffffff">Сведения об отсутствии (наличии) налоговой задолженности</p>
+            @*<a class="button ad-unit-button" href="http://kgd.gov.kz/ru/app/culs-taxarrear-search-web" target="_blank">Перейти</a>*@
+            <a class="button ad-unit-button" ng-click="GetData()">Посмотреть</a>
+        </div>
+        <div class="small-offset-1 small-2 large-offset-1 large-3 columns end ad-unit">
+            <p class="ad-unit-text" style="color: #ffffff">Сведения о налоговой благонадежности</p>
+            <a class="button ad-unit-button" ng-click="GetUnreabilityData()">Посмотреть</a>
+        </div>
+        <div class="small-offset-1 small-2 large-offset-1 large-3 columns end ad-unit">
+            <p class="ad-unit-text" style="color: #ffffff">Проверка на сделки, совершенные без фактического выполнения работ</p>
+            <a class="button ad-unit-button" ng-click="GetNonexeactsData()">Посмотреть</a>
+        </div>
+    </div>
+
+    <div class="row">
+    </div>
+    <div class="row" style="margin-top: 3em">
+        <div class="small-offset-2 small-3 large-offset-2 large-3 columns end ad-unit">
+            <p class="ad-unit-text" style="color: #ffffff">Поиск по базе налогоплательщиков</p>
+            <a class="button ad-unit-button" href="http://kgd.gov.kz/ru/services/taxpayer_search/legal_entity" target="_blank">Перейти</a>
+        </div>
+        <div class="small-offset-2 small-3 large-offset-2 large-3 columns end ad-unit">
+            <p class="ad-unit-text" style="color: #ffffff">Поиск данных о платежах по НДС</p>
+            <a class="button ad-unit-button" href="http://kgd.gov.kz/ru/services/ndspayer_search" target="_blank">Перейти</a>
+        </div>
+    </div>
+
+    @Html.Partial("Partials/KgdDuty")
+
+    @Html.Partial("Partials/Unreliability")
+
+    @Html.Partial("Partials/Noexeacts")
+</div>
+

@@ -1,0 +1,118 @@
+﻿body {
+    font-family: Calibri;
+}
+
+.h {
+    display: none;
+}
+
+h6 {
+    font-family: Calibri;
+}
+
+h4 {
+    font-family: Calibri;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: Calibri;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: Calibri;
+    font-weight: bold;
+    color: gray;
+}
+
+p {
+    font-style: italic;
+}
+
+legend {
+    font-size: medium;
+    color: dodgerblue;
+}
+
+label {
+    color: gray;
+    font-weight: bold;
+}
+
+span {
+    color: black;
+}
+
+table thead th {
+    background-color: dodgerblue;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+table th {
+    background-color: dodgerblue;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.topbtn {
+    font-family: Calibri;
+    font-weight: bold;
+    color: gray;
+    padding-right: 15px;
+    font-size: 13pt;
+}
+
+.indexbtn {
+    font-family: Calibri;
+    font-weight: bold;
+    color: dodgerblue;
+    font-size: 13pt;
+}
+
+    .indexbtn:hover {
+        color: red;
+    }
+
+div.dataTables_wrapper div.dataTables_filter input {
+    display: inline-block !important;
+    width: auto !important;
+    height: auto;
+    margin-bottom: 1em;
+    margin-left: 0.5em;
+}
+
+.ad-unit-text {
+    -webkit-animation: ad-text-anim 1s 1 ease;
+    animation: ad-text-anim 1s 1 ease;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+    -webkit-animation-fill-mode: backwards;
+    animation-fill-mode: backwards;
+    color: #fff;
+    font-size: 16px;
+    padding: 0 15px 10px 15px;
+    text-align: center;
+    height: 90px;
+}
+
+.ad-unit-button {
+    -webkit-box-shadow: 0 -2px 0 #000000 inset;
+    -webkit-box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset;
+    border: 0;
+    border-radius: 3px;
+    box-shadow: 0 -2px 0 #000000 inset;
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset;
+    font-weight: bold;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.ad-unit {
+    background: #074E68;
+    border-radius: 4px;
+    max-width: 250px;
+    padding: .5rem;
+    height: 180px;
+}

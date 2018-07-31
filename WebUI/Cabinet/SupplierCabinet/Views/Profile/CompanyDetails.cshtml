@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Реквизиты компании";
+    ViewBag.BackUrl = Url.Action("Index");
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/company-info-controller.js"></script>
+}
+
+@section ControlPanel {
+    <a class="button success small" href="@Url.Action("CompanyEditor")">Редактировать</a>
+}
+<div ng-controller="CompanyCtrl">
+    <div class="row" ng-init="updateModel()">
+        <div class="row">
+            <div>
+                <label>БИН:</label>
+            </div>
+            <div>
+                &emsp;<span ng-bind="company.bin"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Наименование:</label>
+            </div>
+            <div>
+                &emsp;<span ng-bind="company.name"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Страна:</label>
+            </div>
+            <div>
+                &emsp;<span ng-bind="company.country"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Адрес:</label>
+            </div>
+            <div>
+                &emsp;<span ng-bind="company.addressActual"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Телефоны:</label>
+            </div>
+            <div>
+                &emsp; <span ng-bind="company.telephone"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>E-mail:</label>
+            </div>
+            <div>
+                &emsp; <span ng-bind="company.email"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Директор:</label>
+            </div>
+            <div>
+                &emsp; <span ng-bind="company.director"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>ИИК:</label>
+            </div>
+            <div>
+                &emsp; <span ng-bind="company.iik"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>КБЕ:</label>
+            </div>
+            <div>
+                &emsp; <span ng-bind="company.kbe"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-12 columns text-right">
+            </div>
+        </div>
+    </div>
+</div>

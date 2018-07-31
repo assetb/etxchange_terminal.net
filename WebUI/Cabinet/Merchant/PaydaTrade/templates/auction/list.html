@@ -1,0 +1,99 @@
+﻿<div ng-init="Init(1)">
+    <div class="medium-12 column text-center">
+        <img src="Resources/Images/activeAuctions.jpg" style="height:100px" />
+    </div>
+    <div class="medium-12 columns">
+        <form>
+            <div class="large-12 medium-12 columns">
+                <input type="text" ng-keyup="search()" ng-model="searchParameters.numberOrProduct" placeholder="Наименование товара, номер аукциона/заявки..." />
+            </div>
+            <div class="large-3 medium-6 small-6 columns">
+                <label class="hidden-for-small-down">С</label>
+                <datepicker dp-value="searchParameters.fromDate" dp-changed="search()" />
+            </div>
+            <div class="large-3 medium-6 small-6 columns">
+                <label class="hidden-for-small-down">До</label>
+                <datepicker dp-value="searchParameters.toDate" dp-changed="search()" />
+            </div>
+            <div class="large-3 medium-6 columns hidden-for-small">
+                <label>Статус</label>
+                <select ng-change="search()" ng-model="searchParameters.statusid">
+                    <option value="">Не указано</option>
+                    <option value="1">Новый</option>
+                    <option value="4">Ожидается</option>
+                    <option value="5">В обработке</option>
+                </select>
+            </div>
+            <div class="large-3 medium-6 columns hidden-for-small">
+                <label>Товарная площадка</label>
+                <select ng-change="search()" ng-model="searchParameters.site" ng-options="item.id as item.name for item in markets track by item.id">
+                    <option value="">Не указано</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="medium-12 columns">
+        <pagination pg-click="updateTable(page, items)" pg-page="searchParameters.page" pg-count-pages="table.countPages" pg-count-items="searchParameters.countItems" pg-count="table.countItems"></pagination>
+        <div class="medium-12 small-12 columns">
+            <table id="auctionlist" class="alta">
+                    <tr>
+                        <th>
+                            <a ng-click="orderBy('date')">
+                                <i ng-class="searchParameters.orderby == 'date' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span>ДАТА АУКЦИОНА</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a ng-click="orderBy('number')">
+                                <i ng-class="searchParameters.orderby == 'number' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span>НОМЕР АУКЦИОНА/ЗАЯВКИ</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a ng-click="orderBy('status')">
+                                <i ng-class="searchParameters.orderby == 'status' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span>СТАТУС</span>
+                            </a>
+                        </th>
+                        <th class="hidden-for-small-down">НАИМЕНОВАНИЕ ТОВАРА</th>
+                        <th class="hidden-for-small-down">
+                            <a ng-click="orderBy('sum')">
+                                <i ng-class="searchParameters.orderby == 'sum' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span>СУММА (тг.)</span>
+                            </a>
+                        </th>
+                        <th class="hidden-for-small-down">
+                            <a ng-click="orderBy('applicantsDeadline')">
+                                <i ng-class="searchParameters.orderby == 'applicantsDeadline' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span> ПОДАЧИ СПИСКА ПРЕТЕНДЕНТОВ</span>
+                            </a>
+                        </th>
+                        <th class="hidden-for-small-down">ИСТОЧНИК</th>
+                    </tr>
+                    <tr ng-if="!isLoading" ng-repeat="auction in table.rows">
+                        <td ng-bind="auction.date | date : 'dd.MM.yyyy'"></td>
+                        <td><a ng-href="Auctions/Index#/details/{{auction['<Id>k__BackingField']}}?referer=active" ng-bind="auction.number"></a></td>
+                        <td ng-switch on="auction.statusId">
+                            <span ng-switch-when="1" ng-bind="auction.status" class="label medium-12"></span>
+                            <span ng-switch-when="2" ng-bind="auction.status" class="label success medium-12"></span>
+                            <span ng-switch-when="3" ng-bind="auction.status" class="label error medium-12"></span>
+                            <span ng-switch-when="4" ng-bind="auction.status" class="label info medium-12"></span>
+                            <span ng-switch-when="5" ng-bind="auction.status" class="label warning medium-12"></span>
+                        </td>
+                        <td class="hidden-for-small-down"><div ng-repeat="lot in auction.lots" ng-bind="lot.Number +' '+ lot.Name"></div></td>
+                        <td class="hidden-for-small-down">{{GetSumLots(auction.lots) | currency: "тг" : 2}}</td>
+                        <td class="hidden-for-small-down" ng-bind="auction.applicantsDeadline | date : 'dd.MM.yyyy'"></td>
+                        <td class="hidden-for-small-down" ng-bind="auction.site"></td>
+                    </tr>
+                    <tr ng-if="!isLoading && !table.rows.length">
+                        <td class="text-center" colspan="7">Нет записей</td>
+                    </tr>
+                    <tr ng-if="isLoading">
+                        <td class="text-center" colspan="7"><img src="Resources/Images/ajax-loader.gif" /> Загрузка...</td>
+                    </tr>
+            </table>
+        </div>
+        <pagination pg-click="updateTable(page, items)" pg-page="searchParameters.page" pg-count-pages="table.countPages" pg-count-items="searchParameters.countItems" pg-count="table.countItems"></pagination>
+        <br>
+    </div>
+</div>

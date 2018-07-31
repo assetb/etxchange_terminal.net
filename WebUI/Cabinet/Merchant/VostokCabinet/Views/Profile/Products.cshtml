@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Товары и услуги";
+    ViewBag.BackUrl = Url.Action("Index");
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/main.js"></script>
+}
+
+<div id="contentBody" ng-controller="SupplierProductCtrl" ng-init="init(@Model)" class="form-horizontal">
+    <div class="row">
+        <div class="medium-2 column end">
+            <a href="javascript:history.back();" class="button secondary expand tiny">Назад</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="medium-12">
+            <table style="width: 100%;">
+                <tr>
+                    <th>№</th>
+                    <th>Наименование</th>
+                    <th>Описание</th>
+                    <th>Сертификат</th>
+                </tr>
+                <tr ng-repeat="product in model.products track by $index">
+                    <td>{{$index + 1}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.description}}</td>
+                    <td>
+                        <a ng-if="product.fileId" ng-href="{{URL_ARCHIVE}}/{{product.fileId}}">
+                            <i class="fi-paperclip">Скачать</i>
+                        </a>
+                        <span ng-if="!product.fileId">Нет файла</span>
+                    </td>
+                </tr>
+                <tr ng-if="!model.products.length">
+                    <td colspan="5" class="text-center">Товары не указаны</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

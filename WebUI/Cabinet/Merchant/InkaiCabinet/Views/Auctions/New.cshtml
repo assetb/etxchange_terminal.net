@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Форма подачи заявки на организацию аукциона";
+}
+@section Scripts {
+    <script src="~/scripts/app/app.js"></script>
+    <script>
+        (function () {
+            'use strict';
+            angular.module('app').controller('new_auction_controler', controller);
+            controller.$inject = ['$scope', '$http'];
+
+            function controller($scope, $http) {
+                $scope.auction = {};
+                $scope.submitForm = function () {
+                    console.log("submit action");
+                }
+            };
+        })();
+    </script>
+}
+
+<form method="post" ng-submit="submitForm()">
+    <div class="row">
+        <div class="medium-5 medium-centered columns">
+            <fieldset>
+                <legend>Данные заявки</legend>
+                <label>
+                    Номер
+                    <input type="text" ng-model="auction.number" />
+                </label>
+            </fieldset>
+            <br />
+
+            <fieldset>
+                <legend>Данные аукциона</legend>
+                <label>
+                    Номер
+                    <input type="text" ng-model="auction.number" />
+                </label>
+                
+            </fieldset>
+            <fieldset>
+                <legend>Данные лота</legend>
+                <label>
+                    Наименование товара
+                    <input type="text" ng-model="auction.lotName" />
+                </label>
+                <label>
+                    Количество
+                    <input type="text" ng-model="auction.amount" />
+                </label>
+                <label>
+                    Единица измерения
+                    <select ng-model="auction.unitId">
+                        <option value="1">штука</option>
+                        <option value="2">метр</option>
+                        <option value="3">литр</option>
+                        <option value="4">тонна</option>
+                    </select>
+                </label>
+                <label>
+                    Цена (за единицу)
+                    <input type="text" ng-model="auction.price" />
+                </label>
+            </fieldset>
+            <br />
+
+            <fieldset>
+                <legend>Дополнительные данные</legend>
+                <label>
+                    Условия оплаты
+                    <input type="text" placeholder="Введите условия оплаты" />
+                </label>
+                <label>
+                    Условия поставки
+                    <input type="text" placeholder="Введите условия поставки" />
+                </label>
+                <label>
+                    Место поставки
+                    <input type="text" placeholder="Введите место поставки" />
+                </label>
+                <label>
+                    Сроки поставки
+                    <input type="text" placeholder="Введите сроки поставки" />
+                </label>
+            </fieldset>
+            <br />
+
+            <div class="row text-center">
+                <input type="submit" value="Отправить" class="button small" />
+                @Html.ActionLink("Отмена", "Index", "Home", null, new { @class = "button small" })
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,60 @@
+﻿<div id="application_online" class="row" ng-controller="auction.online.main">
+    <!--Table auction-->
+    <div class="medium-6 columns">
+        <table>
+            <tr>
+                <th>Номер аукциона</th>
+                <th>Номер лота</th>
+                <th>Описание лота</th>
+            </tr>
+
+            <tr ng-repeat="auction in auctions">
+                
+            </tr>
+        </table>
+    </div>
+    <!--Table online-->
+    <div class="medium-6 columns">
+        <h3 class="text-center">Торг в режиме онлайн</h3>
+        <div class="medium-12 columns">
+            <p>На данной страницы отображаются ценновые предложения в реальном времени.</p>
+            <div class="medium-12 columns">
+                <div class="medium-2 columns">
+                    <span>Аукцион № </span>
+                </div>
+                <div class="medium-5 columns end">
+                    <span ng-bind="model.auction.number"></span>
+                </div>
+            </div>
+            <div class="medium-12 columns">
+                <div class="medium-2 columns">
+                    <span>Лот № </span>
+                </div>
+                <div class="medium-5 columns end">
+                    <span ng-bind="model.lot.Number"></span>
+                </div>
+            </div>
+            <p>Вниманиe! Торги на товарной бирже ЕТС проводятся с 15:00 до 16:00 по времени Астаны.</p>
+            <div class="medium-12 columns">
+                <table style="width: 100%;">
+                    <tr>
+                        <th>Время</th>
+                        <th>Код лота</th>
+                        <th>Компания</th>
+                        <th>Цена</th>
+                    </tr>
+                    <tr ng-repeat="price in model.priceOffers">
+                        <td ng-bind="price.offerTime"></td>
+                        <td ng-bind="price.lotCode"></td>
+                        <td ng-bind="price.firmName"></td>
+                        <td ng-bind="price.lotPriceOffer | currency: 'тг': 2"></td>
+                    </tr>
+                    <tr ng-if="!model.priceOffers">
+                        <td colspan="4" class="text-center">Нет ценовых предложений</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

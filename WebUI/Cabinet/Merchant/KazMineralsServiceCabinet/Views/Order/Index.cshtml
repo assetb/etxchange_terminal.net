@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Управление заявками";
+}
+
+@section Scripts {
+    <script src="~/scripts/foundation/foundation.tooltip.js"></script>
+    <script src="~/scripts/angular-route.min.js"></script>
+    <script src="~/scripts/app/order/order_app.js"></script>
+    <script src="~/scripts/app/services/http_factory.js"></script>
+    <script src="~/scripts/app/filters/bytes_filter.js"></script>
+    <script src="~/scripts/app/filters/doc_types_filter.js"></script>
+    <script src="~/scripts/app/directives/file_input_directive.js"></script>
+    <script src="~/scripts/app/order/list_orders_controller.js"></script>
+    <script src="~/scripts/app/order/form_order_controller.js"></script>
+    <script src="~/scripts/app/order/form_multiple_order_controller.js"></script>
+}
+
+<div class="row" ng-app="app">
+    <div class="row text-center">
+        <img src="~/Resources/Images/orderCreation.jpg" style="height:100px" />
+    </div>
+    <div class="medium-3 columns">
+        <ul class="side-nav">
+            <li><a ng-href="Order/Index#/list_orders">Список заявок</a></li>
+            <li class="divider"></li>
+            <li><a ng-href="Order/Index#/form_order">Подать заявку</a></li>
+            @*<li><a ng-href="Order/Index#/form_multiple_order">Прикрепить скан заявки</a></li>*@
+        </ul>
+    </div>
+    <div class="medium-9 columns">
+        <ng-view></ng-view>
+    </div>
+</div>

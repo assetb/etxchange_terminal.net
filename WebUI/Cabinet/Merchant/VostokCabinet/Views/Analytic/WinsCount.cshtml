@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Отчет: Товар-Поставщик-Количество побед";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/scripts/lib/foundation-datepicker/css/foundation-datepicker.min.css" />
+    <style>
+        div.drop-down-list {
+            position: absolute;
+            width: 100%;
+            top: 37px;
+            -webkit-box-shadow: 1px 2px 14px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 1px 2px 14px 0px rgba(0,0,0,0.75);
+            box-shadow: 1px 2px 14px 0px rgba(0,0,0,0.75);
+        }
+
+            div.drop-down-list div.drop-down-item {
+                z-index: 1000;
+                background-color: #fff;
+                color: #000000 !important;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+                div.drop-down-list div.drop-down-item:hover {
+                    background-color: #E8E9EB;
+                }
+    </style>
+}
+
+@section Scripts {
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.tab.js"></script>
+    <script src="~/scripts/lib/requirejs/require.js"></script>
+    <script src="~/scripts/app/config.js"></script>
+    <script src="~/scripts/app/controllers/analytic/winCount.js"></script>
+}
+
+<div id="renderBody" ng-controller="wincountCrtl" ng-init="init()">
+    <div class="row">
+        <form ng-submit="update(1, filterForm.count)">
+            <div class="row collapse">
+                <div class="medium-10 columns" ng-keyup="keyUpDown($event)">
+                    <input type="text" ng-model="filterForm.name" placeholder="Введите: наименование товара" ng-keyup="findProducts($event)" />
+                    <div class="drop-down-list">
+                        <div class="medium-12 columns text-left drop-down-item" ng-repeat="product in namesProducts">
+                            <a ng-click="selecteProduct(product)" title="{{product}}" ng-bind="product"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="medium-2 columns">
+                    <input type="submit" class="button postfix" value="Поиск" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <pagination pg-click="update(page, items)" pg-page="filterForm.page" pg-count-pages="countPages" pg-count-items="filterForm.count" pg-count="count"></pagination>
+    </div>
+    <div class="row">
+        <table style="width: 100%">
+            <tr>
+                <th>Кол-во побед</th>
+                <th>Наименование</th>
+                <th>Описание</th>
+                <th>Средняя цена</th>
+                <th>Победитель</th>
+                <th>БИН</th>
+            </tr>
+            <tbody style="border-bottom: 0.5px solid #007095;" ng-if="winsCounts.length" ng-repeat="(key, value) in winsCounts | groupBy : 'name'">
+                <tr>
+                    <td colspan="6"><b><span ng-bind="key"></span></b></td>
+                </tr>
+                <tr ng-repeat="item in value track by $index">
+                    <td style="width:10%;" ng-bind="item.count"></td>
+                    <td style="width:15%;" ng-bind="item.name"></td>
+                    <td style="width:15%;" ng-bind="item.desc"></td>
+                    <td style="width:15%;" title="Цена может варьироваться" ng-bind="item.avg | currency: 'тг': 2"></td>
+                    <td style="width:65%;" ng-bind="item.winner"></td>
+                    <td style="width:65%;" ng-bind="item.bin"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <pagination pg-click="update(page, items)" pg-page="filterForm.page" pg-count-pages="countPages" pg-count-items="filterForm.count" pg-count="count"></pagination>
+    </div>
+</div>

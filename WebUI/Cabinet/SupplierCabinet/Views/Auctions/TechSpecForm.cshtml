@@ -1,0 +1,107 @@
+﻿@model Dictionary<string, int>
+
+@{
+    ViewBag.Title = "Техническая спецификация";
+    ViewBag.BackUrl = Url.Action("Index", "Auctions", new { id = @Model["auctionId"] }, null);
+}
+@section Scripts {
+    <script src="~/scripts/app/controllers/auction/tech-spec-form-controller.js"></script>
+}
+<div id="controller_container" class="" ng-init="init(@Model["auctionId"], @Model["lotId"])" ng-controller="TechSpecFormCtrl">
+    <div>
+        <h4>Техническая спецификация к лоту № <span ng-bind="lot.Number"></span></h4>
+        <hr />
+
+        <ul class="tabs row collapse" data-tab role="tablist">
+            <li class="tab-title medium-6 columns active"><a href="#panel1">Способ 1. Заполнение формы</a></li>
+            <li class="tab-title medium-6 columns"><a href="#panel2">Способ 2. Прикрепление файла</a></li>
+        </ul>
+
+        <div class="tabs-content panel">
+            <div class="content active" id="panel1">
+                <form id="formTable" ng-submit="submit($event)">
+                    <p>Укажите цены и/или суммы по каждой позиции так что бы <a href="~/Auctions/1136/TechSpecForm/1129#difference">"разница сумм"</a> была равна 0 тг или воспользуйтесь функцией <b>"Распределить автоматически"</b>.</p>
+
+                    <table style="max-width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>П.н.</th>
+                                <th>Наименование закупаемых ТМЦ</th>
+                                <th>Ед. изм.</th>
+                                <th>Кол-во</th>
+                                <th>Цена (с учетом НДС)</th>
+                                <th>Общая сумма</th>
+                                <th>Условия поставки, места и сроков</th>
+                                <th>ДКС (%)</th>
+                                <th title="№ контракта недропользования">№ контр.</th>
+                                <th>Итоговая цена</th>
+                                <th>Итоговая cумма</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="lotex in lot.LotsExtended">
+                                <td ng-bind="lotex.serialnumber"></td>
+                                <td ng-bind="lotex.name"></td>
+                                <td ng-bind="lotex.unit"></td>
+                                <td ng-bind="lotex.quantity | currency : '' : 2"></td>
+                                <td ng-bind="lotex.price | currency : '' : 2"></td>
+                                <td ng-bind="lotex.sum | currency : '' : 2"></td>
+                                <td ng-bind="lotex.terms"></td>
+                                <td ng-bind="lotex.dks"></td>
+                                <td ng-bind="lotex.contractnumber"></td>
+                                <td>
+                                    <input type="text" ng-init="lotex.endprice = lotex.endprice? lotex.endprice: lotex.price" ng-model="lotex.endprice" ng-change="lotex.endsum = lotex.endprice * lotex.quantity" />
+                                </td>
+                                <td>
+                                    <input type="text" ng-init="lotex.endsum = lotex.endsum ? lotex.endsum : lotex.sum" ng-model="lotex.endsum" ng-change="lotex.endprice = lotex.endsum / lotex.quantity" />
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div>
+                        <div class="medium-6 columns">
+                            <label>
+                                Итоговая сумма: <span ng-bind="lot._endSum| currency : 'тг' : 2"></span>
+                            </label>
+                            <label id="difference">
+                                Разница сумм: <span ng-bind="getCurrentSum()-lot._endSum| currency : 'тг' : 2"></span>
+                            </label>
+                            <button type="button" class="button tiny" ng-click="automaticize($event)">Распределить автоматически</button>
+                            <label>
+                                Указанная сумма: <b ng-style="{ color: lot._endSum == getCurrentSum() ? 'тг' : 'red' }" ng-bind="getCurrentSum()| currency : '' : 2"></b>
+                            </label>
+                        </div>
+                        <div class="medium-6 columns text-right">
+                            <button ng-disabled="lot._endSum != getCurrentSum()" type="submit" class="button small success">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content" id="panel2">
+                <form id="formUseTemplate" ng-submit="submit($event)">
+                    <div class="medium-6 columns">
+                        <ol>
+                            <li>Нажмите кнопку <b>"Сформировать шаблон технической спецификации"</b> для тогов что бы скачать шаблон.</li>
+                            <li>Просчитайте и заполните поля "Выигрышная цена" и "Выигрышная сумма" в шаблоне так что бы итоговая сумма была равна <b>итоговой сумме лота</b></li>
+                            <li>Прикрепите заполненый шаблон нажав на кнопку <b>"Обзор"</b></li>
+                            <li>Нажмите кнопку <b>"Отправить на проверку"</b> для отправки заполненого шаблона на сервер.</li>
+                        </ol>
+                    </div>
+                    <div class="medium-6 columns">
+                        <div class="row">
+                            <button type="button" class="button small expand" ng-click="generateTemplate($event)">Сформировать шаблон технической спецификации</button>
+                        </div>
+                        <p>Итоговая сумма лота: <span ng-bind="lot._endSum| currency : 'тг' : 2"></span></p>
+                        <div class="row">
+                            <file-input f-value="lot.$$techSpecFile" f-required="true" f-accept=".xlsx" f-text="Шаблон тех. спецификации"></file-input>
+                        </div>
+                        <div class="row text-right">
+                            <button type="submit" class="button small success">Отправить на проверку</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

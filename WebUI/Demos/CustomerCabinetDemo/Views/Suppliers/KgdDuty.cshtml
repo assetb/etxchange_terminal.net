@@ -1,0 +1,181 @@
+﻿
+@model CustomerCabinetDemo.Models.Supplier
+
+@{
+    ViewBag.Title = "Сведения о налоговой задолженности";
+}
+
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        <p align="center">@Model.name (@Model.bin)</p>
+        <br/>
+    </div>
+</div>
+
+<div class="row" id="captchaRow">
+    <div class="medium-6 medium-centered columns">
+        <img id="imageCaptcha" src="">
+        <div>
+            <a id="reloadImg" onclick="UpdateImg()">Обновить код на картинке</a>
+        </div>
+        <div>
+            <label for="edit-entercaptcha">Какой код на картинке? <span title="Это поле обязательно для заполнения.">*</span></label>
+            <input name="enterCaptcha" id="edit-entercaptcha" type="text" size="60" maxlength="128" value="">
+        </div>
+        <a class="small button" onclick="GetKgdDutyData()">Поиск</a>
+        @*<div id="preloader">*@
+        <img id="preloader" src="~/Resources/Images/ajax-loader.gif" alt="Загрузка" />
+        @*<span class="label">Запрос в Гос. реестры...</span>*@
+        @*</div>*@
+        <a class="small button" onclick="ClearUserValue()">Очистить</a>
+        <a class="button small" href="Details?name=@Model.name">Вернуться</a>
+    </div>
+</div>
+
+<div class="row" id="dutyTableRow">
+    <div class="medium-6 medium-centered columns">
+        <table>
+            <thead>
+            <tr>
+                <th>Вид задолженности</th>
+                <th>Сумма задолженности</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Всего задолженности (тенге):</td>
+                <td><span class="label" id="totalDuty"></span></td>
+            </tr>
+            <tr>
+                <td>Задолженность по обязательным пенсионным взносам, обязательным профессиональным пенсионным взносам (тенге):</td>
+                <td><span class="label" id="pensionDuty"></span></td>
+            </tr>
+            <tr>
+                <td>Задолженность по социальным отчислениям (тенге):</td>
+                <td><span class="label" id="socialDuty"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="button small" href="Details?name=@Model.name">Вернуться</a>
+    </div>
+</div>
+
+@*<div class="row">
+        <table id="dutylist" class="display" hidden width="100%">
+            <thead>
+            <tr>
+                <th>ККБ</th>
+                <th>Задолженность по сумме налога</th>
+                <th>Задолженность по сумме пени</th>
+                <th>Задолженность по сумме штрафа</th>
+                <th>Всего</th>
+            </tr>
+            </thead>
+        </table>
+        <br>
+    </div>*@
+
+
+
+
+
+@section Scripts {
+    <script>
+        capthaUUID = null;
+        captcha_res = null;
+        kgdDutyDate = null;
+
+        $(document)
+            .ready(function() {
+                //$('#preloader').hide();
+                capthaUUID = generateUUID();
+                UpdateImg();
+                //$('#dutylist').DataTable({
+                //    data: dataSetSetSet,
+                //    columns: [
+                //    { "data": "bccNameRu"},
+                //    { "data": "fineArrear" },
+                //    { "data": "poenaArrear" },
+                //    { "data": "taxArrear" },
+                //    { "data": "totalArrear" }
+                //    ]
+                //});
+            });
+
+
+        function generateUUID() {
+            var d = new Date().getTime();
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+                function(c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                });
+        };
+
+
+        function UpdateImg() {
+            var url = "http://kgd.gov.kz/apps/services/CaptchaWeb/generate?uid=" + capthaUUID + "&t=" + generateUUID();
+            document.getElementById("imageCaptcha").src = url;
+        };
+
+
+        function ClearUserValue() {
+            $("#edit-entercaptcha").val('');
+        };
+
+
+        function GetKgdDutyData() {
+            if (!document.getElementById("imageCaptcha").src) {
+                alert("Обновите Капчу.");
+            } else {
+                $('#preloader').show();
+                $.ajax({
+                    url: 'http://88.204.230.204:81/ServerApp/api/gosregistry/kgdduty3',
+                    type: 'GET',
+                    data: {
+                        captchaId: capthaUUID,
+                        captchaUserValue: $("#edit-entercaptcha").val(),
+                        bin: '@Model.bin'
+                    },
+                    success: function(result) {
+                        if (!result.captchaError) {
+                            $("#totalDuty").html(result.totalArrear);
+                            $("#pensionDuty").html(result.pensionContributionArrear);
+                            $("#socialDuty").html(result.socialContributionArrear);
+                            $('#preloader').hide();
+                            $('#captchaRow').hide();
+                            $('#dutyTableRow').show();
+                            //dataSet = result.taxOrgInfo[0].taxPayerInfo[0].bccArrearsInfo;
+                            ////dataSetSet = jQuery.map(dataSet,
+                            ////    function(el, i) {
+                            ////        return new [el.bccNameRu, el.fineArrear, el.poenaArrear, el.taxArrear, el.totalArrear];
+                            ////    });
+                            //console.log(dataSet);
+                            //dataSetSetSet = JSON.stringify(dataSet);
+                            //console.log(dataSetSetSet);
+                            //dataSetSet = JSON.parse(dataSetSetSet);
+                            //console.log(dataSetSet);
+                        } else {
+                            alert("Обновите Каптчу.");
+                            $('#preloader').hide();
+                        }
+                    },
+                    error: function() {
+                        //alert("Запрос в гос. реестры не прошел.");
+                        $('#preloader').hide();
+                    }
+                });
+            }
+        }
+
+    </script>
+
+}
+
+@section Styles {
+    <style>
+        #preloader{display: none;}
+        #dutyTableRow{display: none;}
+    </style>
+}

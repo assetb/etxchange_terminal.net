@@ -1,0 +1,81 @@
+﻿@model List<AltaBO.Order>
+
+@{
+    ViewBag.Title = "Список активных аукционов";
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#auctionlist').DataTable({
+                order: [[ 0, 'desc' ]],
+                language: {
+                    "processing": "Подождите...",
+                    "search": "Поиск:",
+                    "lengthMenu": "Показать _MENU_ записей",
+                    "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+                    "infoEmpty": "Записи с 0 до 0 из 0 записей",
+                    "infoFiltered": "(отфильтровано из _MAX_ записей)",
+                    "infoPostFix": "",
+                    "loadingRecords": "Загрузка записей...",
+                    "zeroRecords": "Записи отсутствуют.",
+                    "emptyTable": "В таблице отсутствуют данные",
+                    "paginate": {
+                        "first": "Первая",
+                        "previous": "Предыдущая",
+                        "next": "Следующая",
+                        "last": "Последняя"
+                    },
+                    "aria": {
+                        "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                        "sortDescending": ": активировать для сортировки столбца по убыванию"
+                    }
+                }
+            });
+            $('#auctionlist').show();
+            $('#auctionlist').removeAttr("hidden");
+        });
+    </script>
+}
+
+<div class="row text-center">
+    <img src="~/Resources/Images/activeAuctions.jpg" style="height:100px" />
+</div>
+
+<div class="row">
+    <table id="auctionlist" class="display" hidden width="100%">
+        <thead>
+            <tr>
+                <th hidden>Id</th>
+                <th>ДАТА АУКЦИОНА</th>
+                <th>НОМЕР</th>
+                <th>СТАТУС</th>
+                <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                <th>СУММА</th>
+                <th>ДАТА ЗАЯВКИ</th>
+                <th>ФАЙЛ ЗАЯВКИ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model) {
+                <tr>
+                    <td hidden>@item.Auction.Id</td>
+                    <td>@item.Auction.Date.ToShortDateString()</td>
+                    <td><a href="AuctionDetails?auctionId=@item.Auction.Id">@item.Auction.Number</a></td>
+                    <td>@item.Auction.Status</td>
+                    <td>@item.Auction.Lots[0].Name</td>
+                    <td>@Math.Round(item.Auction.Lots[0].Sum, 2)</td>
+                    <td>@item.Date.ToShortDateString()</td>
+                    <td class="text-center">
+                        @if(!item.Auction.Status.Contains("Новый")) {
+                            <a href="GetOrderFile?auctionDate=@item.Auction.Date.ToShortDateString()&auctionNumber=@item.Auction.Number"><i class="fi-save"></i></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+
+    <a href="Export?exportType=1" class="indexbtn">Экспортировать в Excel <i class="fi-page-export-csv"></i></a>
+</div>

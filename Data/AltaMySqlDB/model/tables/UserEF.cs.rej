@@ -1,0 +1,19 @@
+diff a/Data/AltaMySqlDB/model/tables/UserEF.cs b/Data/AltaMySqlDB/model/tables/UserEF.cs	(rejected hunks)
+@@ -21,16 +21,11 @@
+         [MaxLength(11)]
+         public String pass { get; set; }
+ 
+-        public bool isactive { get; set; }
+-
+-        [ForeignKey("person")]
+-        public int? personid { get; set; }
++        public Boolean isactive { get; set; }
+         #endregion
+ 
+         #region Foreign Objects
+         public virtual RoleEF role { get; set; }
+-
+-        public virtual PersonEF person { get; set; }
+         #endregion
+     }
+ }

@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Управление заявками";
+}
+
+@section Scripts {
+    <script src="~/scripts/utils/app.js"></script>
+    <script src="~/scripts/app/order/chose_file_directive.js"></script>
+    <script src="~/scripts/app/order/order_upload_service.js"></script>
+    <script src="~/scripts/app/order/order_controller.js"></script>
+}
+
+<div class="row" ng-app="app">
+    <div ng-controller="order_controller" ng-init="Init()">
+        <div class="medium-6 columns panel">
+            <form name="OrderForm" ng-submit="SubmitOrder()" novalidate>
+                <div class="row">
+                    <div ng-if="message" class="medium-12 column">
+                        <h3>{{message}}</h3>
+                    </div>
+                    <div class="medium-12 columns">
+                        <label>Биржа</label>
+                        <select ng-disabled="isSubmiting" ng-model="model.siteId" ng-options="item.id as item.name for item in sites track by item.id" required>
+                            <option disabled ng-bind="sites != null ? 'Укажите биржу' : 'Загрузка...'"></option>
+                        </select>
+                    </div>
+                    <div class="medium-12 columns">
+                        <label>Номер заявки</label>
+                        <input ng-disabled="isSubmiting" type="text" required ng-model="model.number" />
+                    </div>
+                    <div class="medium-12 columns">
+                        <input type="file" ng-disabled="isSubmiting" style="display:none;" id="file_order" required file-model="model.order" accept=".xls, .xlsx" />
+                        <label for="file_order" ng-class="model.order != null ? 'success' : 'info'" class="button">
+                            Заявка. {{model.order.name != null ? ('Выбран файл: ' + model.order.name) : ''}}
+                        </label>
+                    </div>
+                    <div class="medium-12 columns">
+                        <input type="file" ng-disabled="isSubmiting" style="display:none;" id="file_agreement" required file-model="model.agreement" accept=".doc, .docx" />
+                        <label for="file_agreement" ng-class="model.agreement != null ? 'success' : 'info'" class="button">
+                            Проект договора. {{model.agreement.name != null ? ('Выбран файл: ' + model.agreement.name) : ''}}
+                        </label>
+                    </div>
+                    <div class="medium-12 columns">
+                        <input type="file" ng-disabled="isSubmiting" style="display:none;" id="file_order_origin" required file-model="model.orderOrigin" accept=".pdf" />
+                        <label for="file_order_origin" ng-class="model.orderOrigin != null ? 'success' : 'info'" class="button">
+                            Скан заявки. {{model.orderOrigin.name != null ? ('Выбран файл: ' + model.orderOrigin.name) : ''}}
+                        </label>
+                    </div>
+                    <div class="medium-12 columns">
+                        <div class="medium-6 columns">
+                            <button type="submit" ng-disabled="isSubmiting" class="button success">Отправить</button>
+                        </div>
+                        <div class="medium-6 columns">
+                            <button ng-disabled="isSubmiting" class="button">Отменить</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="medium-6 columns">
+            <div class="text-right">
+                <a ng-click="GetOrders()">Обновить</a>
+            </div>
+            <table style="width: 100%;">
+                <tr>
+                    <th>Номер заявки</th>
+                    <th>Дата подачи заявки</th>
+                    <th>Статус</th>
+                    <th>Файлы заявки</th>
+                </tr>
+                <tr ng-if="orders == null">
+                    <td colspan="4">Загрузка...</td>
+                </tr>
+                <tr ng-if="orders.length == 0">
+                    <td colspan="4">Все заявки обработаны.</td>
+                </tr>
+                <tr ng-repeat="order in orders">
+                    <td>{{order.number}}</td>
+                    <td>{{order.date | date : 'dd.MM.yyyy'}}</td>
+                    <td>{{order.status}}</td>
+                    <td>
+                        <a href="#" data-reveal-id="filesModal" ng-click="GetFiles(order['<filesListId>k__BackingField'])">Показать</a>
+                    </td>
+                </tr>
+            </table>
+            <div class="reveal-modal small" id="filesModal" data-reveal>
+                <h1>Список файлов</h1>
+                <ul>
+                    <li ng-repeat="file in files">
+                        <a href="{{URL_ARCHIVE}}/{{file.id}}">{{file.fileName}}</a>
+                    </li>
+                    <li ng-if="files == null">Загрузка...</li>
+                </ul>
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+            </div>
+        </div>
+    </div>
+</div>

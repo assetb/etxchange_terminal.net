@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{132BFBD2-74FF-452B-9C1F-FB77BE14A9AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DocumentFormation</RootNamespace>
+    <AssemblyName>DocumentFormationApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug_test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Protobuf.3.0.0\lib\net45\Google.Protobuf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArchiveVolumeRegistryService.cs" />
+    <Compile Include="AttachService.cs" />
+    <Compile Include="CompanyProfileService.cs" />
+    <Compile Include="ContractService.cs" />
+    <Compile Include="ETSReportConverter.cs" />
+    <Compile Include="ExchangeOrderService.cs" />
+    <Compile Include="FinalReportService.cs" />
+    <Compile Include="InvoiceService.cs" />
+    <Compile Include="JournalC01Service.cs" />
+    <Compile Include="KazETSOrderService.cs" />
+    <Compile Include="MoneyTransferService.cs" />
+    <Compile Include="office\KazMinSerWordDocumentProvider.cs" />
+    <Compile Include="PostRegisterService.cs" />
+    <Compile Include="ProcuratoriesService.cs" />
+    <Compile Include="ProcuratoryWithTechSpecService.cs" />
+    <Compile Include="ReconcilationActService.cs" />
+    <Compile Include="TechSpecReportService.cs" />
+    <Compile Include="TechSpecService.cs" />
+    <Compile Include="TemplateService.cs" />
+    <Compile Include="UTBOrderService.cs" />
+    <Compile Include="ProtocolsService.cs" />
+    <Compile Include="CustomerAttachmentService.cs" />
+    <Compile Include="CustomerOrderService.cs" />
+    <Compile Include="EnkayAttachmentService.cs" />
+    <Compile Include="EnkayOrderService.cs" />
+    <Compile Include="EntryOrderService.cs" />
+    <Compile Include="ETSOrderService.cs" />
+    <Compile Include="FormC01Service.cs" />
+    <Compile Include="IEnkayDocumentProvider.cs" />
+    <Compile Include="JournalC01CompaniesService.cs" />
+    <Compile Include="model\DocumentTypeEnum.cs" />
+    <Compile Include="model\IncomingOrder.cs" />
+    <Compile Include="office\EnkayWordDocumentProvider.cs" />
+    <Compile Include="office\ETSOfficeDocumentProvider.cs" />
+    <Compile Include="OrderBP.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportBP.cs" />
+    <Compile Include="ReportConverter.cs" />
+    <Compile Include="ReportService.cs" />
+    <Compile Include="ApplicantsService.cs" />
+    <Compile Include="SupplierOrderService.cs" />
+    <Compile Include="VostokAttachmentService.cs" />
+    <Compile Include="VostokOrderService_ref.cs" />
+    <Compile Include="VostokOrderService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\base\BaseApp\BaseApp\BaseApp.csproj">
+      <Project>{0CD46A9B-B67E-4A20-B71C-ABBE157B2FE1}</Project>
+      <Name>BaseApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Commons\AltaLog\AltaLog.csproj">
+      <Project>{ba078396-ba39-4fcf-aacb-5ec07b4daddd}</Project>
+      <Name>AltaLog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\AltaArchiveApp\AltaArchiveApp.csproj">
+      <Project>{e85afc47-2f32-4cd1-a81f-863fb9ee7e91}</Project>
+      <Name>AltaArchiveApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\AltaBO\AltaBO.csproj">
+      <Project>{19f4f68e-966a-42ff-936b-9cd435a3f862}</Project>
+      <Name>AltaBO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\AltaMySqlDB\AltaMySqlDB.csproj">
+      <Project>{DED6298D-FC63-470A-AE29-5DC94549DC08}</Project>
+      <Name>AltaMySqlDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Transport\AltaTransportUI\AltaTransportUI.csproj">
+      <Project>{79aa393c-563e-4ed9-a6ee-b068d6d7f627}</Project>
+      <Name>AltaTransportUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Transport\AltaTransport\AltaTransport.csproj">
+      <Project>{86774e1e-c73b-4b54-a282-b713b8833147}</Project>
+      <Name>AltaTransport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\AltaOffice\AltaOffice.csproj">
+      <Project>{4a2abb6d-f193-44fe-abae-aac208efd718}</Project>
+      <Name>AltaOffice</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\DocumentFormationServices\DocumentFormationServices.csproj">
+      <Project>{7c17a011-6056-4ace-acd8-0fc6090dd945}</Project>
+      <Name>DocumentFormationServices</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

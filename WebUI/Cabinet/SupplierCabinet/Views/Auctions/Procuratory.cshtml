@@ -1,0 +1,126 @@
+﻿@model int
+@{
+    ViewBag.Title = "Форма поручения";
+    ViewBag.BackUrl = Url.Action("Index", "Auctions", new { id = Model }, null);
+}
+
+@section Scripts{
+    <script src="~/scripts/app/controllers/auction/procuratory.js"></script>
+}
+<div>
+    <div class="row" id="main_container" ng-controller="ProcuratoryCtrl" ng-init="init(@Model)">
+        <form ng-submit="submit($event)">
+            <div class="row panel">
+                <h3>Информация об аукционе № <span ng-bind="auction.number"></span></h3>
+                <div class="medium-6 columns">
+                    <label for="site">Биржа/Торговая площадка</label>
+                    <div class="medium-12 columns">
+                        <span id="site" ng-bind="auction.site"></span>
+                    </div>
+                    <label for="trader">Трейдер</label>
+                    <div class="medium-12 columns">
+                        <span id="trader" ng-bind="auction.trader"></span>
+                    </div>
+                </div>
+                <div class="medium-6 columns">
+                    <label for="customer">Заказчик</label>
+                    <div class="medium-12 columns">
+                        <span id="customer" ng-bind="auction.customer"></span>
+                    </div>
+                    <label for="type">Тип</label>
+                    <div class="medium-12 columns">
+                        <span id="type" ng-bind="auction.type"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row panel tabs-content">
+                <div class="content" ng-class="step == 0 ? 'active' : ''">
+                    <h4>Шаг 1. Укажите минимальную сумму</h4>
+                    <hr />
+                    <div>
+                        <p>Укажите минимальные суммы для каждого лота.</p>
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Номер</th>
+                                    <th>Наименование</th>
+                                    <th>Кол-во</th>
+                                    <th>Цена</th>
+                                    <th>Сумма</th>
+                                    <th>Минимальная цена</th>
+                                    <th>Минимальная сумма</th>
+                                    <th>Тех.спец.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="lot in lots track by $index">
+                                    <td ng-bind="lot.Number"></td>
+                                    <td ng-bind="lot.Name"></td>
+                                    <td ng-bind="lot.Quantity | currency : lot.Unit"></td>
+                                    <td ng-bind="lot.Price | currency : 'тг' : 2"></td>
+                                    <td ng-bind="(lot.Quantity * lot.Price) | currency : 'тг' : 2"></td>
+                                    <td ng-bind="(lot.Sum / lot.Quantity)| currency : 'тг' : 2"></td>
+                                    <td><input type="text" ng-model="lot.Sum" placeholder="Введите минимальную сумму" /></td>
+                                    <td><button class="button tiny" ng-click="generateTechSpec(auctionId, lot.Id, $event)">Скачать</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="right">
+                            <div>Стартовая сумма: <span ng-bind="getStartSum() | currency : 'тг' : 2"></span></div>
+                            <div>Минимальная сумма: <b ng-bind="getMinimalSum() | currency : 'тг' : 2"></b></div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="right">
+                        <button type="button" class="button small" ng-click="nextStep()">Следующий шаг</button>
+                    </div>
+                </div>
+                <div class="content" ng-class="step == 1 ? 'active' : ''">
+                    <h4>Шаг 2. Прикрепите скан поручения</h4>
+                    <hr />
+                    <div>
+                        <div class="medium-6 columns end">
+                            <p>
+                                <ol>
+                                    <li>Нажмите кнопку <b>Сформировать шаблон поручение</b></li>
+                                    <li>Укажите цены в тех. спец.(если она присутсвует)</li>
+                                    <li>Распечатайте поставьте печать и подпись. Отсканируйте</li>
+                                    <li>Укажите скан и шаблон поручения</li>
+                                    <li>Нажмите кнопку <b>Отправить</b></li>
+                                </ol>
+                            </p>
+                        </div>
+                        <div class="medium-6 columns end">
+                            <div class="medium-12 columns">
+                                <div class="medium-2 columns">
+                                    <div class="switch tiny round">
+                                        <input id="autoCouting" type="checkbox" ng-model="autoCouting">
+                                        <label class="switch-paddle" for="autoCouting"></label>
+                                    </div>
+                                </div>
+                                <div class="medium-10 columns">
+                                    <label for="autoCouting">Автоматически подсчитать тех. спец.</label>
+                                </div>
+                            </div>
+                            <button type="button" class="button small expand " ng-click="getDonwloadTempalte($event)">Сформировать шаблон поручение</button>
+                            <file-input f-disabled="$formDisabled" f-value="$$templateProcuratiry" f-required="true" f-accept=".xlsx" f-text="Шаблон поручение"></file-input>
+                            <file-input f-disabled="$formDisabled" f-value="$$originFile" f-required="true" f-accept=".jpeg, .png, .jpg, .pdf" f-text="Прикрепить скан поручение"></file-input>
+                        </div>
+                    </div>
+                    <hr />
+                    <div>
+                        <div class="medium-6 columns medium-uncentered">
+                            <button type="button" class="button small" ng-click="prevStep()">Предыдущий шаг</button>
+                        </div>
+                        <div class="medium-6 columns text-right">
+                            <button type="submit" class="button small success">Отправить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

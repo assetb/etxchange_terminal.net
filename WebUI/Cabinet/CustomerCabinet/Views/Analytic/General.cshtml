@@ -1,0 +1,45 @@
+﻿@section Styles{
+    <style>
+        #mainContainer {
+            background: #7474BF;   
+            background: -webkit-linear-gradient(left, #348AC7, #7474BF);
+            background: -o-linear-gradient(left, #348AC7, #7474BF);
+            background: linear-gradient(to right, #348AC7, #7474BF); 
+        }
+
+        #mainContainer label, #contentBody p{
+            color: #fff;            
+        }
+
+        #mainContainer label, #contentBody span{
+            font-family: Gungsuh;
+            font-size: 36px;
+        }
+
+        #mainContainer span {
+            color: #C00000;   
+        }
+    </style>
+    }
+
+@section Scripts{
+    <script type="text/javascript" src="~/scripts/app/report/general_statistic.js"></script>
+}
+<div id="contentBody">
+    <div ng-controller="GeneralCtrl" ng-init="init()">
+        <div class="medium-12 columns">
+            <h1 class="text-center" style="color: #fff">Общая статистика торгов</h1>
+        </div>
+        <p class="text-center">Данные за период с <i ng-bind="filter.startDate | date : 'shortDate'"></i> по <i ng-bind="filter.endDate | date : 'shortDate'"></i></p>
+        <br />
+        <div class="medium-12 columns" ng-repeat="row in statuses">
+            <div class="medium-8 columns">
+                <label ng-bind="row.Status.Name + ':'"></label>
+            </div>
+            <div class="medium-4 columns text-right">
+                <span ng-bind="row.Count"></span>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>

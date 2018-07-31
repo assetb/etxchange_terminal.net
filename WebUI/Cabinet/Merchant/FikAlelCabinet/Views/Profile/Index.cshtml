@@ -1,0 +1,76 @@
+﻿@model int?
+
+@section Styles {
+    <style>
+        .hide, .hide + label ~ div {
+            display: none;
+        }
+
+            .hide + label,
+            .hide:checked + label {
+                padding: 0;
+                color: green;
+                cursor: pointer;
+                border-bottom: 1px dotted green;
+            }
+
+            .hide:checked + label {
+                color: red;
+                border-bottom: 0;
+            }
+
+                .hide:checked + label + div {
+                    display: block;
+                }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        var app = angular.module("ProfileApp", []);
+        app.controller("ProfileController", function ($scope, $http) {
+            $scope.company = null;
+
+            $scope.isLoading = false;
+
+            $scope.GetCompany = function () {
+                $http.get(baseUrl + "/api/company/@((Context.User as FikAlelCabinet.Models.User).companyId)")
+                    .success(function (data) {
+                        $scope.company = data;
+                    })
+                .error(function (data) {
+                    $scope.company = null;
+                });
+            };
+
+
+            $scope.GetProducts = function (id) {
+                $http.get(baseUrl + "/api/product", { params: { companyid: id } })
+                    .success(function (data) {
+                        $scope.products = data;
+                    })
+                .error(function (data) {
+                    $scope.products = null;
+                });
+            };
+
+            $scope.init = function () {
+                console.log("Initializate");
+                $scope.GetCompany();
+            };
+        });
+    </script>
+}
+
+<div ng-app="ProfileApp" >
+    <div class="row" ng-controller="ProfileController" ng-init="init()">
+        <div class="column medium-12 panel">
+            <input class="hide" id="hd-1" type="checkbox">
+            <label for="hd-1">О компании: {{company.name}}</label>
+            <div>
+                <hr />
+                @Html.Partial("Partials/Company")
+            </div>
+        </div>
+    </div>
+</div>

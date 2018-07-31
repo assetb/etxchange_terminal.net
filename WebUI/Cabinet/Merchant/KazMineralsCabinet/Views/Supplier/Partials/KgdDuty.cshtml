@@ -1,0 +1,24 @@
+﻿<div ng-if="kgdDutyDate != null" class="row">
+    <table style="margin-top: 3em; margin-left: 3em">
+        <thead>
+        <tr>
+            <th>Вид задолженности</th>
+            <th>Сумма задолженности</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Всего задолженности (тенге):</td>
+            <td>{{kgdDutyDate.totalArrear}}</td>
+        </tr>
+            <tr>
+                <td>Задолженность по обязательным пенсионным взносам, обязательным профессиональным пенсионным взносам (тенге):</td>
+                <td>{{kgdDutyDate.pensionContributionArrear}}</td>
+            </tr>
+            <tr>
+                <td>Задолженность по социальным отчислениям (тенге):</td>
+                <td>{{kgdDutyDate.socialContributionArrear}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

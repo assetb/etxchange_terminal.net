@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Управление заявками";
+}
+
+@section Scripts {
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.tooltip.js"></script>
+    <script src="~/scripts/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/scripts/app/order/order_app.js"></script>
+    <script src="~/scripts/app/services/http_factory.js"></script>
+    <script src="~/scripts/app/filters/bytes_filter.js"></script>
+    <script src="~/scripts/app/filters/doc_types_filter.js"></script>
+    <script src="~/scripts/app/directives/file_input_directive.js"></script>
+    <script src="~/scripts/app/order/list_orders_controller.js"></script>
+    <script src="~/scripts/app/order/form_order_controller.js"></script>
+    <script src="~/scripts/app/order/form_multiple_order_controller.js"></script>
+}
+
+<div ng-app="app">
+    <div class="medium-12 columns text-center">
+        <img src="~/Resources/Images/orderCreation.jpg" style="height:100px" />
+    </div>
+    <div class="hidden-for-small-down">
+        @*<div class="medium-3 columns">
+            <ul class="side-nav">
+                <li><a ng-href="Order/Index#/list_orders">Список заявок</a></li>
+                <li class="divider"></li>
+                <li><a ng-href="Order/Index#/form_order">Подать заявку</a></li>
+                <li><a ng-href="Order/Index#/form_multiple_order">Прикрепить скан заявки</a></li>
+            </ul>
+        </div>*@
+        
+        <div class="medium-12 columns">
+            <h3>Список активных заявок</h3>
+            <div ng-controller="list_orders_controller" ng-init="Init()">
+                <blockquote  class="content" id="list">
+                    <table style="width: 100%;">
+                        <tr>
+                            <th>Номер заявки</th>
+                            <th>Дата подачи заявки</th>
+                            <th>Статус</th>
+                            <th>Файлы заявки</th>
+                        </tr>
+                        <tr ng-if="orders == null">
+                            <td class="text-center" colspan="4"><img src="Resources/Images/ajax-loader.gif" /> Загрузка...</td>
+                        </tr>
+                        <tr ng-if="orders.length == 0">
+                            <td class="text-center" colspan="4">Все заявки обработаны.</td>
+                        </tr>
+                        <tr ng-repeat="order in orders">
+                            <td>{{order.number}}</td>
+                            <td>{{order.date | date : 'dd.MM.yyyy'}}</td>
+                            <td>{{order.status}}</td>
+                            <td>
+                                <a data-reveal-id="filesModal" ng-click="GetFiles(order['<filesListId>k__BackingField'])">Показать</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="reveal-modal small" id="filesModal" data-reveal-id="filesModal" data-reveal>
+                        <h1>Список файлов</h1>
+                        <ul>
+                            <li class="inline-list vertical" ng-repeat="file in files">
+                                {{file.type | docTypes}} - <a href="{{URL_ARCHIVE}}/{{file.id}}">{{file.fileName}}</a>
+                            </li>
+                            <li ng-if="files == null"><img src="Resources/Images/ajax-loader.gif" /> Загрузка...</li>
+                        </ul>
+                        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                    </div>
+                    <cite class="text-right">
+                        <a ng-click="Update()">Обновить</a>
+                    </cite>
+                </blockquote>
+                <div class="columns">
+                    <hr />
+                    <label id="form2submit" style="text-align:center" ng-click="toggle_dom('#list','#form2submit');">Скрыть</label>
+                </div>
+            </div>
+            <ng-view  ng-controller="form_order_controller"></ng-view>
+        </div>
+    </div>
+    <div class="show-for-small-down text-center">
+        <h3>Мобильная версия данной страницы недоступна. Пожалуйста воспользуйтесь компьютером. Спасибо</h3>
+    </div>
+</div>

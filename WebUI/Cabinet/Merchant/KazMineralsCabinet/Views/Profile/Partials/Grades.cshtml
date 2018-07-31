@@ -1,0 +1,34 @@
+﻿@model IEnumerable<KazMineralsCabinet.Models.Grade>
+
+<p>
+    @Html.ActionLink("Добавить", "Create")
+</p>
+<table class="table" style="width: 100%;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.source)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.source)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Просмотреть", "Details", new { id = item.id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

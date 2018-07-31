@@ -1,0 +1,86 @@
+﻿@model int?
+@{
+    ViewBag.Title = "Поиск поставщика по товару";
+}
+@section Scripts {
+    <script src="~/scripts/utils/classes.js"></script>
+    <script src="~/scripts/app/app.js"></script>
+    <script src="~/scripts/app/supplier/supplier_search_products_controller.js"></script>
+}
+
+<div ng-app="app" class="row">
+    <div ng-controller="supplier_search_products_controller" class="row" ng-init="Init()">
+        <div class="row">
+            <form ng-submit="search()">
+                <div class="row">
+                    <div class="medium-12">
+                        <div class="row collapse">
+                            <div class="medium-10 columns">
+                                <input type="text" ng-model="searchParameters.searchproduct" placeholder="Товар..." />
+                            </div>
+                            <div class="medium-2 columns">
+                                <button type="submit" class="postfix button">Искать</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="large-4 columns">
+                <label>Кол-во элементов</label>
+                <ul class="pagination">
+                    <li ng-repeat="item in [10,20,50] track by $index" ng-class="{true: 'current', false: ''}[item == searchParameters.countItems]">
+                        <a ng-click="searchParameters.countItems = item; update(1)">{{item}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="large-5 columns">
+                <label>Страницы</label>
+                <ul class="pagination" role="pagination">
+                    <li class="pagination-previous">
+                        <a ng-click="table.currentPage != 1 && update(1)"><i class="fi-previous"></i></a>
+                    </li>
+                    <li ng-repeat="page in GetPagesForPagination() track by $index" ng-class="{true: 'current', false: ''}[page == table.currentPage]">
+                        <a ng-click="update(page)">{{page}}</a>
+                    </li>
+                    <li class="pagination-next">
+                        <a ng-click="table.countPages != table.currentPage && update(table.countPages)"><i class="fi-next"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="large-3 columns">
+                <label>Всего найдено: {{table.countItems}}</label>
+            </div>
+            <div class="row">
+                <table id="auctionlist" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Наименование</th>
+                            <th>БИН</th>
+                            <th>Поставляемые товары</th>
+                            <th>КП</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="!isLoading" ng-repeat="row in table.rows">
+                            <td><a ng-href="~/Supplier/Index/{{row.Id}}">{{row.Name}}</a></td>
+                            <td>{{row.BIN}}</td>
+                            <td>
+                                <span>Всего: {{row.products.length}}.</span>
+                                <span ng-if="(lastSearchText && item.name.toLowerCase().search(lastSearchText.toLowerCase()) > -1) || (!lastSearchText && $index < 11)" class="label secondary" ng-repeat="item in row.products">
+                                    {{item.name}}
+                                </span>
+                            </td>
+                            <td><a ng-href="#{{supplier.commerticalId}}"><i class="fi-save"></i></a></td>
+                        </tr>
+                        <tr ng-if="isLoading">
+                            <td class="text-center" colspan="4">Загрузка...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>

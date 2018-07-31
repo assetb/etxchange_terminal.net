@@ -1,0 +1,48 @@
+﻿<Window x:Class="HostApp.DockComplexWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HostApp"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        mc:Ignorable="d"
+        Title="ComplexWindow" Height="600" Width="800">
+    <Border x:Name="_border">
+        <xcad:DockingManager x:Name="_dockManager" AllowMixedOrientation="True" BorderBrush="Black" BorderThickness="1">
+            <xcad:DockingManager.Theme>
+                <xcad:VS2010Theme/>
+            </xcad:DockingManager.Theme>
+
+            <xcad:DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding IconSource}" Margin="0,0,4,0" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </xcad:DockingManager.DocumentHeaderTemplate>
+
+            <xcad:LayoutRoot x:Name="_layoutRoot">
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutAnchorablePaneGroup DockWidth="200">
+                        <xcad:LayoutAnchorablePane x:Name="_leftPane"/>
+                    </xcad:LayoutAnchorablePaneGroup>
+
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane x:Name="_docPane"/>
+                    </xcad:LayoutDocumentPaneGroup >
+
+                    <xcad:LayoutAnchorablePaneGroup DockWidth="125">
+                        <xcad:LayoutAnchorablePane x:Name="_rightPane"/>
+                    </xcad:LayoutAnchorablePaneGroup>
+                </xcad:LayoutPanel>
+
+                <xcad:LayoutRoot.LeftSide>
+                    <xcad:LayoutAnchorSide>
+                        <xcad:LayoutAnchorGroup x:Name="_leftSide"/>
+                    </xcad:LayoutAnchorSide>
+                </xcad:LayoutRoot.LeftSide>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+    </Border>
+</Window>

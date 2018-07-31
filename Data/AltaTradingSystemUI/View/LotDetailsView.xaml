@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="AltaTradingSystemUI.View.LotDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaTradingSystemUI.View"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto" MaxWidth="600">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        
+        <StackPanel Orientation="Vertical">
+            <DockPanel>
+                <TextBlock Text="Номер (код)"/>
+                <TextBox Text="{Binding Lot.Number}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Описание"/>
+                <TextBox Text="{Binding Lot.Name}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Единица измерения"/>
+                <ComboBox ItemsSource="{Binding UnitsList}" HorizontalAlignment="Right"
+                                  SelectedItem="{Binding SelectedUnit}" VerticalAlignment="Center"                                 
+                                  DisplayMemberPath="Description" Margin="5"
+                          Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Количество"/>
+                <TextBox Text="{Binding Lot.Quantity}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Цена за единицу"/>
+                <TextBox Text="{Binding Lot.Price}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Сумма"/>
+                <TextBox Text="{Binding Lot.Sum}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Условия оплаты"/>
+                <TextBox Text="{Binding Lot.PaymentTerm}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Время поставки"/>
+                <TextBox Text="{Binding Lot.DeliveryTime}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Место поставки"/>
+                <TextBox Text="{Binding Lot.DeliveryPlace}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="ДКС"/>
+                <TextBox Text="{Binding Lot.Dks}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Шаг понижения"/>
+                <TextBox Text="{Binding Lot.Step}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Гарантийное обеспечение"/>
+                <TextBox Text="{Binding Lot.Warranty}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Местное содержание"/>
+                <TextBox Text="{Binding Lot.LocalContent}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

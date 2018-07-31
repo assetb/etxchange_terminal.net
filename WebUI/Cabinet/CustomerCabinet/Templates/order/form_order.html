@@ -1,0 +1,65 @@
+﻿<form name="OrderForm" ng-submit="SubmitOrder()" novalidate class="content" ng-init="Init()">
+    <h3>Форма подачи заявок</h3>
+    <blockquote id="form1">
+        <!--<div class="row">
+            <div ng-if="message" class="medium-12 column">
+                <h3>{{message}}</h3>
+            </div>-->
+            <div class="medium-12 columns">
+                <label>Номер заявки</label>
+                <input ng-disabled="model.$sendingData" type="text" required ng-model="model.number" />
+            </div>
+            <!--<div class="medium-6 columns">
+                <label>Брокер</label>
+              <select ng-disabled="model.$sendingData" ng-model="model.brokerId" ng-options="item.id as item.name for item in brokers track by item.id" required>
+                    <ng-init="model.siteId = sites[0].id">
+                    <option disabled ng-bind="brokers != null ? 'Укажите брокера' : 'Загрузка...'"></option>
+                </select>
+            </div-->
+            <div class="medium-12 columns">
+                <file-input f-disabled="model.$sendingData" f-change="SumFileSize(value)" f-value="model.assignment" f-required="true" f-accept=".doc, .docx" f-text="Поручение на покупку"></file-input>
+            </div>
+            <div class="medium-12 columns">
+                <file-input f-disabled="model.$sendingData" f-change="SumFileSize(value)" f-value="model.specification" f-required="true" f-accept=".xls, .xlsx" f-text="Техническая спецификация"></file-input>
+            </div>
+            <div class="medium-12 columns">
+                <file-input f-disabled="model.$sendingData" f-change="SumFileSize(value)" f-value="model.suppliers" f-accept=".doc, .docx" f-text="Список поставщиков"></file-input>
+            </div>
+            <!--<div class="medium-12 columns">-->
+                <!--<div class="row" ng-repeat="sheme in model.shemes track by $index">
+                <div class="medium-11 columns">
+                    <file-input f-disabled="model.$sendingData" f-change="SumFileSize(value)" f-value="model.shemes[$index]" f-required="true" f-accept="*.*" f-text="Схема/чертеж"></file-input>
+                </div>
+                <div class="medium-1 columns">
+                    <a ng-click="model.shemes.splice($index, 1)" class="fi-x"></a>
+                </div>
+            </div>-->
+         <!--  -->   </div>
+            <!--<div class="medium-6 columns">
+            <a ng-click="model.shemes.push(null);">Добавить схему/чертеж</a>
+        </div>-->
+
+            <cite class="text-right">
+                <!--class="medium-6 columns text-right"-->
+                <span ng-class="model.filesSize > model.maxFilesSize ? 'label alert' : ''">
+                    {{model.filesSize | bytes : 2}}
+                </span> из <span data-tooltip class="has-tip" title="Максимальный размер файлов">
+                    {{model.maxFilesSize | bytes : 2}}
+                </span>
+            </cite>
+        </div>
+    </blockquote>
+        <div class="columns">
+            <hr />
+            <label id="form1submit" style="text-align:center" ng-click="toggle_dom('#form1','#form1submit');">Скрыть</label>
+        </div>
+            <div class="medium-12 columns text-right" style="padding: 20px;">
+                <div class="medium-3 columns medium-offset-6">
+                    <button type="submit" ng-disabled="model.$sendingData" class="button success">Отправить</button>
+                </div>
+                <div class="medium-3 columns">
+                    <button type="button" ng-disabled="model.$sendingData" ng-click="ClearModel()" class="button">Отменить</button>
+                </div>
+            </div>
+
+</form>

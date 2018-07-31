@@ -1,0 +1,20 @@
+﻿<div class="row" id="captchaRow">
+    <div class="medium-6 medium-centered columns">
+        <img id="imageCaptcha" src="">
+        <div>
+            <a id="reloadImg" onclick="UpdateImg()">Обновить код на картинке</a>
+        </div>
+        <div>
+            <label for="edit-entercaptcha">Какой код на картинке? <span title="Это поле обязательно для заполнения.">*</span></label>
+            <input name="enterCaptcha" id="edit-entercaptcha" type="text" size="60" maxlength="128" value="">
+        </div>
+        <a class="small button" onclick="GetKgdDutyData()">Поиск</a>
+        @*<div id="preloader">*@
+        <img id="preloader" src="~/Resources/Images/ajax-loader.gif" alt="Загрузка" />
+        @*<span class="label">Запрос в Гос. реестры...</span>*@
+        @*</div>*@
+        <a class="small button" onclick="ClearUserValue()">Очистить</a>
+        <a class="button small" href="Details?name=@Model.name">Вернуться</a>
+    </div>
+</div>
+

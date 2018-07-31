@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Подать заявку";
+}
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        <fieldset>
+            <legend>Подать заявку</legend>
+            <div class="medium-12">
+                @using (Html.BeginForm("UploadOrder", "Auctions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="medium-12">
+                        <label>Номер заявки</label>
+                        <input type="text" name="number" />
+                    </div>
+                    <div class="medium-12">
+                        <label>Файл заявки</label>
+                        <input type="file" name="order" />
+                    </div>
+                    <div class="medium-12">
+                        <button type="submit" class="button small">Отправить</button>
+                    </div>
+                }
+            </div>
+
+        </fieldset>
+    </div>
+</div>

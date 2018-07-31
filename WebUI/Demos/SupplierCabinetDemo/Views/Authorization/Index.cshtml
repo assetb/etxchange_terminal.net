@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Авторизация</title>
+
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/foundation.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/normalize.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        body {
+            height: 100%;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .content {
+            flex: 1 0 auto;
+        }
+
+        .footer {
+            flex: 0 0 auto;
+        }
+    </style>
+</head>
+<body style="height:100%;font-family:Calibri">
+    <div class="wrapper">
+        <div class="content">
+            <!--Logo-->
+            <div class="row text-center" style="margin-top:25px;margin-bottom:25px;">
+                <img src="~/Resources/Images/supplierCabinetLogo.png" style="width:300px;" />
+            </div>
+            <hr/>
+            <br />
+
+            <!--Authorization form-->
+            <div class="row">
+                <div class="medium-4 medium-centered columns">
+                    <fieldset>
+                        <legend>Войти в личный кабинет</legend>
+                        <label>
+                            Логин
+                            <input type="text" placeholder="Введите логин"/>
+                        </label>
+                        <label>
+                            Пароль
+                            <input type="text" placeholder="Введите пароль"/>
+                        </label>
+                        <input id="checkbox1" type="checkbox"><label for="checkbox1">Запомнить меня</label>
+                        <a href="@Url.Action("Index","Home")" class="button small round right">Войти</a>
+                    </fieldset>
+                </div>
+            </div>
+            <br />
+        </div>
+
+        <!--Footer-->
+        <div class="footer" style="background-color:#333333">
+            <div class="text-center">
+                <img src="~/Resources/Images/whiteCompanyLogo.png" style="margin-top:15px;width:250px;" />
+                <h6 style="color:white;">© ТОО "Альта и К" 2016</h6>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/scripts/foundation/foundation.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Добавление товара/услуги";
+    ViewBag.BackUrl = Url.Action("Product");
+}
+
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/company-products-controller.js"></script>
+}
+
+<div ng-controller="AddProductCtrl">
+    <div class="row" ng-init="update()">
+        <form ng-submit="submit($event)">
+            <div ng-if="model.$errorMessage" class="row">
+                <span class="alert-box warning">
+                    {{model.$errorMessage}}
+                </span>
+            </div>
+            <div class="row">
+                <label>
+                    Наименование товара/услуги
+                    <input type="text" ng-model="model.name" />
+                </label>
+            </div>
+            <div class="row">
+                <label>Описание</label>
+                <textarea ng-model="model.description"></textarea>
+            </div>
+            <div class="row">
+                <file-input f-disabled="isSubmiting" f-value="model.file" f-accept="*.pdf *.jpg *.jpeg *.png" f-text="Сертификат"></file-input>
+            </div>
+            <div class="row">
+                <div class="medium-4 column medium-centered text-center">
+                    <button type="submit" class="button success">Добавить</button>
+                    <a class="button" href="@Url.Action("Product")">Назад</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="AltaReportsUI.view.DealNumberView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaReportsUI.view"
+             xmlns:vm="clr-namespace:AltaReportsUI.vm"
+             mc:Ignorable="d"              
+             Height="Auto" Width="Auto">
+    <UserControl.DataContext>
+        <vm:DealNumberVM/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <!--Filter panel-->
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="Номер сделки:" Margin="5" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding DealNumberTxt}" MinWidth="150" Margin="5" VerticalAlignment="Center"/>
+            <TextBlock Text="Дата от:" Margin="5" VerticalAlignment="Center"/>
+            <DatePicker DisplayDate="{Binding FromDate}" Width="150"
+                        SelectedDate="{Binding FromDate}" VerticalAlignment="Center"
+                        Margin="5"/>
+            <TextBlock Text="по:" Margin="5" VerticalAlignment="Center"/>
+            <DatePicker DisplayDate="{Binding ToDate}" Width="150"
+                        SelectedDate="{Binding ToDate}" VerticalAlignment="Center"
+                        Margin="5"/>
+            <Button Content="Применить" Command="{Binding ApplyCmd}" Margin="5" VerticalAlignment="Center"/>
+            <TextBlock Text="Брокер:" Margin="5" VerticalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding BrokersList}" SelectedItem="{Binding SelectedBroker}"
+                      Margin="5" Width="200"
+                      VerticalAlignment="Center" DisplayMemberPath="Name"/>
+            <Button Content="Применить с брокером" Command="{Binding ApplyBrokerCmd}" Margin="5" VerticalAlignment="Center"/>
+            <Button Content="Посчитать по тарифу" Command="{Binding CalculateCmd}" Margin="5" VerticalAlignment="Center"/>
+            <Button Content="Сохранить в EXCEL" Command="{Binding SaveInExcelCmd}" Margin="5" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!--Content-->
+        <DataGrid Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False"
+                  ItemsSource="{Binding DealNumbersList}" IsReadOnly="True"
+                  SelectedItem="{Binding SelectedDealNumber}">
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ShowAuctionCmd}"/>
+            </DataGrid.InputBindings>
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер сделки" Binding="{Binding Path=dealNumber}"/>
+                <DataGridTextColumn Header="Дата аукциона" Binding="{Binding Path=auctionDate, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                <DataGridTextColumn Header="Номер аукциона" Binding="{Binding Path=auctionNumber}"/>
+                <DataGridTextColumn Header="Заказчик" Binding="{Binding Path=customerName}"/>
+                <DataGridTextColumn Header="Код лота" Binding="{Binding Path=lotCode}"/>
+                <DataGridTextColumn Header="Поставщик" Binding="{Binding Path=supplierName}"/>
+                <DataGridTextColumn Header="Выигрышная сумма" Binding="{Binding Path=finalPriceOffer}"
+                                    Foreground="Red" FontWeight="Bold"/>
+                <DataGridTextColumn Header="По тарифу" Binding="{Binding Path=debt}"
+                                    Foreground="Red" FontWeight="Bold"/>
+                <DataGridTextColumn Header="Трейдер" Binding="{Binding Path=traderName}"/>
+                <DataGridTextColumn Header="Брокер" Binding="{Binding Path=brokerName}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Status bar-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Text="Кол-во итогов:" VerticalAlignment="Center"
+                       FontWeight="Bold" Margin="5"/>
+            <TextBlock Text="{Binding RecordsCount}" VerticalAlignment="Center"
+                       Margin="5" Foreground="Green"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

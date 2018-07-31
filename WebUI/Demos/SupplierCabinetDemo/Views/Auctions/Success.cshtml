@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Ваша заявка отправлена";
+}
+
+<div class="row text-center">
+    <div class="medium-5 medium-centered columns">
+        <h5>Желаете создать еще одну или вернуться?</h5>
+        <br/>
+
+        <a href="@Url.Action("Create","Auctions")" class="button small round">Создать</a>
+        <a href="@Url.Action("Index","Home")" class="button small round">Вернуться</a>
+    </div>
+</div>
+

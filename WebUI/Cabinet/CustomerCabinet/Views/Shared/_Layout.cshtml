@@ -1,0 +1,126 @@
+﻿﻿@using System.Web.Configuration
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="@(Request.ApplicationPath.Equals("/") ? Request.ApplicationPath : Request.ApplicationPath + '/')" />
+    <title>Личный кабинет Закачика - @ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/lib/foundation/css/foundation.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/lib/foundation/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/lib/foundation-icon-fonts/foundation-icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/lib/foundation-icon-fonts/foundation-icons.ttf" />
+    <link rel="stylesheet" href="~/Content/GeneralStyle.css" />
+    @RenderSection("Styles", false)
+</head>
+<body>
+    <div style="display:flex;flex-direction:column;height:100%;">
+        <!--Navigation menu bar-->
+        <div class="row">
+            <div class="large-4 medium-4 small-12 columns">
+                <a href="@Url.Action("Index", "Home")"><img src="~/Resources/Images/customerCabinetLogo.png" style="margin-top:10px;width:200px;" /></a>
+            </div>
+            <!--VostokCvetMet(KazMinerals)-->
+            <div class="large-2 columns hidden-for-medium-down text-center">             
+                <img id="logo" src="~/Resources/Images/kazzincLogo.jpg" style="margin-top:10px;width:120px;" />                      
+            </div>
+            <div class="large-6 medium-8 small-12 columns" style="margin-top:25px;">
+                <div class="row">
+                    <div class="large-10 medium-9 small-11 columns text-right small-only-text-left">
+                        <a data-dropdown="auctionDrop" aria-controls="auctionDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-list-thumbnails hidden-for-small-down"></i>Аукционы</a>
+                        <ul id="auctionDrop" class="f-dropdown text-center" data-dropdown-content aria-hidden="true" tabindex="-1">
+                      
+                            <li><a href="Order/Index">Управление заявками</a></li>
+                            <li><a href="Auctions/Index#/active">Список активных</a></li>
+                            <li><a href="Auctions/Index#/history">Перечень прошедших</a></li>
+                            <li><a href="Auctions/Online">Онлайн торги</a></li>
+                        </ul>
+                        <a data-dropdown="supplierDrop" aria-controls="supplierDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-results-demographics hidden-for-small-down"></i>Поставщики</a>
+                        <ul id="supplierDrop" class="f-dropdown text-center" data-dropdown-content aria-hidden="true" tabindex="-1">
+                            <li>@Html.ActionLink("База компаний", "Index", "Supplier", new { id = string.Empty }, null)</li>
+                            <li>@Html.ActionLink("Поиск по товару", "SearchByProduct", "Supplier", new { id = string.Empty }, null)</li>
+                            <li>@Html.ActionLink("Поиск поставщиков", "SearchSupplier", "Supplier", new { id = string.Empty }, null)</li>
+                        </ul>
+                        <a data-dropdown="reportDrop" aria-controls="reportDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-graph-bar hidden-for-small-down"></i>Аналитика</a>
+                        <ul id="reportDrop" class="f-dropdown text-center" data-dropdown-content aria-hidden="true" tabindex="-1">
+                            <li>@Html.ActionLink("Статистика торгов", "general", "analytic", new { id = string.Empty }, null)</li>
+                            <li>@Html.ActionLink("Отчеты", "report", "analytic", new { id = string.Empty }, null)</li>
+                            <li>@Html.ActionLink("Экономические показатели", "economy", "analytic", new { id = string.Empty }, null)</li>
+                            <li>@Html.ActionLink("Товар-поставщик", "products", "analytic", new { id = string.Empty }, null)</li>
+                            <li>@Html.ActionLink("Ключевой поставщик по товару", "WinsCount", "analytic", new { id = string.Empty }, null)</li>
+                        </ul>
+                    </div>
+                    <div class="large-2 medium-3 small-1 columns">
+                        <a href="@Url.Action("Logout", "Home", new { id = string.Empty}, null)" class="topbtn"><i class="fi-power show-for-medium-down"></i><span class="hidden-for-medium-down">Выход</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="mainContainer" style="flex:1 0 auto;">
+            <!--Title-->
+            <div class="row text-center">
+                <h3 id="title_page" style="color:gray">@ViewBag.Title</h3>
+            </div>
+
+            <!--Render zone-->
+            <div id="notificationContainer"></div>
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>
+        <br />
+        <!--Footer-->
+        <footer style="background-color:#333333;flex:0 0 auto;">
+            <div class="row text-center">
+                <img src="~/Resources/Images/whiteCompanyLogo.png" style="margin-top:15px;width:250px;" />
+                <h6 style="color:white;">© ТОО "Альта и К" 2016 - 2017</h6>
+            </div>
+        </footer>
+    </div>
+  
+    <script src="~/scripts/lib/foundation/js/vendor/jquery.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation.min.js"></script>
+    <script src="~/scripts/lib/foundation/js/vendor/modernizr.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.dropdown.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.topbar.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.reveal.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="~/scripts/lib/angular/angular.min.js"></script>
+    <script src="~/scripts/lib/angular-i18n/angular-locale_ru-kz.js"></script>
+    <script src="~/scripts/lib/requirejs/require.js"></script>
+    <script src="~/scripts/app/services/notification.js"></script>
+    @*<script>
+var apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["LogoConfig"]';
+     $("#logo").attr("src",apiUrl)</script>*@
+    <script>
+        var baseUrl = "@WebConfigurationManager.AppSettings[MvcApplication.URL_APPLICATION]";
+        var currentDate = new Date();
+
+        window.globalSettings = {
+            urlToApp: baseUrl,
+            applicationPath: $("base").attr("href"),
+            $title: $("#title_page")
+        }
+
+        $(window).on('load', function () {
+            $(document).foundation({
+                Dropdown: {
+                    active_class: 'open'
+                }
+            });
+            $("a#profile_logout").attr("href", baseUrl + "/api/profile/logout");
+
+        });
+
+        $(document).ready(function () {
+            notification.init($("#notificationContainer"));
+        });
+    </script>
+   
+    <script src="~/scripts/app/config.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

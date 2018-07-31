@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="DocumentFormation.view.CommandsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DocumentFormation.view"
+             xmlns:mw="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             Background="White"
+             
+             Height="Auto" Width="Auto">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="190"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="{DynamicResource BackgroundImg}"/>
+        </Grid.Background>
+        <!--Header-->
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="{StaticResource AltaLogoImg}" Width="400" Margin="5"/>
+            <Border Grid.Row="1" Background="#333333">
+                <TextBlock Text="Сервисы формирования документов" Foreground="White"
+                           FontWeight="Bold" FontSize="19"/>
+            </Border>
+        </Grid>
+        <!--User panel-->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Row="0" Grid.Column="1" Source="{DynamicResource EtsImg}" Margin="5"/>
+            <Image Grid.Row="0" Grid.Column="2" Source="{DynamicResource UtbImg}" Margin="5"/>
+            <Image Grid.Row="0" Grid.Column="3" Source="{DynamicResource UtilitsImg}" Margin="5"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="ЕТС"
+                       FontWeight="Bold" FontSize="24" Foreground="Red"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="УТБ"
+                       FontWeight="Bold" FontSize="24" Foreground="Red"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="Утилиты"
+                       FontWeight="Bold" FontSize="24" Foreground="Red"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="Евразийская Торговая Система"
+                       FontStyle="Italic" FontSize="13" Foreground="#333333"/>
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="Универсальная Торговая Биржа"
+                       FontStyle="Italic" FontSize="13" Foreground="#333333"/>
+            <TextBlock Grid.Row="2" Grid.Column="3" Text="Сервисы общего назначения"
+                       FontStyle="Italic" FontSize="13" Foreground="#333333"/>
+            <Separator Grid.Row="3" Grid.ColumnSpan="5" Background="Gray"/>
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical">
+                <Button Content="Заявка на биржу" Command="{Binding OrderETS}"/>
+                <Button Content="Заявка на участие" Command="{Binding SupplierOrderETS}"/>
+                <Button Content="Список претендентов" Command="{Binding ApplicantsETS}"/>
+                <Button Content="Поручение на сделку" Command="{Binding ProcuratoryETS}"/>
+                <Button Content="Отчеты" Command="{Binding ReportsETS}"/>
+                <Button Content="Акт о несостоявшемся" Command="{Binding ActETS}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Vertical">
+                <!--<Button Content="Заявка на биржу" Command="{Binding OrderUTB}"/>
+                <Button Content="Заявка на участие" Command="{Binding SupplierOrderUTB}"/>
+                <Button Content="Список претендентов" Command="{Binding ApplicantsUTB}"/>
+                <Button Content="Шаблон протокола" Command="{Binding ProtocolUTB}"/>
+                <Button Content="Отчеты" Command="{Binding ReportsUTB}"/>-->
+            </StackPanel>
+            <StackPanel Grid.Row="4" Grid.Column="3" Orientation="Vertical">
+                <Button Content="Счет на оплату" Command="{Binding Invoice}"/>
+                <Button Content="Журнал С01" Command="{Binding JournalC01}"/>
+                <Button Content="Отправка по E-mail" Command="{Binding EmailSending}"/>
+                <Button Content="Отправка по EDO" Command="{Binding TestCmd}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

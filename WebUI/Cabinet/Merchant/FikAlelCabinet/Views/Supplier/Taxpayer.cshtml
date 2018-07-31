@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Поиск в списках сделок, совершенных без фактического выполнения работ";
+}
+
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        <p align="center">@Request.Params["name"] (@Request.Params["bin"])</p>
+        <br />
+    </div>
+</div>
+
+<div class="row" id="captchaRow">
+    <div class="medium-6 medium-centered columns">
+        <img id="imageCaptcha" src="">
+        <div>
+            <a id="reloadImg" onclick="UpdateImg()">Обновить код на картинке</a>
+        </div>
+        <div>
+            <label for="edit-entercaptcha">Какой код на картинке? <span title="Это поле обязательно для заполнения.">*</span></label>
+            <input name="enterCaptcha" id="edit-entercaptcha" type="text" size="60" maxlength="128" value="">
+        </div>
+        <a class="small button" onclick="GetTaxpayerData()">Поиск</a>
+        @*<div id="taxpayerpreloader">*@
+        <img id="taxpayerpreloader" src="Resources/Images/ajax-loader.gif" alt="Загрузка" />
+        @*<span class="label">Запрос в Гос. реестры...</span>*@
+        @*</div>*@
+        <a class="small button" onclick="ClearUserValue()">Очистить</a>
+        <a class="button small" href="Supplier/Company/@Request.Params["companyid"]">Вернуться</a>
+    </div>
+</div>
+
+<div class="row" id="taxpayerTableRow">
+    <div class="medium-6 medium-centered columns">
+        <table>
+            <thead>
+                <tr>
+                    <th>Присутствие в списках</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><label" id="taxpayer"></label></td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="button small" href="Supplier/Company/@Request.Params["companyid"]">Вернуться</a>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        capthaUUID = null;
+        captcha_res = null;
+        kgdDutyDate = null;
+        unreabilityData = null;
+        nonexeactData = null;
+
+        $(document)
+            .ready(function () {
+                capthaUUID = generateUUID();
+                UpdateImg();
+            });
+
+
+        function generateUUID() {
+            var d = new Date().getTime();
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+                function (c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                });
+        };
+
+
+        function UpdateImg() {
+            var url = "http://kgd.gov.kz/apps/services/CaptchaWeb/generate?uid=" + capthaUUID + "&t=" + generateUUID();
+            document.getElementById("imageCaptcha").src = url;
+        };
+
+
+        function ClearUserValue() {
+            $("#edit-entercaptcha").val('');
+        };
+
+
+        function GetTaxpayerData() {
+            if (!document.getElementById("imageCaptcha").src) {
+                alert("Обновите Капчу.");
+            } else {
+                $('#taxpayerpreloader').show();
+                $('#taxpayer').html("Компания не найдена в списках.");
+                $('#taxpayerpreloader').hide();
+                $('#captchaRow').hide();
+                $('#taxpayerTableRow').show();
+            }
+        }
+
+    </script>
+}
+
+@section Styles {
+    <style>
+        #taxpayerpreloader {
+            display: none;
+        }
+
+        #taxpayerTableRow {
+            display: none;
+        }
+    </style>
+}

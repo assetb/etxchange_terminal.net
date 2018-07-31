@@ -1,0 +1,41 @@
+﻿@model AltaBO.Auction
+<div class="row">
+    <div class="medium-12 columns">
+        @Html.LabelFor(m => m.Number, "Номер")
+        @Html.TextBoxFor(m => m.Number, new { @readonly = "readonly" })
+    </div>
+    <div class="medium-12 columns">
+        @Html.LabelFor(m => m.ApplicantsDeadline, "Прием заявок на участие до")
+        @Html.TextBoxFor(m => m.ApplicantsDeadline, new { @readonly = "readonly" })
+    </div>
+    <div class="medium-12 columns">
+        @Html.LabelFor(m => m.Comments, "Комментарии")
+        @Html.TextBoxFor(m => m.Comments, new { @readonly = "readonly" })
+    </div>
+    <div class="medium-12 columns">
+        @Html.LabelFor(m => m.Date,"Дата проведение аукциона")
+        @Html.TextBoxFor(m => m.Date, new { @readonly = "readonly" })
+    </div>
+    @*<div class="medium-12 columns">
+        @Html.LabelFor(m => m.ExchangeProvisionDeadline, "Взнос гарантийного обеспечения до")
+        @Html.TextBoxFor(m => m.ExchangeProvisionDeadline, new { @readonly = "readonly" })
+    </div>*@
+    <div class="medium-12 columns">
+        @Html.LabelFor(m => m.ExchangeProvisionSize, "Размер гарантийного обеспечения")
+        @Html.TextBoxFor(m => m.ExchangeProvisionSize, new { @readonly = "readonly" })
+    </div>
+    <div class="medium-12 columns">
+        @Html.LabelFor(m => m.Customer, "Наименование заказчика")
+        @Html.TextBoxFor(m => m.Customer, new { @readonly = "readonly" })
+    </div>
+    <div class="medium-12 columns">
+        <h5>Лоты</h5>
+        <hr />
+        @Html.Partial("Partials/Lots", Model.Lots)
+    </div>
+    <div class="medium-12 columns">
+        <h5>Брокер</h5>
+        <hr />
+        @Html.Partial("Partials/Broker", Model.Broker)
+    </div>
+</div>

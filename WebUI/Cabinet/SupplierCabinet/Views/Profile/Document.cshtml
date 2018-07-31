@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Документы";
+    ViewBag.BackUrl = Url.Action("Index");
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/company-docs-controller.js"></script>
+}
+
+
+@section ControlPanel {
+    <a class="button success small" href="@Url.Action("AddDocument")">Добавить документ</a>
+}
+
+<div ng-controller="DocumentCtrl">
+    <div class="row" ng-init="updateModel()">
+        <br />
+        <div class="medium-12">
+            <h3>Договора</h3>
+            <table style="width: 100%;">
+                <tr>
+                    <th>Наименование</th>
+                    <th>Описание</th>
+                    <th>Файл</th>
+                    <th>Удалить</th>
+                </tr>
+                <tr ng-repeat="file in model.agreements">
+                    <td ng-bind="file.fileName"></td>
+                    <td ng-bind="file.description"></td>
+                    <td><a ng-href="{{urlToArchive}}/file/{{file.id}}">Скачать</a></td>
+                    <td><a ng-click="removeDocument(model.company.filesListId, file.id)">Удалить</a></td>
+                </tr>
+                <tr ng-if="!model.agreements.length">
+                    <td colspan="4" class="text-center">Нет записей</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="medium-12">
+            <h3>Пользовательские файлы</h3>
+            <table style="width: 100%;">
+                <tr>
+                    <th>Наименование</th>
+                    <th>Описание</th>
+                    <th>Файл</th>
+                    <th>Удалить</th>
+                </tr>
+                <tr ng-repeat="file in model.files">
+                    <td ng-bind="file.fileName"></td>
+                    <td ng-bind="file.description"></td>
+                    <td><a ng-href="{{urlToArchive}}/file/{{file.id}}">Скачать</a></td>
+                    <td><a ng-click="removeDocument(model.company.filesListId, file.id)">Удалить</a></td>
+                </tr>
+                <tr ng-if="!model.files.length">
+                    <td colspan="4" class="text-center">Нет записей</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

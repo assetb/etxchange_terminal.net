@@ -1,0 +1,147 @@
+﻿<div class="form-horizontal">
+    <div class="row panel">
+        <h4>Общая информация</h4>
+        <hr />
+        <div class="row callout">
+            <div class="medium-3 columns">
+                <div class="form-group">
+                    <label for="company_bin">БИН</label>
+                    <div>
+                        <span id="company_bin">{{company.bin}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="medium-9 columns end">
+                <div class="form-group">
+                    <label for="company_name">Наименование компании</label>
+                    <div>
+                        <span id="company_name">{{company.name}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <h4>Контактные данные</h4>
+        <hr />
+        <div class="row callout">
+            <div class="medium-3 columns">
+                <div class="form-group">
+                    <label for="company_email">Электронный адрес</label>
+                    <div>
+                        <span id="company_email">{{company.email}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="medium-3 columns">
+                <div class="form-group">
+                    <label for="company_tel">Телефон</label>
+                    <div>
+                        <span id="company_tel">{{company.telephone}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="medium-3 columns end">
+                <div class="form-group">
+                    <label for="company_fax">Факс</label>
+                    <div>
+                        <span id="company_fax">{{company.fax}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <h4>Адресная книга</h4>
+        <hr />
+        <div class="row callout">
+            <div class="form-group medium-3 columns">
+                <label for="company_country">Страна</label>
+                <div>
+                    <span id="company_country">{{company.country}}</span>
+                </div>
+            </div>
+            <div class="medium-3 columns form-group">
+                <label for="company_addresslegal">Юридический адрес</label>
+                <div>
+                    <span id="company_addresslegal">{{company.addressLegal}}</span>
+                </div>
+            </div>
+            <div class="medium-3 columns form-group">
+                <label for="company_addressactual">Фактический адрес</label>
+                <div>
+                    <span id="company_addressactual">{{company.addressActual}}</span>
+                </div>
+            </div>
+            <div class="medium-3 columns end form-group">
+                <label for="company_postcode">Почтовый индекс</label>
+                <div class="col-md-10">
+                    <span id="company_postcode">{{company.postCode}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <h4>Банковская информация</h4>
+        <hr />
+        <div class="medium-3 columns form-group">
+            <label for="company_kbe">КБЕ</label>
+            <div>
+                <span id="company_kbe">{{company.kbe}}</span>
+            </div>
+        </div>
+        <div class="medium-3 columns form-group">
+            <label for="company_iik">ИИК</label>
+            <div>
+                <span id="company_iik">{{company.iik}}</span>
+            </div>
+        </div>
+        <div class="medium-3 columns end form-group">
+            <label for="company_bik">БИК</label>
+            <div>
+                <span id="company_bik">{{company.bik}}</span>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <h4>Дополнительно</h4>
+        <hr />
+        <div class="medium-4 columns form-group">
+            <label for="company_directorpowers">И.О. на основании</label>
+            <div>
+                <span id="company_directorpowers">{{company.directorPowers}}</span>
+            </div>
+        </div>
+        <div class="medium-4 columns form-group">
+            <label for="company_director">Ф.И.О. директора</label>
+            <div class="col-md-10">
+                <span id="company_director">{{company.director}}</span>
+            </div>
+        </div>
+        <div class="medium-4 columns end form-group">
+            <label for="company_comments">Доп. описание</label>
+            <div>
+                <span id="company_comments">{{company.comments}}</span>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <div class="medium-6 columns form-group">
+            <label for="company_updatedate">Дата обновления</label>
+            <div>
+                <span id="company_updatedate">{{company.updateDate | date : "dd.MM.yyyy"}}</span>
+            </div>
+        </div>
+        <div class="medium-6 columns end form-group">
+            <label for="company_createdate">Дата регистрации</label>
+            <div>
+                <span id="company_createdate">{{company.createDate | date : "dd.MM.yyyy"}}</span>
+            </div>
+        </div>
+    </div>
+</div>

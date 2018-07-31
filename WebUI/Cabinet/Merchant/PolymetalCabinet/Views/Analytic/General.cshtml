@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Общая статистика торгов";
+}
+@section Scripts{
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script>
+        google.load("visualization", "1", { packages: ["corechart"] });
+    </script>
+    <script type="text/javascript" src="~/scripts/app/app.js"></script>
+    <script type="text/javascript" src="~/scripts/app/report/general_statistic.js"></script>
+}
+<div ng-app="app">
+    <div ng-controller="general_statistic" ng-init="Init()">
+        <div class="row">
+            <div class="medium-7 medium-centered columns">
+                <div id="chartdiv" style="width:600px;height:400px;"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="medium-5 medium-centered columns">
+                <fieldset>
+                    <legend>Статистические данные</legend>
+                    <label>Ожидаемые: <span>{{model.expected}}</span></label>
+                    <br />
+                    <label>Состоявшиеся: <span>{{model.finished}}</span></label>
+                    <br />
+                    <label>Не состоявшиеся: <span>{{model.notHeld}}</span></label>
+                </fieldset>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

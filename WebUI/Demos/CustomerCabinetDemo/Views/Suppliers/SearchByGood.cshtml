@@ -1,0 +1,71 @@
+﻿@model List<CustomerCabinetDemo.Models.Supplier>
+
+@{
+    ViewBag.Title = "Поиск поставщика по товару";
+}
+
+@section Scripts{
+<script src="~/scripts/Utilits/dataTableFunc.js"></script>
+    <script>
+        $(function () {
+            var availableTags = [
+              "Смазка", "Канат", "Фильтр", "Термопары", "Кольца", "Изделия из ПВХ", "Инструмент", "Электроды", "Сварочное оборудование", "Осушитель",
+            "Сетка", "Вафельное полотно", "Сторительные материалы", "Электростанция", "Дизельное топливо", "Кронциркуль", "Метизы", "Противопожарное оборудование", "Запасные части", "Огнетушители",
+            "Вкладыш", "Поглотители", "Химические средства", "Электрооборудование", "Кабели", "Чистящие средства", "Перчатки", "Обувь",
+            "Масло", "Изоляция", "Лакокрасочная продукция", "Лента антискольжения", "Трубы", "Вал промежуточный", "Плиты", "Порошки",
+            "Сода", "Подшипники", "Переналадки", "Гипохлорид кальция", "Аппараты"
+            ];
+            $("#tags").autocomplete({
+                source: availableTags
+            });
+        });
+
+    </script>
+}
+
+@using(Html.BeginForm()) {
+    <div class="row">
+        <div class="small-4 columns">
+            <label for="tags" class="right inline">Введите наименование товара:</label>
+        </div>
+        <div class="small-4 columns">
+            @Html.TextBox("key", null, new { id = "tags" })
+        </div>
+        <div class="small-4 columns">
+            <input type="submit" value="Найти" class="button small round" />
+        </div>
+    </div>
+    <br />
+}
+
+<div class="row">
+    <table id="auctionlist" class="display" hidden width="100%">
+        <thead>
+            <tr>
+                <th>НАИМЕНОВАНИЕ</th>
+                <th>БИН</th>
+                <th>ПРОДУКЦИЯ</th>
+                <th>КОМ.ПРЕД.</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model) {
+                <tr>
+                    <td><a href="Details?name=@item.name">@item.name</a></td>
+                    <td>@item.bin</td>
+                    <td>
+                        <ul class="inline-list">
+                            @foreach(var i in item.goods) {
+                                <li>
+                                    @i.name;
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                    <td><a href="#">Скачать</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+</div>

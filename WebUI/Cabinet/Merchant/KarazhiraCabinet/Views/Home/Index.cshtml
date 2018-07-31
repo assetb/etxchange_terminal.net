@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+}
+
+<!--Navigation page-->
+<div class="row callout text-center">
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/auctions.png" style="height:100px"/>
+        <h3>Аукционы</h3>
+        <hr />
+        <p>В данном разделе можно подать заявку на аукцион. И увидеть список торгов.</p>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("Организовать аукцион", "AuctionOrder", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Список активных", "AuctionsList", null, new { @class = "indexbtn" })</li>
+            <li>@Html.ActionLink("Перечень завершенных", "EndedAuctionsList", null, new { @class = "indexbtn" })</li>
+        </ul>
+
+    </div>
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/companies.png" style="height:100px"/>
+        <h3>Компании</h3>
+        <hr />
+        <p>Здесь представлена информация по участникам торгов.</p>
+        <hr />
+        @Html.ActionLink("Участвовавшие", "CompaniesList", null, new { @class = "indexbtn" })
+
+
+    </div>
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/analytics.png" style="height:100px"/>
+        <h3>Аналитика</h3>
+        <hr />
+        <p>Совокупность информации покажет Вам статистику по выбранным критериям.</p>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("Ожидаемые и проведенные", "WaitingEndedGraph", null, new { @class = "indexbtn" })</li>
+            <li>@Html.ActionLink("Сумма экономии за период", "EconomySumGraph", null, new { @class = "indexbtn" })</li>
+        </ul>
+
+    </div>
+</div>

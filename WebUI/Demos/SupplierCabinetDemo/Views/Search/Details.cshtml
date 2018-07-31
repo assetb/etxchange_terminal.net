@@ -1,0 +1,24 @@
+﻿@model SupplierCabinetDemo.Models.Customer
+
+@{
+    ViewBag.Title = "Детальная информация заказчика";
+}
+
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        <fieldset>
+            <legend>Данные компании</legend>
+            <label>Наименование: <span>@Model.name</span></label>
+            <label>БИН: <span>@Model.bin</span></label>
+            <label>Кбе: <span>@Model.kbe</span></label>
+            <label>Страна: <span>@Model.country</span></label>
+            <label>Адрес: <span>@Model.address</span></label>
+            <label>Телефоны: <span>@Model.telephones</span></label>
+            <label>E-mail: <span>@Model.email</span></label>
+            <label>Почтовый индекс: <span>@Model.postcode</span></label>
+            <label>Директор: <span>@Model.director</span></label>
+            <label>ИИК: <span>@Model.iik</span></label>
+        </fieldset>
+        <br />
+    </div>
+</div>

@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="AltaArchive.view.ETSOnlineView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaArchive.view"
+             xmlns:mw="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:vm="clr-namespace:AltaArchive.vm"
+             xmlns:wt="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             FontFamily="Calibri"
+             MinWidth="400" MinHeight="400"
+             Height="Auto" Width="Auto">
+    <UserControl.DataContext>
+        <vm:ETSOnlineViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+
+        <!--Control panel-->
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock Text="Фильтр" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding FilterTxt, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="5" VerticalAlignment="Center" Width="150"/>
+                <Button Content="Обновить" Command="{Binding ApplyCmd}"/>
+            </StackPanel>
+        </Grid>
+
+        <!--Tables-->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <!--Price offers list-->
+            <DataGrid Grid.Row="0" AutoGenerateColumns="False" 
+                  ItemsSource="{Binding PriceOffersList}"
+                  Foreground="DodgerBlue" Margin="5"
+                  Style="{StaticResource AzureDataGrid}"
+                  CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Код лота" Binding="{Binding Path=lotCode}"/>
+                    <DataGridTextColumn Header="Ценовое предложение" Binding="{Binding Path=lotPriceOffer}"/>
+                    <DataGridTextColumn Header="Брокер" Binding="{Binding Path=firmName}"/>
+                    <DataGridTextColumn Header="Время подачи" Binding="{Binding Path=offerTime, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <!--Logs-->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <TextBox Text="{Binding LogsTxt}" Margin="5" TextWrapping="Wrap"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </StackPanel>
+        </Grid>
+
+        <!--CRUD panel-->
+        <Grid Grid.Row="2">
+            <Separator Background="#333333" VerticalAlignment="Top"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Подключить" Command="{Binding ConnectETSOnlineCmd}"/>                
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

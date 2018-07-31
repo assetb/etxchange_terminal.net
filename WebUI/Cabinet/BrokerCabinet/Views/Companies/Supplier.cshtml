@@ -1,0 +1,206 @@
+﻿@model int?
+@{
+    ViewBag.Title = "Форма деталей компании";
+}
+
+@section Styles {
+    <style>
+        .hide, .hide + label ~ div {
+            display: none;
+        }
+
+            .hide + label,
+            .hide:checked + label {
+                padding: 0;
+                color: green;
+                cursor: pointer;
+                border-bottom: 1px dotted green;
+            }
+
+            .hide:checked + label {
+                color: red;
+                border-bottom: 0;
+            }
+
+                .hide:checked + label + div {
+                    display: block;
+                }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        var app = angular.module("app", []);
+        app.controller("SupplierController",
+            function ($scope, $http) {
+                $scope.company = null;
+                $scope.products = null;
+                $scope.grades = null;
+                $scope.commetricalOffers = null;
+
+                $scope.isLoading = false;
+
+                $scope.GetCompany = function () {
+                    $http.get(baseUrl + "/api/supplier/company/@Model")
+                        .success(function (data) {
+                            $scope.company = data;
+                            if ($scope.company != null) {
+                                $scope.GetProducts($scope.id);
+                            }
+                        })
+                        .error(function (data) {
+                            $scope.company = null;
+                        });
+                };
+
+
+                $scope.GetProducts = function (id) {
+                    $http.get(baseUrl + "/api/product", { params: { companyid: id } })
+                        .success(function (data) {
+                            $scope.products = data;
+                        })
+                        .error(function (data) {
+                            $scope.products = null;
+                        });
+                };
+
+                $scope.init = function () {
+                    $scope.GetCompany();
+                };
+
+                $scope.capthaUUID = null;
+                $scope.captcha_res = null;
+                $scope.kgdDutyDate = null;
+                $scope.unreabilityData = null;
+                $scope.nonexeactData = null;
+
+                $scope.generateUUID = function () {
+                    var d = new Date().getTime();
+                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+                        function (c) {
+                            var r = (d + Math.random() * 16) % 16 | 0;
+                            d = Math.floor(d / 16);
+                            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                        });
+                };
+
+                $scope.img = null;
+                $scope.UpdateImg = function () {
+                    if ($scope.capthaUUID == null)
+                        $scope.capthaUUID = $scope.generateUUID();
+                    var url = "http://kgd.gov.kz/apps/services/CaptchaWeb/generate?uid=" +
+                        $scope.capthaUUID +
+                        "&t=" +
+                        $scope.generateUUID();
+                    console.log(url);
+                    $scope.img = url;
+
+                };
+
+                //$scope.GetData = function () {
+                //    $http.post("http://kgd.gov.kz/apps/services/culs-taxarrear-search-web/rest/search", {
+                //        "captcha-id": $scope.capthaUUID,
+                //        "captcha-user-value": $scope.captcha_res,
+                //        "iinBin":$scope.company.bin
+                //    }, {
+                //        headers: {
+                //            "Access-Control-Allow-Origin":"*"
+                //        }
+                //    })
+                //    .success(function (data) {
+                //       $scope.kgdDutyDate = data;
+                //    })
+                //}
+
+                $scope.GetData = function () {
+                    if ($scope.img == null) {
+                        alert("Обновите Капчу.");
+                    } else {
+                        $http.get(baseUrl + "/api/gosregistry/kgdduty3",
+                            {
+                                "params": {
+                                    "captchaId": $scope.capthaUUID,
+                                    "captchaUserValue": $scope.captcha_res,
+                                    "bin": $scope.company.bin
+                                }
+                            })
+                            .success(function (data) {
+                                $scope.kgdDutyDate = data;
+                            });
+                    }
+                }
+
+
+                $scope.GetUnreabilityData = function () {
+                    if ($scope.img == null) {
+                        alert("Обновите Капчу.");
+                    } else {
+                        setTimeout(function () { $scope.unreabilityData = "No"; }, 2000);
+
+                    }
+                }
+
+
+                $scope.GetNonexeactsData = function () {
+                    if ($scope.img == null) {
+                        alert("Обновите Капчу.");
+                    } else {
+                        $scope.nonexeactData = "No";
+                    }
+                }
+            });
+    </script>
+}
+<div ng-app="app">
+    <div class="row" ng-controller="SupplierController" ng-init="init()">
+        <a href="~/Supplier">Вернуться в списку</a>
+        <div class="column medium-12 panel">
+            <input class="hide" id="hd-1" type="checkbox">
+            <label for="hd-1">О компании: {{company.name}}</label>
+            <div>
+                <hr />
+                @Html.Partial("Partials/Company")
+            </div>
+        </div>
+        <div class="column medium-12 panel">
+            <input class="hide" id="hd-2" type="checkbox">
+            <label for="hd-2">Список товаров и услуг ({{products.length > 0 ? products.length : "Товары не указаны"}})</label>
+            <div>
+                <hr />
+                @Html.Partial("Partials/Goods")
+            </div>
+        </div>
+        <div class="column medium-12 panel">
+            <input class="hide" id="hd-3" type="checkbox">
+            <label for="hd-3">Оценка качества ({{grades.length > 0 ? grades.length : "Нет отзывов"}})</label>
+            <div>
+                <hr />
+                @Html.Partial("Partials/Grades")
+            </div>
+        </div>
+        <div class="column medium-12 panel">
+            <input class="hide" id="hd-4" type="checkbox">
+            <label for="hd-4">Запрос данных поставщика</label>
+            <div>
+                <hr />
+                @Html.Partial("Partials/CompanyQuality")
+            </div>
+        </div>
+        <div class="column medium-12 panel">
+            <input class="hide" id="hd-5" type="checkbox">
+            <label for="hd-5">Коммерческое предложение ({{commetricalOffers.length > 0 ? commetricalOffers.length : "Нет предложений"}})</label>
+            <div>
+                <hr />
+                @Html.Partial("Partials/Commertical")
+            </div>
+        </div>
+        <div class="column medium-12 panel">
+            <input class="hide" id="hd-6" type="checkbox">
+            <label for="hd-6">Проверка по реестрам торговых площадок (в разработке)</label>
+            <div>
+                <hr />
+                @Html.Partial("Partials/InformationOnRegistriesMarketplaces")
+            </div>
+        </div>
+    </div>
+</div>

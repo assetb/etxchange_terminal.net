@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SupplierCabinetDemo.Models.Auction>
+
+@{
+    ViewBag.Title = "Поиск торга по заказчику";
+}
+
+@section Scripts{
+    <script src="~/scripts/Utilits/dataTableFunc.js"></script>
+}
+
+@using(Html.BeginForm()) {
+    <div class="row">
+        <div class="small-4 columns">
+            <label for="customerKeyTxt" class="right inline">Введите наименование заказчика:</label>
+        </div>
+        <div class="small-4 columns">
+            <select name="key" id="customerKeyTxt">
+                <option value="восток">ТОО Востокцветмет</option>
+                <option value="инкай">СП Инкай</option>
+                <option value="казмин">Казминералс</option>
+                <option value="караж">АО Каражыра</option>
+            </select>
+        </div>
+        <div class="small-4 columns">
+            <input type="submit" value="Найти" class="button small round" />
+        </div>
+    </div>
+    <br />
+}
+
+<div class="row">
+    <table id="auctionlist" class="display" hidden>
+        <thead>
+            <tr>
+                <th>ДАТА АУКЦИОНА</th>
+                <th>НОМЕР</th>
+                <th>ЗАКАЗЧИК</th>
+                <th>БИРЖА</th>
+                <th>СТАТУС</th>
+                <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                <th>СТАРТОВАЯ ЦЕНА</th>
+                <th>КОЛИЧЕСТВО</th>
+                <th>ОБЩАЯ СУММА</th>
+                <th>ДАТА ЗАЯВКИ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model) {
+                <tr>
+                    <td>@item.auctionDate.ToShortDateString()</td>
+                    <td>@Html.ActionLink(item.number, "Details", "Auctions", new { auctionNumber = item.number }, null)</td>
+                    <td>@item.customer</td>
+                    <td>@item.source</td>
+                    @if(item.status == true) {
+                        <td>Состоялся</td>
+                    } else {
+                        <td>Ожидается</td>
+                    }
+                    <td>@item.lotName</td>
+                    <td>@Math.Round(item.startPrice, 2)</td>
+                    <td>@item.lotName.Length</td>
+                    <td>@Math.Round(item.startPrice * item.lotName.Length, 2)</td>
+                    <td>@item.orderDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+</div>

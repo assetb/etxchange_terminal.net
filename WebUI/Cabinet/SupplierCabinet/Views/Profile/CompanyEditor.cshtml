@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Реквизиты компании";
+    ViewBag.BackUrl = Url.Action("CompanyDetails");
+}
+
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/company-info-controller.js"></script>
+}
+
+<div ng-controller="CompanyCtrl">
+    <div ng-init="updateModel()" class="row">
+        <form id="companyEditorForm" ng-submit="saveCompany($event)">
+            <div class="medium-12 column">
+                <label>
+                    Наименование:
+                    <input type="text" name="name" ng-model="company.name" />
+                </label>
+                <label>
+                    БИН:
+                    <input type="text" name="bin" ng-model="company.bin" />
+                </label>
+                <label>
+                    Кбе:
+                    <input type="text" name="kbe" ng-model="company.kbe" />
+                </label>
+                <label>
+                    Телефоны:
+                    <input type="tel" name="telephone" ng-model="company.telephone" />
+                </label>
+                <label>
+                    E-mail:
+                    <input type="email" name="email" ng-model="company.email" />
+                </label>
+                <label>
+                    Страна:
+                    <input type="text" name="country" ng-model="company.country" />
+                </label>
+                <label>
+                    Почтовый индекс:
+                    <input type="text" name="postCode" ng-model="company.postCode" />
+                </label>
+                <label>
+                    Адрес:
+                    <textarea name="addressActual" ng-model="company.addressActual"></textarea>
+                </label>
+                <label>
+                    Директор:
+                    <input type="text" name="director" ng-model="company.director" />
+                </label>
+                <label>
+                    ИИК:
+                    <input type="text" name="iik" ng-model="company.iik" />
+                </label>
+            </div>
+            <div class="medium-6 column medium-centered text-center">
+                <button type="submit" class="button small success">Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+</div>
+

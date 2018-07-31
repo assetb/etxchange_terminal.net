@@ -1,0 +1,30 @@
+﻿<form ng-submit="SubmitOrder()">
+    <div class="row">
+        <div class="medium-12 columns">
+            <label>Биржа</label>
+            <select ng-model="model.siteId" ng-options="item.id as item.name for item in sites track by item.id">
+                <option disabled>{{(!sites ? 'Укажите биржу' : 'Загрузка')}}</option>
+            </select>
+        </div>
+        <div class="medium-12 columns">
+            <label>Номер заявки</label>
+            <input type="text" ng-model="model.number" />
+        </div>
+        <div class="medium-12 columns">
+            <input type="file" style="display:none;" id="fileUpload" file-model="file" />
+            <label for="fileUpload" ng-class="model.fileId != null ? 'success' : 'info'" class="button" ng-bind="file.name != null ? ('Выбран файл ' + file.name) : 'Выберите файл заявки'"></label>
+            <button type="button" ng-class="model.fileId != null ? 'success' : ''" class="button" ng-click="UploadOrder()" title="Загрузить файл на сервер">
+                <i class="fi-upload-cloud large"></i>
+                @*<span class="hidden-for-medium">Загрузить</span>*@
+            </button>
+        </div>
+        <div class="medium-12 columns">
+            <div class="medium-6 columns">
+                <button type="submit" class="button success" ng-disabled="(model.orderFileId == null && model.number == '')">Отправить</button>
+            </div>
+            <div class="medium-6 columns">
+                <button class="button">Отменить</button>
+            </div>
+        </div>
+    </div>
+</form>

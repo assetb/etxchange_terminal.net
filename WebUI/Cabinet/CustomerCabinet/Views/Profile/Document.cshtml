@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Документы";
+    ViewBag.BackUrl = Url.Action("Index");
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/main.js"></script>
+}
+
+<div id="contentBody" ng-controller="SupplierDocumentCtrl" ng-init="init(@Model)" class="form-horizontal">
+    <div class="row">
+        <div class="medium-2 column end">
+            <a href="javascript:history.back();" class="button secondary expand tiny">Назад</a>
+        </div>
+    </div>
+    <div class="row">
+        <br />
+        <div class="medium-12">
+            <h3>Документы</h3>
+            <table style="width: 100%;">
+                <tr>
+                    <th>Наименование</th>
+                    <th>Описание</th>
+                    <th>Файл</th>
+                </tr>
+                <tr ng-repeat="file in model.files">
+                    <td ng-bind="file.fileName"></td>
+                    <td ng-bind="file.description"></td>
+                    <td><a ng-href="{{urlToArchive}}/file/{{file.id}}">Скачать</a></td>
+                </tr>
+                <tr ng-if="!model.files.length">
+                    <td colspan="3" class="text-center">Нет документов</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

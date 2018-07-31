@@ -1,0 +1,84 @@
+﻿body {
+    font-family: Calibri;
+}
+
+.h {
+    display: none;
+}
+
+h6 {
+    font-family: Calibri;
+}
+
+h4 {
+    font-family: Calibri;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: Calibri;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: Calibri;
+    font-weight: bold;
+    color: gray;
+}
+
+p {
+    font-style: italic;
+}
+
+legend {
+    font-size: medium;
+    color: dodgerblue;
+}
+
+label {
+    color: gray;
+    font-weight: bold;
+}
+
+span {
+    color: black;
+}
+
+table thead th {
+    background-color: dodgerblue;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+table th {
+    background-color: dodgerblue;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.topbtn {
+    font-family: Calibri;
+    font-weight: bold;
+    color: gray;
+    padding-right: 15px;
+    font-size: 13pt;
+}
+
+.indexbtn {
+    font-family: Calibri;
+    font-weight: bold;
+    color: dodgerblue;
+    font-size: 13pt;
+}
+
+    .indexbtn:hover {
+        color: red;
+    }
+
+div.dataTables_wrapper div.dataTables_filter input {
+    display: inline-block !important;
+    width: auto !important;
+    height: auto;
+    margin-bottom: 1em;
+    margin-left: 0.5em;
+}

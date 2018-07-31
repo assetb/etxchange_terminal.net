@@ -1,0 +1,70 @@
+﻿@model IEnumerable<CustomerCabinetDemo.Models.Auction>
+
+@{
+    ViewBag.Title = "Список аукционов";
+}
+
+@section Scripts{
+<script src="~/scripts/Utilits/dataTableFunc.js"></script>
+}
+
+<br />
+@using(Html.BeginForm()) {
+    <div class="row">
+        <div class="small-1 columns">
+            <label for="dateFrom" class="left inline">Дата от:</label>
+        </div>
+        <div class="small-3 columns">
+            <input type="date" name="dateF" id="dateFrom" value="2016-01-01"/>
+        </div>
+        <div class="small-1 columns">
+            <label for="dateTo" class="left inline">Дата по:</label>
+        </div>
+        <div class="small-3 columns">
+            <input type="date" name="dateT" id="dateTo" value="2016-12-31"/>
+        </div>
+        <div class="small-4 columns right">
+            <input type="submit" value="Установить диапазон" class="button small round" />
+        </div>
+    </div>
+    <br />
+}
+
+<div class="row">
+    <table id="auctionlist" class="display" hidden width="100%">
+        <thead>
+            <tr>
+                <th>ДАТА АУКЦИОНА</th>
+                <th>НОМЕР</th>
+                <th>СТАТУС</th>
+                <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                <th>СТАРТОВАЯ ЦЕНА</th>
+                <th>КОЛИЧЕСТВО</th>
+                <th>ОБЩАЯ СУММА</th>
+                <th>ДАТА ЗАЯВКИ</th>
+                <th>ФАЙЛ ЗАЯВКИ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.auctionDate.ToShortDateString()</td>
+                    <td><a href="Details?auctionNumber=@item.number">@item.number</a></td>
+                    <td>
+                        @(item.status && item.orderFile == null ? "Состоялся" : !item.status && !string.IsNullOrEmpty(item.winner) ? "Ожидается" : "Новый" )
+                    </td>
+                    <td>@item.lotName</td>
+                    <td>@Math.Round(item.startPrice, 2)</td>
+                    <td>@item.lotName.Length</td>
+                    <td>@Math.Round(item.startPrice * item.lotName.Length, 2)</td>
+                    <td>@item.orderDate.ToShortDateString()</td>
+                    <td class="text-center"><a href="~/Resources/Files/Order.docx"><i class="fi-save"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br/>
+
+    <a href="Export?exportType=1" class="indexbtn">Экспортировать в Excel <i class="fi-page-export-csv"></i></a>
+</div>

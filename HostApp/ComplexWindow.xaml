@@ -1,0 +1,62 @@
+﻿<mw:MetroWindow x:Class="HostApp.ComplexWindow"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:dock="clr-namespace:AltaDock.view;assembly=AltaDock"
+                xmlns:local="clr-namespace:HostApp"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:mw="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                xmlns:vm="clr-namespace:HostApp.vm"
+                Title=".Net Автоматизация"
+                Background="#333333"
+                WindowStartupLocation="CenterScreen"
+                WindowState="Maximized"
+                mc:Ignorable="d">
+    <dock:ComplexView />
+
+    <mw:MetroWindow.DataContext>
+        <vm:ComplexWindowViewModel />
+    </mw:MetroWindow.DataContext>
+
+    <mw:MetroWindow.RightWindowCommands>
+        <mw:WindowCommands>
+            <ToggleButton Content="Навигационное меню"
+                          Cursor="Hand" 
+                          IsChecked="{Binding ElementName=MAFlyout,
+                                              Path=IsOpen}"/>                      
+        </mw:WindowCommands>
+    </mw:MetroWindow.RightWindowCommands>
+
+    <mw:MetroWindow.Flyouts>
+        <mw:FlyoutsControl>
+            <mw:Flyout x:Name="MAFlyout"
+                       Width="250"
+                       Header="Меню"
+                       Position="Right">                
+                <WrapPanel>
+                    <mw:Tile Title="Брокерская система"
+                             Background="DodgerBlue"
+                             Command="{Binding TradingSystemCmd}">
+                    </mw:Tile>
+                    <mw:Tile Title="Почта"
+                             Background="Blue"
+                             Command="{Binding PostCmd}">
+                    </mw:Tile>
+                    <mw:Tile Title="Архив (архивное представление)"
+                             Background="Gray"
+                             Command="{Binding ArchivCmd}">
+                    </mw:Tile>
+                    <!--<mw:Tile Title="Архив (биржевое представление)"
+                             Background="Gray"
+                             Command="{Binding ExchangeCmd}">
+                    </mw:Tile>-->
+                    <mw:Tile Title="Отчеты"
+                             Background="Green"
+                             Command="{Binding ReportsCmd}">
+                    </mw:Tile>
+                </WrapPanel>
+            </mw:Flyout>
+        </mw:FlyoutsControl>
+    </mw:MetroWindow.Flyouts>
+
+</mw:MetroWindow>

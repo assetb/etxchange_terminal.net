@@ -1,0 +1,22 @@
+﻿<table style="width: 100%;">
+    <tr>
+        <th>№</th>
+        <th>Наименование</th>
+        <th>Описание</th>
+        <th>Сертификат</th>
+    </tr>
+    <tr ng-repeat="product in model.products track by $index">
+        <td>{{$index + 1}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td>
+            <button ng-if="product.fileId" class="tiny" ng-click="getFile($event, product.fileId)">
+                <i class="fi-paperclip">Скачать</i>
+            </button>
+            <span ng-if="!product.fileId">Нет файла</span>
+        </td>
+    </tr>
+    <tr ng-if="!model.products.length">
+        <td colspan="5" class="text-center">Товары не указаны</td>
+    </tr>
+</table>

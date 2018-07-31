@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BBF5759C-4718-4602-887C-1F3C47E1D222}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SupervisionApp</RootNamespace>
+    <AssemblyName>SupervisionApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug_test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="handlers\AuctionNotificationsEnum.cs" />
+    <Compile Include="sources\ApplicantESM.cs" />
+    <Compile Include="handlers\AuctionEH.cs" />
+    <Compile Include="sources\AuctionESM.cs" />
+    <Compile Include="AuctionStateEnum.cs" />
+    <Compile Include="sources\DBEventsSource.cs" />
+    <Compile Include="sources\NewAuctionESM.cs" />
+    <Compile Include="handlers\NewAuctionEH.cs" />
+    <Compile Include="handlers\NewReportEH.cs" />
+    <Compile Include="handlers\NewOrderEH.cs" />
+    <Compile Include="sources\EventsSourceMonitorBase.cs" />
+    <Compile Include="SupervisionProxy.cs" />
+    <Compile Include="sources\NewReportESM.cs" />
+    <Compile Include="sources\NewOrderESM.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\base\BaseApp\BaseApp\BaseApp.csproj">
+      <Project>{0cd46a9b-b67e-4a20-b71c-abbe157b2fe1}</Project>
+      <Name>BaseApp</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Commons\AltaLog\AltaLog.csproj">
+      <Project>{ba078396-ba39-4fcf-aacb-5ec07b4daddd}</Project>
+      <Name>AltaLog</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\AltaBO\AltaBO.csproj">
+      <Project>{19f4f68e-966a-42ff-936b-9cd435a3f862}</Project>
+      <Name>AltaBO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DocumentFormation\DocumentFormationApp\DocumentFormationApp.csproj">
+      <Project>{132bfbd2-74ff-452b-9c1f-fb77be14a9ad}</Project>
+      <Name>DocumentFormationApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Transport\AltaTransport\AltaTransport.csproj">
+      <Project>{86774e1e-c73b-4b54-a282-b713b8833147}</Project>
+      <Name>AltaTransport</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Transport\Merchants\CustomerSpecifics\MerchantBP.csproj">
+      <Project>{c1694576-b6a9-46c3-83be-e25e60563984}</Project>
+      <Name>MerchantBP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltaWindowsNotification\AltaWindowsNotification.csproj">
+      <Project>{d462f990-1e44-4ddb-9a8d-1a74f60aa59b}</Project>
+      <Name>AltaWindowsNotification</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SupervisionModel\SupervisionModel.csproj">
+      <Project>{4efe4ce8-a773-4b74-859b-29d32147758c}</Project>
+      <Name>SupervisionModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

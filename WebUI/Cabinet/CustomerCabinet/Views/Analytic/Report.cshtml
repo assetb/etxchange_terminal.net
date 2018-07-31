@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Отчеты";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/scripts/lib/foundation-datepicker/css/foundation-datepicker.min.css" />
+    <style>
+        #reportTable {
+            overflow: hidden;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/scripts/app/controllers/report/report.main.js"></script>
+}
+
+<div id="container_application">
+    <div ng-controller="TechSpecCtrl" ng-init="init()">
+        <div class="row">
+            <form ng-submit="update()">
+                    <div class="medium-6 columns">
+                        <div class="row">
+                            <div class="medium-6 columns">
+                                <label>
+                                    Дата с
+                                    <datepicker dp-value="model.startDate" dp-changed="update()" />
+                                </label>
+                            </div>
+                            <div class="medium-6 columns">
+                                <label>
+                                    Дата до
+                                    <datepicker dp-value="model.endDate" dp-changed="update()" />
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="medium-4 columns">
+                                <label>Фильтровать по дате</label>
+                            </div>
+                            <div class="medium-4 columns">
+                                <div class="switch tiny round">
+                                    <input id="auctionDateFilter" type="radio" ng-change="update()" checked ng-model="model.dateFilterType" value="auctionDate">
+                                    <label class="switch-paddle" for="auctionDateFilter">
+                                    </label>
+                                </div>
+                                <label for="auctionDateFilter">аукциона</label>
+                            </div>
+                            <div class="medium-4 columns end">
+                                <div class="switch tiny round">
+                                    <input id="orderDateFilter" type="radio" ng-change="update()" ng-model="model.dateFilterType" value="orderDate">
+                                    <label for="orderDateFilter"></label>
+                                </div>
+                                <label for="orderDateFilter">заявки</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="medium-6 columns">
+                        <div class="row">
+                            <div class="medium-6 columns">
+                                <label>
+                                    Торговая площадка
+                                    <select ng-model="model.siteId" ng-change="update()" ng-options="item.id as item.name for item in markets" ng-init="model.siteId = 4"></select>
+                                </label>
+                            </div>
+                            <div class="medium-6 columns">
+                                <label>
+                                    Статус аукциона
+                                    <select ng-model="model.statusId" ng-change="update()">
+                                        <option ng-selected="{{model.statusId == 1}}" value="1">Состоявщиеся</option>
+                                        <option ng-selected="{{model.statusId == 0}}" value="0">Все аукционы</option>
+                                        <option ng-selected="{{model.statusId == 2}}" value="2">Ожидаются</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row collapse">
+                        <div class="medium-offset-9 medium-3 columns expand">
+                            <button type="button" ng-click="generateUrl()" class="button small secondary expand">Скачать</button>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    <hr />
+    <div class="row">
+        <pagination pg-click="update(page, items)" pg-page="table.currentPage" pg-count-pages="table.countPages" pg-count-items="searchParameters.countItems" pg-count="table.countItems"></pagination>
+    </div>
+    <div class="row text-center">
+        <p>&larr; Для того что бы прокрутить таблицу влево или вправо зажмите кнопку <b>SHIFT</b> и крутите колесико &rarr;</p>
+    </div>
+    <div class="row text-right">
+        <a ng-click="setOrder(null)">Отменить сортировку</a> <span>Всего найдeно: <span ng-bind="report.length"></span></span>
+    </div>
+    <div class="row expanded">
+        <table class="alta">
+            <tr>
+                <th>№ п.н.</th>
+                <th>Номер аукциона</th>
+                <th id="orderDate" class="active-head" ng-click="setOrder('orderDate')">
+                    <span>Дата заявки</span>
+                </th>
+                <th>Код лота</th>
+                <th>Наименование продукта</th>
+                <th>Ед. измерения</th>
+                <th>Кол-во</th>
+                <th>Цена</th>
+                <th>Сумма</th>
+                <th>Номер сделки</th>
+                <th>Поставщик</th>
+                <th id="auctionDate" class="active-head" ng-click="setOrder('auctionDate')">
+                    <span>Дата аукциона</span>
+                </th>
+                <th>Цена поставщика</th>
+                <th>Сумма поставщика</th>
+            </tr>
+            <tr ng-if="report.length == 0">
+                <td colspan="14" class="text-center" ng-if="$submiting == false">Нет записей</td>
+                <td colspan="14" class="text-center" ng-if="$submiting == true"><img src="Resources/Images/ajax-loader.gif" /> Загрузка...</td>
+            </tr>
+            <tr ng-repeat="row in report track by $index">
+                <td ng-bind="$index + 1"></td>
+                <td ng-bind="row.auctionNumber"></td>
+                <td ng-bind="row.orderDate | date : 'shortDate'"></td>
+                <td ng-bind="row.lotCode"></td>
+                <td ng-bind="row.productName"></td>
+                <td ng-bind="row.unit"></td>
+                <td ng-bind="row.quantity"></td>
+                <td ng-bind="row.price | currency : '': 2"></td>
+                <td ng-bind="row.productSum | currency : '': 2"></td>
+                <td ng-bind="row.dealNumber"></td>
+                <td ng-bind="row.name"></td>
+                <td ng-bind="row.auctionDate | date: 'shortDate'"></td>
+                <td ng-bind="row.productFinalPrice"></td>
+                <td ng-bind="row.productFinalSum"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <pagination pg-click="update(page, items)" pg-page="table.currentPage" pg-count-pages="table.countPages" pg-count-items="searchParameters.countItems" pg-count="table.countItems"></pagination>
+    </div>
+</div>
+</div>

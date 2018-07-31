@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+}
+
+
+<div class="row callout text-center  home-page">
+    <div class="medium-4 columns home-section">
+        <img src="~/Resources/Images/auctions.png" style="height:100px" />
+        <h3>Аукционы</h3>
+        <hr />
+        <div class="home-section-description">
+            <span>В данном разделе можно организовать торг, увидеть список активных и историю прошедших.</span>
+        </div>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;"><a class="indexbtn" href="@Url.Action("Index", "Order", new { id = string.Empty}, null)">Управление заявками</a></li>
+            <li style="padding-bottom:15px;"><a class="indexbtn" href="@Url.Action("Index", "Auctions", new { id = string.Empty}, null)#/active">Список активных</a></li>
+            <li style="padding-bottom:15px;"><a class="indexbtn" href="@Url.Action("Index", "Auctions", new { id = string.Empty}, null)#/history">Перечень прошедших</a></li>
+            <li style="padding-bottom:15px;"><a class="indexbtn" href="Auctions/Online">Онлайн торги</a></li>
+        </ul>
+    </div>
+    <div class="medium-4 columns home-section">
+        <img src="~/Resources/Images/companies.png" style="height:100px" />
+        <h3>Поставщики</h3>
+        <hr />
+        <div class="home-section-description">
+            <span>Здесь вы сможете найти данные по компаниям участникам. Проверить их данные и организовать поиск по товару.</span>
+        </div>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("База компаний", "Index", "Supplier", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Поиск по товару", "SearchByProduct", "Supplier", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Поиск поставщиков", "SearchSupplier", "Supplier", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+    <div class="medium-4 columns home-section">
+        <img src="~/Resources/Images/analytics.png" style="height:100px" />
+        <h3>Аналитика</h3>
+        <hr />
+        <div class="home-section-description">
+            <span>Совокупность информации покажет Вам статистику по выбранным критериям.</span>
+        </div>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("Статистика торгов", "general", "analytic", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Отчеты", "report", "analytic", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Экономические показатели", "economy", "analytic", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Товар-поставщик", "products", "analytic", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Ключевой поставщик по товару", "WinsCount", "analytic", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+</div>

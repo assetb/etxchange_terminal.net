@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="DocumentFormation.view.InvoiceView_old"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DocumentFormation.view"
+             xmlns:toolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto">
+    <UserControl.Background>
+        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="white" Offset="0"/>
+            <GradientStop Color="Navy" Offset="1.5"/>
+        </LinearGradientBrush>
+    </UserControl.Background>
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontFamily" Value="calibri" />
+            <Setter Property="Foreground" Value="Navy" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontFamily" Value="calibri" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Width" Value="150"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="125" />
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="BorderBrush" Value="Navy" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontFamily" Value="Calibri" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontFamily" Value="calibri" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Width" Value="100"/>
+        </Style>
+        <Style TargetType="toolkit:DateTimePicker">
+            <Setter Property="Format" Value="Custom" />
+            <Setter Property="FormatString" Value="dd.MM.yyyy" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Foreground" Value="Navy" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="55"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" HorizontalAlignment="Left">
+            <TextBlock Text="Номер аукциона"/>
+            <TextBox Text="{Binding AuctionNumber}"/>
+            <TextBlock Text="От кого"/>
+            <ComboBox Text="{Binding BrokerName}"
+                      ItemsSource="{Binding BrokerInfo}"
+                      DisplayMemberPath="name"
+                      SelectedItem="{Binding SelBrokerName}"/>
+        </DockPanel>
+        <DockPanel Grid.Row="1">
+            <TextBlock Text="Поиск клиента"/>
+            <TextBox Width="125" Text="{Binding SearchSupplier, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="Кому"/>
+            <ComboBox Text="{Binding SupplierName}"
+                      ItemsSource="{Binding JournalC01Companies}"
+                      DisplayMemberPath="name"
+                      SelectedItem="{Binding JournalC01CompanyInfo}"
+                      SelectedIndex="0" Width="200"/>
+        </DockPanel>
+        <DockPanel Grid.Row="3" HorizontalAlignment="Left">
+            <TextBlock Text="Cумма для просчета"/>
+            <TextBox Text="{Binding InvoiceSum}"/>
+            <TextBlock Text="Заметка: стартовая сумма для счета ГО, выигрышная для счета на оплату после торгов." 
+                       FontStyle="Italic" FontWeight="Light" FontSize="8"
+                       TextWrapping="Wrap" Width="200"/>
+        </DockPanel>
+        <!--Commands panel-->
+        <Separator Grid.Row="4" Background="Red"/>
+        <Border Grid.Row="5" Margin="5" Background="Transparent" Padding="5">
+            <ItemsControl ItemsSource="{Binding Commands}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding Command}"
+                                Content="{Binding DisplayName}" Width="150"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </Grid>
+</UserControl>

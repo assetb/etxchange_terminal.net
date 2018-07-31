@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "Список протоколов";
+}
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/foundation/foundation-datepicker.min.css" />
+    <style>
+        div.drop-down-list {
+            position: absolute;
+            width: 100%;
+            top: 37px;
+            -webkit-box-shadow: 1px 2px 14px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 1px 2px 14px 0px rgba(0,0,0,0.75);
+            box-shadow: 1px 2px 14px 0px rgba(0,0,0,0.75);
+        }
+
+            div.drop-down-list div.drop-down-item {
+                z-index: 1000;
+                background-color: #fff;
+                color: #000000 !important;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+                div.drop-down-list div.drop-down-item:hover {
+                    background-color: #E8E9EB;
+                }
+    </style>
+}
+
+@section Scripts {
+    <script src="~/scripts/foundation/foundation.tab.js"></script>
+    <script src="~/scripts/requierjs/require.min.js"></script>
+    <script src="~/scripts/app/config.js"></script>
+    <script src="~/scripts/app/controllers/analytics/protocols.js"></script>
+}
+
+<div id="protocol-module" ng-controller="ProtocolCtrl" ng-init="init()">
+    <div class="row">
+        <form ng-submit="update(1, filterForm.count)" class="medium-12 columns">
+            <div class="row collapse">
+                <div class="medium-2 columns">
+                    <select ng-model="methodSearch" class="prefix">
+                        <option ng-selected="methodSearch == $index" ng-repeat="method in methodsSearch track by $index" value="{{$index}}" ng-bind="method.text"></option>
+                    </select>
+                </div>
+                <div class="medium-8 columns">
+                    <input type="text" ng-model="queryString" placeholder="Поиск" ng-keyup="findProducts($event)" />
+                    @*<div class="drop-down-list">
+                            <div class="medium-12 columns text-left drop-down-item" ng-repeat="product in namesProducts">
+                                <a ng-click="selecteProduct(product)" title="{{product}}" ng-bind="product"></a>
+                            </div>
+                        </div>*@
+                </div>
+                <div class="medium-2 columns">
+                    <input type="submit" class="button postfix" value="Поиск" />
+                </div>
+            </div>
+            <div class="row collapse">
+
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <pagination pg-click="update(page, items)" pg-page="form.page" pg-count-pages="countPages" pg-count-items="form.count" pg-count="count"></pagination>
+    </div>
+    <div class="row">
+        <table style="width: 100%">
+            <tr>
+                <th>Номер протокола</th>
+                <th>Организатор</th>
+                <th>Адрес</th>
+                <th>Метод закупки</th>
+                <th>Регион</th>
+                <th>Источник</th>
+                <th>Дата завершения</th>
+            </tr>
+            <tbody style="border-bottom: 0.5px solid #007095;" ng-if="protocols.length" ng-repeat="(key, value) in protocols | groupBy : 'name'">
+                <tr>
+                    <td colspan="7"><b><span ng-bind="key"></span></b></td>
+                </tr>
+                <tr ng-repeat="item in value track by $index" ng-init="item._hideText = true">
+                    <td style="width:10%;" ng-bind="item.number"></td>
+@*                    <td style="width:15%;"><span style="height: 30px; text-overflow: {{item._hideText ? 'clip' : 'ellipsis'}}" ng-bind="item.organizer"></span><a ng-click="item._hideText = !item._hideText">Подробнее</a></td>*@
+                    <td style="width:15%;" ng-bind=item.organizer></td>
+                    <td style="width:15%;" ng-bind="item.venue"></td>
+                    <td style="width:15%;" ng-bind="item.purchaseMethod"></td>
+                    <td style="width:15%;" ng-bind="item.region"></td>
+                    <td style="width:15%;" ng-bind="item.source == 'Samruk' ? 'Самрук-Қазына' : 'Государственные закупки'"></td>
+                    <td style="width:15%;" ng-bind="item.endDate | date:'MM/dd/yyyy'"></td>
+@*                    <td style="width:10%;" ng-if="item.winner != 'null'" ng-bind="item.price | currency: 'тг': 2"></td>*@
+@*                    <td style="width:65%;" ng-if="item.winner != 'null'" ng-bind="item.winner"></td>*@
+@*                    <td ng-if="item.winner == 'null'" class="text-center" colspan="2"><i>Торг не состоялся</i></td>*@
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <pagination pg-click="update(page, items)" pg-page="form.page" pg-count-pages="countPages" pg-count-items="form.count" pg-count="count"></pagination>
+    </div>
+</div>

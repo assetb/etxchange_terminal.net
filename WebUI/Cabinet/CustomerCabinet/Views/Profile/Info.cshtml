@@ -1,0 +1,160 @@
+﻿@{
+    ViewBag.Title = "Реквизиты компании";
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/main.js"></script>
+    }
+
+<div id="contentBody" ng-controller="SupplierInfoCtrl" ng-init="init(@Model)" class="form-horizontal">
+    <div class="row">
+        <div class="medium-2 column end">
+            <a href="javascript:history.back();" class="button secondary expand tiny">Назад</a>
+        </div>
+    </div>
+    <div class="row panel">
+        <h4>Общая информация</h4>
+        <hr />
+        <div class="row callout">
+            <div class="medium-3 columns">
+                <div class="form-group">
+                    <label for="company_bin">БИН</label>
+                    <div>
+                        <input id="company_bin" type="text" value="{{company.bin}}" />
+                    </div>
+                </div>
+            </div>
+            <div class="medium-9 columns end">
+                <div class="form-group">
+                    <label for="company_name">Наименование компании</label>
+                    <div>
+                        <input id="company_name" type="text" value="{{company.name}}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <h4>Контактные данные</h4>
+        <hr />
+        <div class="row callout">
+            <div class="medium-3 columns">
+                <div class="form-group">
+                    <label for="company_email">Электронный адрес</label>
+                    <div>
+                        <input id="company_email" type="text" value="{{company.email}}" />
+                    </div>
+                </div>
+            </div>
+            <div class="medium-3 columns">
+                <div class="form-group">
+                    <label for="company_tel">Телефон</label>
+                    <div>
+                        <input id="company_tel" type="text" value="{{company.telephone}}" />
+                    </div>
+                </div>
+            </div>
+            <div class="medium-3 columns end">
+                <div class="form-group">
+                    <label for="company_fax">Факс</label>
+                    <div>
+                        <input id="company_fax" type="text" value="{{company.fax}}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <h4>Адресная книга</h4>
+        <hr />
+        <div class="row callout">
+            <div class="form-group medium-3 columns">
+                <label for="company_country">Страна</label>
+                <div>
+                    <input id="company_country" type="text" value="{{company.country}}" />
+                </div>
+            </div>
+            <div class="medium-3 columns form-group">
+                <label for="company_addresslegal">Юридический адрес</label>
+                <div>
+                    <input id="company_addresslegal" type="text" value="{{company.addressLegal}}" />
+                </div>
+            </div>
+            <div class="medium-3 columns form-group">
+                <label for="company_addressactual">Фактический адрес</label>
+                <div>
+                    <input id="company_addressactual" type="text" value="{{company.addressActual}}" />
+                </div>
+            </div>
+            <div class="medium-3 columns end form-group">
+                <label for="company_postcode">Почтовый индекс</label>
+                <div class="col-md-10">
+                    <input id="company_postcode" type="text" value="{{company.postCode}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <h4>Банковская информация</h4>
+        <hr />
+        <div class="medium-3 columns form-group">
+            <label for="company_kbe">КБЕ</label>
+            <div>
+                <input id="company_kbe" type="text" value="{{company.kbe}}" />
+            </div>
+        </div>
+        <div class="medium-3 columns form-group">
+            <label for="company_iik">ИИК</label>
+            <div>
+                <input id="company_iik" type="text" value="{{company.iik}}" />
+            </div>
+        </div>
+        <div class="medium-3 columns end form-group">
+            <label for="company_bik">БИК</label>
+            <div>
+                <input id="company_bik" type="text" value="{{company.bik}}" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <h4>Дополнительно</h4>
+        <hr />
+        <div class="medium-4 columns form-group">
+            <label for="company_directorpowers">И.О. на основании</label>
+            <div>
+                <input id="company_directorpowers" type="text" value="{{company.directorPowers}}" />
+            </div>
+        </div>
+        <div class="medium-4 columns form-group">
+            <label for="company_director">Ф.И.О. директора</label>
+            <div class="col-md-10">
+                <input id="company_director" type="text" value="{{company.director}}" />
+            </div>
+        </div>
+        <div class="medium-4 columns end form-group">
+            <label for="company_comments">Доп. описание</label>
+            <div>
+                <input id="company_comments" type="text" value="{{company.comments}}" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row panel">
+        <div class="medium-6 columns form-group">
+            <label for="company_updatedate">Дата обновления</label>
+            <div>
+                <input id="company_updatedate" type="date" value="{{company.updateDate | date : "dd.MM.yyyy"}}" />
+            </div>
+        </div>
+        <div class="medium-6 columns end form-group">
+            <label for="company_createdate">Дата регистрации</label>
+            <div>
+                <input id="company_createdate" type="date" value="{{company.createDate | date : "dd.MM.yyyy"}}" />
+            </div>
+        </div>
+    </div>
+</div>

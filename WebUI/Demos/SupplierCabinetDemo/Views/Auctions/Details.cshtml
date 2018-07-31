@@ -1,0 +1,54 @@
+﻿@model SupplierCabinetDemo.Models.AuctionDetails
+
+@{
+    ViewBag.Title = "Детальная информация торга";
+}
+
+<div class="row">
+    <div class="medium-7 medium-centered columns">
+        <fieldset>
+            <legend>Данные аукциона</legend>
+            <label>Номер: <span>@Model.auction.number</span></label>
+            <label>Дата торга: <span>@Model.auction.auctionDate.ToShortDateString()</span></label>
+            <label>Заказчик: <span>@Model.auction.customer</span></label>
+            <label>Биржа: <span>@Model.auction.source</span></label>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Данные о лоте</legend>
+            <label>Наименование: <span>@Model.lot.name</span></label>
+            <label>Стартовая сумма: <span>@Model.lot.startPrice</span></label>
+            <label>Количество: <span>@Model.lot.quantity</span></label>
+            <label>Условия оплаты: <span>@Model.lot.paymentTerms</span></label>
+            <label>Условия поставки: <span>@Model.lot.deliveryTerms</span></label>
+            <label>Время поставки: <span>@Model.lot.deliveryTime</span></label>
+            <label>Место поставки: <span>@Model.lot.deliveryPlace</span></label>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Участники</legend>
+            <label>Наименование компании: <span>@Model.suppliers[0].name</span></label>
+            <label>Наименование компании: <span>@Model.suppliers[1].name</span></label>
+        </fieldset>
+        <br />
+        @if(Model.auction.orderDate.AddDays(5) >= DateTime.Now) {
+            <fieldset>
+                <legend>Заявка</legend>
+
+                @if(Model.auction.supplierOrder == null) {
+                    <label>Шаблон: <a href="~/Resources/Files/SupplierOrder.docx"><i class="fi-save"></i></a></label>
+                    using(Html.BeginForm("UploadOrder", "Auctions", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+                        <input hidden name="auctionNumber" value="@Model.auction.number" />
+                        <label>Подать: <input type="file" name="file" /><button type="submit" class="button small">Отправить</button></label>
+                    }
+                } else {
+                    <label>Ваша заявка:</label>
+                    <a href="@Model.auction.supplierOrder">Скачать</a>
+                }
+            </fieldset>
+            <br />
+        }
+    </div>
+</div>

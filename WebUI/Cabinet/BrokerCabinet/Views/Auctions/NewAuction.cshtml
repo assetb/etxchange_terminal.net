@@ -1,0 +1,141 @@
+﻿@model int?
+
+@{
+    ViewBag.Title = "Формирование нового аукциона";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/foundation/foundation-datepicker.min.css" />
+}
+
+@section Scripts {
+   
+    <script src="~/Scripts/app/controllers/newAuction.js"></script>
+}
+
+
+
+<div id="auctionApp" class="row">
+    <div ng-controller="newAucCtrl" class="row" ng-init="init();getDateReglament(date)">
+
+        @*<label>{{postParam.siteId}}</label>
+            <label>{{postParam.brokerId}}</label>*@
+
+        <section>
+            <h4>Информация об аукционе</h4>
+            <form id="create1" class="medium-8">
+                <div id="trigger1">
+                    <div class="medium-6 columns">
+                        <div class="medium-12 columns">
+                            <label>Биржа</label>
+                            <select ng-model="postParam.siteId" ng-options="exchange.id as exchange.value for exchange in enum.$exchanges.exchangesEnum" ng-init="postParam.siteId = enum.$exchanges.exchangesEnum[3].id">
+                                <option value="">Не указано</option>
+                            </select>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label>Брокер</label>
+                            <select ng-model="postParam.brokerId" ng-options="broker.id as broker.value for broker in enum.$brokers.brokersEnum" ng-init="postParam.brokerId = enum.$brokers.brokersEnum[0].id">
+                                <option value="">Не указано</option>
+                            </select>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label>Тип</label>
+                            <select ng-model="postParam.autionTypeId" ng-options="auction.id as auction.value for auction in enum.$auctionTypes.auctionEnum" ng-init="postParam.autionTypeId = enum.$auctionTypes.auctionEnum[0].id">
+                                <option value="">Не указано</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="medium-6 columns">
+                        <div class="medium-12 columns">
+                            <label>Биржа</label>
+                            <select ng-model="postParam.siteId" ng-options="exchange.id as exchange.value for exchange in enum.$exchanges.exchangesEnum" ng-init="postParam.siteId = enum.$exchanges.exchangesEnum[3].id">
+                                <option value="">Не указано</option>
+                            </select>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label>Брокер</label>
+                            <select ng-model="postParam.brokerId" ng-options="broker.id as broker.value for broker in enum.$brokers.brokersEnum" ng-init="postParam.brokerId = enum.$brokers.brokersEnum[0].id">
+                                <option value="">Не указано</option>
+                            </select>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label>Тип</label>
+                            <select ng-model="postParam.autionTypeId" ng-options="auction.id as auction.value for auction in enum.$auctionTypes.auctionEnum" ng-init="postParam.autionTypeId = enum.$auctionTypes.auctionEnum[0].id">
+                                <option value="">Не указано</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="columns">
+                <hr />
+                <label id="form1submit" style="text-align:center" ng-click="toggle_dom('#create1','#form1submit');">Принять</label>
+            </div>
+            @*<div class="row">
+            <div class="large-3 columns">
+                <label>С</label>
+                <input ng-change="search()" type="date" ng-model="form.params.fromDate" />
+            </div>
+            <div class="large-3 columns">
+                <label>До</label>
+                <input ng-change="search()" type="date" ng-model="form.params.toDate" />
+            </div>
+                </div>*@
+        </section>
+
+        <section>
+            <h4>Регламент дат</h4>
+            <form id="create2" class="medium-8">
+                <div>
+                    <div class="medium-6 columns">
+                        <label for="number">Дата подачи заявки</label>
+                        <div class="medium-12 columns">
+                            <datepicker dp-value="Listform.rows[3].Value" dp-changed="getDateReglament(Listform.rows[3].Value)" />
+                        </div>
+                        <label for="site">Дата обработки</label>
+                        <div class="medium-12 columns">
+                            <datepicker dp-value="date" />
+                        </div>
+                        <label for="trader">Срок подачи заявок на участие</label>
+                        <div class="medium-12 columns">
+                            <datepicker dp-value="Listform.rows[4].Value" />
+                        </div>
+                    </div>
+                    <div class="medium-6 columns">
+                        <label for="customer">Срок подачи списка претендентов</label>
+                        <div class="medium-12 columns">
+                            <datepicker dp-value="Listform.rows[1].Value" />
+                        </div>
+                        <label for="type">Срок внесения биржевого обеспечения</label>
+                        <div class="medium-12 columns">
+                            <datepicker dp-value="Listform.rows[2].Value" />
+                        </div>
+                        <label for="type">Дата аукциона</label>
+                        <div class="medium-12 columns">
+                            <datepicker dp-value="Listform.rows[0].Value" />
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div class="columns">
+                <hr />
+                <label id="form2submit" style="text-align:center" ng-click="toggle_dom('#create2','#form2submit');">Принять</label>
+            </div>
+        </section>
+        <h4>Спиоск лотов</h4>
+        <form id="create3" class="medium-8">
+            <div>
+
+            </div>
+        </form>
+        <div class="columns">
+            <hr />
+            <label id="form3submit" style="text-align:center" ng-click="toggle_dom('#create3','#form3submit');">Принять</label>
+        </div>     
+
+                <button id="createAuction" ng-click="createAuction()">сделать все хорошо</button>
+
+
+            </div>
+    </div>

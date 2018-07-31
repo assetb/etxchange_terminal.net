@@ -1,0 +1,105 @@
+﻿@model int
+@{
+    ViewBag.Title = "Форма поставщика";
+}
+
+@section Styles {
+    <style>
+        .hide, .hide + label ~ div {
+            display: none;
+        }
+
+            .hide + label,
+            .hide:checked + label {
+                padding: 0;
+                color: green;
+                cursor: pointer;
+                border-bottom: 1px dotted green;
+            }
+
+            .hide:checked + label {
+                color: red;
+                border-bottom: 0;
+            }
+
+                .hide:checked + label + div {
+                    display: block;
+                }
+    </style>
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/supplier.js"></script>
+}
+<div id="contentBody">
+    <div class="row" ng-controller="supplier_details_controller" ng-init="init(@Model)">
+        <div class="medium-6 medium-centered columns">
+            <fieldset>
+                <legend>Данные компании</legend>
+                @Html.Partial("Partials/Company")
+            </fieldset>
+            <br />
+            <fieldset>
+                <legend>Поставляемые товары/услуги ({{model.products.length}})</legend>
+                <div style="min-height: 200px;  max-height: 350px; overflow-y: auto;">
+                    @Html.Partial("Partials/Goods")
+                </div>
+            </fieldset>
+            <br />
+            <fieldset style="min-height: 200px; max-height: 350px; overflow-y: scroll;">
+                <legend>Документы(комерческие, ценовые предложения и т.п.)</legend>
+                <div style="min-height: 200px;  max-height: 350px; overflow-y: auto;">
+                    @Html.Partial("Partials/Commertical")
+                </div>
+            </fieldset>
+            <br />
+            <fieldset>
+                <legend>Проверка по гос. базам данных</legend>
+                <a ng-href="~/Supplier/KgdDuty?companyid={{company.id}}&bin={{company.bin}}&name={{company.name}}" class="button small expanded round" style="width: 30em;">Сведения об отсутствии (наличии) налоговой задолженности</a>
+                <a ng-href="~/Supplier/Unreliability?companyid={{company.id}}&bin={{company.bin}}&name={{company.name}}" class="button small expanded round" style="width: 30em;">Сведения о благонадежности (в стадии ликвидации, соответствие адреса и т.д.)</a>
+                <a ng-href="~/Supplier/Taxpayer?companyid={{company.id}}&bin={{company.bin}}&name={{company.name}}" class="button small expanded round" style="width: 30em;">Проверка на сделки, совершенные без фактического выполнения работ, оказания услуг</a>
+                <a class="button small expanded round" style="width: 30em;" href="http://kgd.gov.kz/ru/services/taxpayer_search/legal_entity" target="_blank">Поиск компании как налогоплательщика</a>
+                <a class="button small expanded round" style="width: 30em;" href="http://kgd.gov.kz/ru/services/ndspayer_search" target="_blank">Поиск данных о платежах НДС</a>
+            </fieldset>
+            <br />
+            <fieldset>
+                <legend>Проверка по реестрам торговых площадок</legend>
+                <div class="row">
+                    <div class="medium-7 columns">
+                        <label>Участник Гос. закупок:</label>
+                    </div>
+                    <div class="medium-5 columns end">
+                        @*<label>@StatusSupplier(Model.memberGos)</label>*@
+                    </div>
+                </div><br />
+
+                <div class="row">
+                    <div class="medium-7 columns">
+                        <label>В списках недобросовестных поставщиков Гос. закупок:</label>
+                    </div>
+                    <div class="medium-5 columns end">
+                        @*<label>@StatusSupplier(Model.listConscientiousGos)</label>*@
+                    </div>
+                </div><br />
+
+                <div class="row">
+                    <div class="medium-7 columns">
+                        <label>Участник фонда "Самрук-Казына":</label>
+                    </div>
+                    <div class="medium-5 columns end">
+                        @*<label>@StatusSupplier(Model.memberSamruk)</label>*@
+                    </div>
+                </div><br />
+
+                <div class="row">
+                    <div class="medium-7 columns">
+                        <label>В списках ненадежных поставщиков фонда "Самрук-Казына":</label>
+                    </div>
+                    <div class="medium-5 columns end">
+                        @*<label>@StatusSupplier(Model.listUnfairSamruk)</label>*@
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>

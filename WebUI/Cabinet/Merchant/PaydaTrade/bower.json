@@ -1,0 +1,17 @@
+{
+  "name": "com.alta.cabinet.vostokcabinet",
+  "private": true,
+  "dependencies": {
+    "jquery": "2.1.4",
+    "angular-resource": "1.4.6",
+    "angular-sanitize": "1.4.6",
+    "angular-route": "1.4.6",
+    "requirejs": "2.1.20",
+    "foundation-datepicker": "~1.5.6",
+    "foundation": "5.5.2",
+    "angular-i18n": "1.4.6",
+    "foundation-icon-fonts": "*",
+    "angular-messages": "1.4.6",
+    "angular-mask": "~3.1.1"
+  }
+}

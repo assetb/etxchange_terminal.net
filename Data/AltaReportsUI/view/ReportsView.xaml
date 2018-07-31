@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="AltaReportsUI.view.ReportsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AltaReportsUI.view"
+        xmlns:mahApp="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:oldReports="clr-namespace:AltaArchive.view;assembly=AltaArchive"
+        mc:Ignorable="d"
+        Height="Auto" Width="Auto">
+    <Grid>
+        <mahApp:MetroAnimatedTabControl>
+            <mahApp:MetroTabItem Header="АКТ СВЕРКИ" Padding="5 0 5 5">
+                <oldReports:ReconcilationsReportView/>
+            </mahApp:MetroTabItem>
+            <mahApp:MetroTabItem Header="ДЕБИТОРЫ ИЗ 1C" Padding="5 0 5 5">
+                <oldReports:DebtorsReportView/>
+            </mahApp:MetroTabItem>
+            <mahApp:MetroTabItem Header="ДЕБИТОРЫ" Padding="5 0 5 5">
+                <local:DebtorsListView/>
+            </mahApp:MetroTabItem>
+            <mahApp:MetroTabItem Header="ОТЧЕТЫ ЕТС" Padding="5 0 5 5">
+                <local:DealNumberView/>
+            </mahApp:MetroTabItem>
+            <mahApp:MetroTabItem Header="ДОГОВОРА" Padding="5 0 5 5">
+                <local:ContractsListView/>
+            </mahApp:MetroTabItem>
+            <!--<mahApp:MetroTabItem Header="ЗАВЕРШЕННЫЕ" Padding="5 0 5 5">
+                <local:AuctionsResult/>
+            </mahApp:MetroTabItem>-->
+        </mahApp:MetroAnimatedTabControl>
+    </Grid>
+</UserControl>

@@ -1,0 +1,101 @@
+﻿﻿@using System.Web.Configuration
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="@(Request.ApplicationPath.Equals("/") ? Request.ApplicationPath : Request.ApplicationPath + '/')" />
+    <title>Личный кабинет Брокера - @ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/foundation.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/fonts/foundation-icons/foundation-icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/fonts/foundation-icons/foundation-icons.ttf" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/GeneralStyle.css" />
+
+    @RenderSection("Styles", false)
+
+</head>
+<body>
+    <div style="display:flex;flex-direction:column;height:100%;">
+
+        <!--Navigation menu bar-->
+        <div class="row">
+            <div class="medium-6 columns">
+                <a href="@Url.Action("Index", "Home")"><img src="~/Resources/Images/brokerCabinetLogo.png" style="margin-top:10px;width:300px;" /></a>
+            </div>
+            <div class="medium-6 columns">
+                <div class="right" style="margin-top:25px;">
+                    <a data-dropdown="auctionDrop" aria-controls="auctionDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-list-thumbnails"></i> Аукционы</a>
+                    <ul id="auctionDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("Реестр торгов", "Index", "Auctions")</li>
+                        <li>@Html.ActionLink("Перечень прошедших", "History", "Auctions")</li>
+                    </ul>
+                    <a data-dropdown="companyDrop" aria-controls="companyDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-results-demographics"></i> Компании</a>
+                    <ul id="companyDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("База организаций", "Index", "Companies")</li>
+                    </ul>
+                    <a data-dropdown="reportDrop" aria-controls="reportDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-graph-bar"></i> Аналитика</a>
+                    <ul id="reportDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("Отчеты по торгам", "AuctionsReport", "Analytics")</li>
+                    </ul>
+                    <a href="#" class="topbtn"><i class="fi-widget"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <!--Title-->
+        <div class="row text-center">
+            <h3 style="color:gray">@ViewBag.Title</h3>
+        </div>
+
+        <!--Render zone-->
+        <div class="row" style="flex:1 0 auto;">
+            @RenderBody()
+        </div>
+        <br />
+
+        <!--Footer-->
+        <footer style="background-color:#333333;flex:0 0 auto;">
+            <div class="row text-center">
+                <img src="~/Resources/Images/whiteCompanyLogo.png" style="margin-top:15px;width:250px;" />
+                <h6 style="color:white;">© ТОО "Альта и К" 2016</h6>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/scripts/lib/foundation/js/vendor/jquery.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation.min.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.dropdown.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.topbar.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.reveal.js"></script>
+    <script src="~/scripts/app/services/notification.js"></script>   
+    <script>
+        var baseUrl = "@WebConfigurationManager.AppSettings[MvcApplication.URL_APPLICATION]";
+        var currentDate = new Date();    
+        var globalSettings = {
+            application: $("base").attr("href"),           
+        };      
+
+        $(window).on('load', function () {
+            $(document).foundation({
+                Dropdown: {
+                    active_class: 'open'
+                }
+            });
+            //$("a#profile_logout").attr("href", baseUrl + "/api/profile/logout");
+
+        });
+
+        $(document).ready(function () {
+            notification.init($("#notificationContainer"));
+        });
+    </script>
+    <script src="~/scripts/lib/requirejs/require.js"></script>
+    <script src="~/scripts/app/require-config.js"></script>
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="AltaArchiveUI.view.DocumentCreationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaArchiveUI.view"
+             xmlns:vm="clr-namespace:AltaArchiveUI.vm"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto">
+
+    <Grid>
+        <GroupBox Grid.Row="2" Header="{Binding TitleHeader}" 
+                  MinHeight="250" Visibility="{Binding DocumentPanelVis}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="75"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0">
+                    <StackPanel Orientation="Vertical" Margin="5" Width="300" HorizontalAlignment="Left">
+                        <TextBlock Text="Тип"/>
+                        <ComboBox ItemsSource="{Binding DocumentTypesList}"
+                                  SelectedItem="{Binding SelectedDocumentType}"
+                                  DisplayMemberPath="descriptionRU"/>
+                        <TextBlock Text="Номер*"/>
+                        <TextBox Text="{Binding DocumentNumber}"/>
+                        <TextBlock Text="Брокерская компания"/>
+                        <ComboBox ItemsSource="{Binding BrokersList}"
+                                  SelectedItem="{Binding SelectedBroker}"
+                                  DisplayMemberPath="ShortName"/>
+                        <TextBlock Text="Наименование"/>
+                        <TextBox Text="{Binding DocumentName}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="5" Width="400" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Дата создания*"/>
+                        <DockPanel HorizontalAlignment="Stretch">
+                            <DatePicker DisplayDate="{Binding DocumentDate}"
+                                  SelectedDate="{Binding DocumentDate}"
+                                        HorizontalAlignment="Stretch"/>
+                            <Button Command="{Binding UpdateDateCmd}"
+                                Width="25" Height="25" Background="Transparent"
+                                    HorizontalAlignment="Right">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="..\images\update_icon.png" MaxHeight="25"/>
+                                </StackPanel>
+                            </Button>
+                        </DockPanel>
+                        <TextBlock Text="Автор"/>
+                        <ComboBox ItemsSource="{Binding AuthorsList}"
+                                  SelectedItem="{Binding SelectedAuthor}"
+                                  DisplayMemberPath="name"/>
+                        <TextBlock Text="Компания (контрагент)*"/>
+                        <ComboBox ItemsSource="{Binding CompaniesList}"
+                                  SelectedItem="{Binding SelectedCompany}"
+                                  IsEditable="True" IsTextSearchEnabled="False"                                  
+                                  Text="{Binding SearchCompanyTxt, UpdateSourceTrigger=PropertyChanged}"
+                                  IsDropDownOpen="{Binding IsDropDown}"
+                                  DisplayMemberPath="name"/>
+                        <TextBlock Text="Описание"/>
+                        <TextBox Text="{Binding DocumentDescription}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="5" Width="300" HorizontalAlignment="Left" Visibility="{Binding ArchivePresentVis}">
+                        <TextBlock Text="Год"/>
+                        <TextBox Text="{Binding DocumentYear}" IsReadOnly="True"/>
+                        <TextBlock Text="Дело"/>
+                        <TextBox Text="{Binding DocumentCase}" IsReadOnly="True"/>
+                        <TextBlock Text="Том"/>
+                        <TextBox Text="{Binding DocumentVolume}" IsReadOnly="True"/>
+                        <TextBlock Text="Архивный номер (порядковый)"/>
+                        <TextBox Text="{Binding DocumentSerialNumber}"/>
+                    </StackPanel>
+                </DockPanel>
+
+                <DockPanel Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Button Command="{Binding AttachDocumentCmd}" Width="Auto" Height="Auto">
+                            <StackPanel Orientation="Vertical">
+                                <Image MaxHeight="32">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="..\images\file_blank_icon.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsAttach}" Value="True">
+                                                    <Setter Property="Source" Value="..\images\file_document_icon.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Margin="5" TextWrapping="Wrap" TextAlignment="Center" Width="Auto" Height="Auto">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Text" Value="Прикрепите файл"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsAttach}" Value="True">
+                                                    <Setter Property="Text" Value="Файл прикреплен"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Command="{Binding SaveCmd}">
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="..\images\file_check_icon.png" MaxHeight="32"/>
+                                <TextBlock Text="Сохранить" Margin="5" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding CancelCmd}">
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="..\images\file_cancel_icon.png" MaxHeight="32"/>
+                                <TextBlock Text="Отмена" Margin="5" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

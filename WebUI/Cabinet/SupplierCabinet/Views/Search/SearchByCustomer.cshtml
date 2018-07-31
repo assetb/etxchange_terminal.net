@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Поиск заказчика";
+}
+@section Scripts{
+    <script src="~/scripts/app/controllers/search/search_application.js"></script>
+}
+<div id="container_application" class="row">
+    <div ng-controller="list_customers_controller" class="row" ng-init="Init()">
+        <div class="row">
+            <form>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <input type="text" ng-change="form.Search()" ng-model="form.params.query" placeholder="Наименование компании" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <pagination pg-click="update(page, items)" pg-page="form.$currentPage" pg-count-pages="form.$countPages" pg-count-items="form.params.countItems" pg-count="form.$countItems"></pagination>
+            <div class="row">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>БИН</th>
+                            <th>Наименование компании</th>
+                            <th>Адрес</th>
+                            <th>Страна</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="customer in form.rows">
+                            <td ng-bind="customer.bin"></td>
+                            <td><a ng-href="~/Search/SearchByCustomer/{{customer.id}}" ng-bind="customer.name"></a></td>
+                            <td ng-bind="customer.addressActual"></td>
+                            <td ng-bind="customer.country"></td>
+                        </tr>
+                        <tr ng-if="!form.$isLoading && !form.rows.length">
+                            <td class="text-center" colspan="8">Нет записей</td>
+                        </tr>
+                        <tr ng-if="form.$isLoading">
+                            <td class="text-center" colspan="8">Загрузка...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <pagination pg-click="update(page, items)" pg-page="form.$currentPage" pg-count-pages="form.$countPages" pg-count-items="form.params.countItems" pg-count="form.$countItems"></pagination>
+            <br>
+        </div>
+    </div>
+</div>

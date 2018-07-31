@@ -1,0 +1,50 @@
+﻿@model SupplierCabinetDemo.Models.Supplier
+
+@{
+    ViewBag.Title = "Профиль поставщика";
+}
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        <fieldset>
+            @using(Html.BeginForm("Update", "Profile")) {
+                <legend>Данные компании</legend>
+                <label>Наименование: @Html.EditorFor(m => m.name)</label>
+                <label>БИН: @Html.EditorFor(m => m.bin)</label>
+                <label>Кбе: @Html.EditorFor(m => m.kbe)</label>
+                <label>Страна: @Html.EditorFor(m => m.country)</label>
+                <label>Адрес: @Html.EditorFor(m => m.address)</label>
+                <label>Телефоны: @Html.EditorFor(m => m.telephones)</label>
+                <label>E-mail: @Html.EditorFor(m => m.email)</label>
+                <label>Почтовый индекс: @Html.EditorFor(m => m.postcode)</label>
+                <label>Директор: @Html.EditorFor(m => m.director)</label>
+                <label>ИИК: @Html.EditorFor(m => m.iik)</label>
+                <button type="submit" class="button small">Сохранить изменения</button>
+            }
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Данные по поставляемому товару</legend>
+
+            @using(Html.BeginForm("UpdateLots", "Profile")) {
+                @Html.ActionLink("Добавить товар", "InsertGood")
+                <table id="goods" style="width: 100%;">
+                    <tr>
+                        <th>Наименование</th>
+                        <th></th>
+                    </tr>
+                    @for(var i = 0; i < Model.goods.Count; i++) {
+                        <tr>
+                            <td>
+                                <input type="text" name="goods[@i].name" value="@Model.goods[i].name" />
+                            </td>
+                            <td><a href="@Url.Action("DeletetGood", new { id = i })" title="Удалить"><i class="fi-trash"></i></a></td>
+                        </tr>
+                    }
+                </table>
+                <button type="submit" class="button small">Сохранить изменения</button>
+            }
+        </fieldset>
+        <br />
+    </div>
+</div>

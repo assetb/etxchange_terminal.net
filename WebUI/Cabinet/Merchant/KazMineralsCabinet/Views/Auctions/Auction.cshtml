@@ -1,0 +1,356 @@
+﻿@model int?
+
+@{
+    ViewBag.Title = "Форма аукциона";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/Content/hiding_panel.css" />
+}
+
+@section Scripts {
+    <script>
+        this.app = angular.module('app', []);
+        this.app.controller("auctionController", function ($scope, $http, $timeout) {
+            $scope.URL_ARCHIVE = baseUrl + '/api/archive/file';
+            $scope.files = null;
+            $scope.auctionId = @Model;
+
+            $scope.orders = null;
+            $scope.auction = null;
+            $scope.applicants = null;
+
+            $scope.GetAuction = function () {
+                $http({
+                    url: baseUrl + "/api/auction/" + $scope.auctionId,
+                    method: "GET",
+                }).success(function (data, status, header, config) {
+                    $scope.auction = data;
+                })
+                .error(function (data, status, headers, config) {
+                    $scope.auction = null;
+                });
+            };
+
+            $scope.GetOrder = function (id) {
+                $http({
+                    url: baseUrl + "/api/order",
+                    method: "GET",
+                    params: {
+                        auctionId : $scope.auctionId
+                    }
+                }).success(function (data, status, header, config) {
+                    $scope.orders = data;
+                })
+                .error(function (data, status, headers, config) {
+                    $scope.order = null;
+                });
+            }
+
+            $scope.GetApplicants = function(){
+                $http.get(baseUrl + "/api/auction/applicants", {params:{auctionId : $scope.auctionId}})
+                .success(function(data){
+                    $scope.applicants = data;
+                });
+            };
+
+            $scope.GetFiles = function (fileListId) {
+                $scope.files = null;
+                $http.get(baseUrl + "/api/archive/list/" + fileListId).success(function (data) {
+                    $scope.files = data;
+                });
+            };
+
+            $scope.Init = function () {
+                $scope.GetAuction();
+                $scope.GetOrder();
+                $scope.GetApplicants();
+            };
+
+            $scope.DownloadFile = function (fileType) {
+                $http({
+                    method: 'GET',
+                    url: baseUrl+'/api/archive/download',
+                    params: {
+                        auctionDate: $scope.auction.date,
+                        auctionNumber: $scope.auction.number,
+                        fileType:fileType
+                    },
+                    responseType: 'arraybuffer'
+                }).success(function (data, status, headers) {
+                    headers = headers();
+
+                    var filename = headers['x-filename'];
+                    var contentType = headers['content-type'];
+
+                    var linkElement = document.createElement('a');
+                    try {
+                        var blob = new Blob([data], { type: contentType });
+                        var url = window.URL.createObjectURL(blob);
+
+                        linkElement.setAttribute('href', url);
+                        linkElement.setAttribute("download", fileType+".pdf");
+
+                        var clickEvent = new MouseEvent("click", {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        linkElement.dispatchEvent(clickEvent);
+                    } catch (ex) {
+                        console.log(ex);
+                    }
+                }).error(function (data) {
+                    console.log(data);
+                    alert("Файл еще не сформирован.");
+                });
+            };
+        });
+    </script>
+
+    <script type="text/javascript">
+        var tableToExcel = (function() {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+              , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+              , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+              , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+            return function(table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    </script>
+}
+
+<div ng-app="app" class="row">
+    <div ng-controller="auctionController" ng-init="Init()" class="form-horizontal">
+        <div ng-if="auction">
+            <a href="@Request.UrlReferrer">Вернуться к списку</a>
+            <div class="row panel">
+                <input class="hiding_panel_title" id="hd-1" type="checkbox">
+                <label class="hiding_panel_label" for="hd-1">Заявка</label>
+                <div class="hiding_panel_body">
+                    <div ng-if="orders == null">
+                        Загрузка...
+                    </div>
+                    <div ng-if="orders.length == 0">
+                        Нет прикрепленных зявок
+                    </div>
+                    <div ng-repeat="order in orders">
+                        <hr />
+                        <div class="medium-12 columns">
+                            <div class="medium-2 columns">
+                                <label>Номер</label>
+                                <span>{{order.number}}</span>
+                            </div>
+                            <div class="medium-8 columns">
+                                <label>Инициатор</label>
+                                <span>{{order.initiator}}</span>
+                            </div>
+                            <div class="medium-1 columns">
+                                <label>Дата заявки</label>
+                                <span ng-bind="order.date | date : 'dd.MM.yyyy'"></span>
+                            </div>
+                            <div class="medium-1 columns">
+                                <label>Файл заявки</label>
+                                <a href="#" ng-if="order['<filesListId>k__BackingField'] > 0" data-reveal-id="filesModal" ng-click="GetFiles(order['<filesListId>k__BackingField'])"><i class="fi-download"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row panel">
+                <div>
+                    <h4>Аукцион</h4>
+                    <hr />
+                    <div class="medium-6 columns">
+                        <label for="number">Номер</label>
+                        <div class="medium-12 columns">
+                            <span id="number">{{auction.number}}</span>
+                        </div>
+                        <label for="site">Биржа/Торговая площадка</label>
+                        <div class="medium-12 columns">
+                            <span id="site">{{auction.site}}</span>
+                        </div>
+                        <label for="trader">Трейдер</label>
+                        <div class="medium-12 columns">
+                            <span id="trader">{{auction.trader}}</span>
+                        </div>
+                        <label for="customer">Заказчик</label>
+                        <div class="medium-12 columns">
+                            <span id="customer">{{auction.customer}}</span>
+                        </div>
+                        <label for="type">Тип</label>
+                        <div class="medium-12 columns">
+                            <span id="type">{{auction.type}}</span>
+                        </div>
+                    </div>
+                    <div class="medium-6 columns">
+                        <div class="medium-12 columns">
+                            <label for="status">Статус</label>
+                            <span id="status">{{auction.status}}</span>
+                        </div>
+                        <div class="medium-12 columns" ng-if="auction.protocolNumber">
+                            <label for="protocolNumber">Номер протокола</label>
+                            <span id="protocolNumber">{{auction.protocolNumber}}</span>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label for="exchangeProvisionSize">Размер биржевого обеспечения</label>
+                            <span id="exchangeProvisionSize">{{auction.exchangeProvisionSize}}</span>
+
+                        </div>
+                        <div class="medium-12 columns">
+                            <label for="applicantsDeadline">Прием заявок до</label>
+                            <span id="applicantsDeadline">{{ auction.applicantsDeadline | date : "dd.MM.yyyy"}}</span>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label for="exchangeProvisionDeadline">Взнос гарантийного обеспечения до</label>
+                            <span id="exchangeProvisionDeadline">{{ auction.exchangeProvisionDeadline | date : "dd.MM.yyyy"}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row panel">
+                <div ng-if="auction.broker">
+                    <h4>Брокер</h4>
+                    <hr />
+                    <div class="medium-2 columns">
+                        <label for="broker_code">Код</label>
+                        <span id="broker_code">{{auction.broker.Code}}</span>
+                    </div>
+                    <div class="medium-6 columns">
+                        <label for="broker_name">Наименование</label>
+                        <span id="broker_name">{{auction.broker.Name}}</span>
+                    </div>
+                    <div class="medium-4 columns">
+                        <label for="broker_requisites">Реквизиты</label>
+                        <span id="broker_requisites">{{auction.broker.Requisites}}</span>
+                    </div>
+                </div>
+                <div ng-if="!auction.broker">
+                    <h4>Брокер не указан</h4>
+                </div>
+            </div>
+            <br />
+            <div class="row panel">
+                <div>
+                    <h4>Лоты</h4>
+                    <hr />
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th hidden>Id</th>
+                                <th>Номер</th>
+                                <th>Наименование</th>
+                                <th>Кол-во</th>
+                                <th>Цена (тг.)</th>
+                                <th>Сумма (тг.)</th>
+                                <th>Ед. измерение</th>
+                                <th>Шаг понижения (%)</th>
+                                <th>Условие поставки</th>
+                                <th>Срок поставки</th>
+                                <th>Место поставки</th>
+                                <th>ДКС</th>
+                                <th>Местное содержание (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="lot in auction.lots">
+                                <td>{{lot.Number}}</td>
+                                <td>{{lot.Name}}</td>
+                                <td>{{lot.Quantity}}</td>
+                                <td>{{lot.Price}}</td>
+                                <td>{{lot.Quantity * lot.Price}}</td>
+                                <td>{{lot.Unit}}</td>
+                                <td>{{lot.Step}}</td>
+                                <td>{{lot.PaymentTerm}}</td>
+                                <td>{{lot.DeliveryTime | date : "dd.MM.yyyy"}}</td>
+                                <td>{{lot.DeliveryPlace}}</td>
+                                <td>{{lot.Dks}}</td>
+                                <td>{{lot.LocalContent}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+
+            <div class="row panel">
+                <div>
+                    <h4>Техническая спецификация по лоту<a onclick="tableToExcel('lotExTable', 'Техническая спецификация лота')" class="right" title="Экспортировать в Excel"><i class="fi-page-export-csv"></i></a></h4>
+                    <hr />
+                    <table style="width: 100%;" id="lotExTable">
+                        <thead>
+                            <tr>
+                                <th hidden>Id</th>
+                                <th>Наименование закупаемых ТМЦ</th>
+                                <th>Ед. изм.</th>
+                                <th>Кол-во</th>
+                                <th>Цена (с учетом НДС)</th>
+                                <th>Общая сумма</th>
+                                <th>Условия поставки, места и сроков</th>
+                                <th>Порядок оплаты</th>
+                                <th>ДКС (%)</th>
+                                <th>№ контракта недропользования</th>
+                                <th>Цена победителя</th>
+                                <th>Сумма победителя</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="lotex in auction.lots[0].LotsExtended">
+                                <td hidden>{{lotex.id}}</td>
+                                <td>{{lotex.name}}</td>
+                                <td>{{lotex.unit}}</td>
+                                <td>{{lotex.quantity}}</td>
+                                <td>{{lotex.price}}</td>
+                                <td>{{lotex.sum}}</td>
+                                <td>{{lotex.terms}}</td>
+                                <td>{{lotex.paymentterms}}</td>
+                                <td>{{lotex.dks}}</td>
+                                <td>{{lotex.contractnumber}}</td>
+                                <td>{{auction.status=='Состоялся'?lotex.endprice:'Нет итогов'}}</td>
+                                <td>{{auction.status=='Состоялся'?lotex.endsum:'Нет итогов'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+
+            <div class="row panel">
+                <h4>Список участников<a class="right" title="Скачать реестр участников"><i ng-click="DownloadFile('applicants')" class="fi-save"></i></a></h4>
+                <hr />
+                <div class="medium-12 columns" ng-if="applicants.length" ng-repeat="applicant in applicants">
+                    <label class="medium-2 columns">Наименование:</label>
+                    <span class="medium-10 columns">
+                        <a ng-href="~/Supplier/Index/{{applicant.SupplierId}}">{{applicant.SupplierName}}</a>
+                    </span>
+                </div>
+                <div class="right" ng-if="applicants.length">
+
+                </div>
+                <div class="medium-12 columns" ng-if="!applicants.length">
+                    <h5 class="text-center">Список участников ещё не сформирован</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row panel" ng-if="!auction">
+            <h4 class="text-center">Загрузка...</h4>
+        </div>
+
+        <!-- modal view-->
+        <div class="reveal-modal small" id="filesModal" data-reveal>
+            <h1>Список файлов</h1>
+            <ul>
+                <li ng-repeat="file in files">
+                    <a href="{{URL_ARCHIVE}}/{{file.id}}">{{file.fileName}}</a>
+                </li>
+                <li ng-if="files == null">Загрузка...</li>
+            </ul>
+            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+    </div>
+</div>

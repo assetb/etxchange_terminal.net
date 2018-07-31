@@ -1,0 +1,119 @@
+﻿<UserControl x:Class="AltaTradingSystemUI.View.ProcuratoriesListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaTradingSystemUI.View"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto" MaxWidth="600">
+    
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="GrayButton">
+            <Style.Setters>
+                <Setter Property="Button.Width" Value="100" />
+                <Setter Property="Button.Height" Value="35" />
+                <Setter Property="Button.Background" Value="Gainsboro" />
+                <Setter Property="Button.Foreground" Value="Gray" />
+                <Setter Property="Button.BorderBrush" Value="White" />
+                <Setter Property="Button.Margin" Value="5"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.FontSize" Value="13" />
+                    <Setter Property="Button.Background" Value="Gray" />
+                    <Setter Property="Button.FontWeight" Value="Bold" />
+                    <Setter Property="Button.Foreground" Value="Gainsboro" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="СПИСОК ПОРУЧЕНИЙ" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Background="WhiteSmoke">
+            <StackPanel.Effect>
+                <DropShadowEffect ShadowDepth="5" BlurRadius="10" 
+                                      Direction="300" Opacity="0.25"/>
+            </StackPanel.Effect>
+            <DataGrid Margin="5" ItemsSource="{Binding ProcuratoriesList}"
+                      SelectedItem="{Binding SelectedProcuratory}" AutoGenerateColumns="False"
+                      CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding UpdateProcuratoryCmd}"/>
+                </DataGrid.InputBindings>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Лот" Binding="{Binding Path=lotNumber}"/>
+                    <DataGridTextColumn Header="Минимальная сумма" Binding="{Binding Path=MinimalPrice}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource GrayButton}" Command="{Binding CreateProcuratoryCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Create"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding UpdateProcuratoryCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Update"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding DeleteProcuratoryCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Delete"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Visibility="{Binding ProcuratoryDetailsVis}">
+            <TextBlock Text="ДЕТАЛИ ПОРУЧЕНИЯ" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Vertical" Background="WhiteSmoke" Visibility="{Binding ProcuratoryDetailsVis}">
+            <StackPanel.Effect>
+                <DropShadowEffect ShadowDepth="5" BlurRadius="10" 
+                                      Direction="300" Opacity="0.25"/>
+            </StackPanel.Effect>
+            <local:ProcuratoryDetailsView DataContext="{Binding ProcuratoryDetailsVM}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding ProcuratoryDetailsVis}">
+            <Button Style="{StaticResource GrayButton}" Command="{Binding SaveProcuratoryCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Save"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding CancelProcuratoryCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Cancel"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

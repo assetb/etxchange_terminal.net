@@ -1,0 +1,91 @@
+﻿@model KarazhiraCabinet.Models.AuctionOrderModel
+
+@{
+    ViewBag.Title = "Форма организации аукциона";
+
+    var listItem = new List<SelectListItem>();
+
+    foreach(var item in Model.units) {
+        listItem.Add(new SelectListItem {
+            Text = item.Description,
+            Value = item.Id.ToString()
+        });
+    }
+}
+
+<div class="row text-center">
+    <img src="~/Resources/Images/orderCreation.jpg" style="height:100px" />
+</div>
+
+<div class="row">
+    <div class="medium-5 medium-centered columns">
+        @using(Html.BeginForm()) {
+            @Html.ValidationSummary()
+            <fieldset>
+                <legend>Данные лота</legend>
+                <label>Наименование товара(лота)</label>
+                @Html.TextBoxFor(x => x.LotName)
+                <label>Количество</label>
+                @Html.TextBoxFor(x => x.Count, new { id = "lCount", onkeyup = "Calculate()" })
+                <label>Ед. измерения</label>
+                @Html.DropDownListFor(model => model.UnitId, listItem)
+                <label>Цена(с НДС)</label>
+                @Html.TextBoxFor(x => x.Price, new { id = "lPrice", onkeyup = "Calculate()" })
+                <label>Максимальная стоимость</label>
+                @Html.TextBoxFor(x => x.Amount, new { id = "lSum", @readonly = true })
+                <label>Минимальная стоимость(итоговая)</label>
+                @Html.TextBoxFor(x => x.MinimalSum)
+            </fieldset>
+            <br />
+
+            <fieldset>
+                <legend>Данные торга</legend>
+                <label>Шаг понижения</label>
+                @Html.TextBoxFor(x => x.Step)
+                <label>Размер биржевого обеспечения</label>
+                @Html.TextBoxFor(x => x.TradeWarranty)
+                <label>Местное содержание</label>
+                @Html.TextBoxFor(x => x.Percent)
+            </fieldset>
+            <br />
+
+            <fieldset>
+                <legend>Дополнительные данные</legend>
+                <label>Условия поставки</label>
+                @Html.TextBoxFor(x => x.DeliveryTerm)
+                <label>Место поставки</label>
+                @Html.TextBoxFor(x => x.DeliveryPlace)
+                <label>Сроки поставки</label>
+                @Html.TextBoxFor(x => x.DeliveryTime)
+                <label>Порядок оплаты</label>
+                @Html.TextBoxFor(x => x.Payment)
+                <label>Комментарии</label>
+                @Html.TextBoxFor(x => x.Comments)
+            </fieldset>
+            <br />
+
+            <div class="row text-center">
+                <input type="submit" value="Создать" class="button" />
+                @Html.ActionLink("Отмена", "Index", null, new { @class = "button" })
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function Calculate() {
+        var nCount = document.getElementById('lCount').value;
+        var nPrice = document.getElementById('lPrice').value;
+
+        nCount = nCount.replace(",", ".");
+        nPrice = nPrice.replace(",", ".");
+
+        try { Number(nCount); }
+        catch (Ex) { nCount = 0; }
+
+        try { Number(nPrice); }
+        catch (Ex) { nPrice = 0; }
+
+        document.getElementById('lSum').value = Number(nCount) * Number(nPrice);
+    }
+</script>

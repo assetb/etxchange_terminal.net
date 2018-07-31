@@ -1,0 +1,169 @@
+﻿﻿@using System.Web.Configuration
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="@(Request.ApplicationPath.Equals("/") ? Request.ApplicationPath : Request.ApplicationPath + '/')" />
+    <title>Личный кабинет Поставщика - @ViewBag.Title</title>
+    @*@Styles.Render("~/bundles/css/main")*@
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/lib/foundation/css/foundation.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/lib/foundation-datepicker/css/foundation-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/lib/foundation/css/normalize.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/scripts/lib/foundation-icon-fonts/foundation-icons.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Content/GeneralStyle.css" />
+    <link href="~/scripts/lib/foundation-icon-fonts/foundation-icons.ttf" rel="stylesheet" />
+    @RenderSection("Styles", false)
+</head>
+<body>
+    <div style="display:flex;flex-direction:column;height:100%;">
+
+        <!--Navigation menu bar-->
+        <div class="row">
+            <div class="medium-4 small-12 columns">
+                <a href="@Url.Action("Index", "Home")"><img src="~/Resources/Images/supplierCabinetLogo.png" style="margin-top:10px;width:300px;" /></a>
+            </div>
+            <div class="medium-8 small-12 columns" style="margin-top:25px;">
+                <div class="large-7 medium-9 small-9 columns text-right">
+                    <a data-dropdown="auctionDrop" aria-controls="auctionDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-list-thumbnails"></i> Аукционы</a>
+                    <ul id="auctionDrop" class="f-dropdown text-left" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("Список активных", "Index", "Auctions", new { id = string.Empty }, null)</li>
+                        <li>@Html.ActionLink("Перечень прошедших", "Played", "Auctions", new { id = string.Empty }, null)</li>
+                    </ul>
+                    <a data-dropdown="searchDrop" aria-controls="searchDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-results-demographics"></i> Поиск</a>
+                    <ul id="searchDrop" class="f-dropdown text-left" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("Поиск торгов", "SearchByGood", "Search", new { id = string.Empty }, null)</li>
+                        <li>@Html.ActionLink("Поиск заказчика", "SearchByCustomer", "Search", new { id = string.Empty }, null)</li>
+                    </ul>
+                    <a data-dropdown="reportDrop" aria-controls="reportDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-graph-bar"></i> Аналитика</a>
+                    <ul id="reportDrop" class="f-dropdown text-left" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("Статистика торгов", "GeneralStatistics", "Analytics", new { id = string.Empty }, null)</li>
+                        <li>@Html.ActionLink("Акт-сверки", "Reconciliation", "Analytics", new { id = string.Empty }, null)</li>
+                        @*<li>@Html.ActionLink("Список протоколов", "Protocols", "Analytics", new { id = string.Empty }, null)</li>*@
+                    </ul>
+                </div>
+                <div class="large-5 medium-3 small-3 columns">
+                    <div class="large-6 medium-6 small-6 columns">
+                        <a href="@Url.Action("Index", "Profile", new { id = string.Empty }, null)" class="topbtn" style="font-weight:bold;font-style:normal">
+                            <i class="fi-torso size-60"></i><i class="hidden-for-medium-down"> Профиль</i>
+                        </a>
+                    </div>
+                    <div class="large-6 medium-6 small-6 columns" style="border-left: 1px solid #ddd">
+                        <a href="@Url.Action("Logout", "Home", new { id = string.Empty}, null)" class="topbtn">
+                            <i class="fi-power"></i><i class="hidden-for-medium-down"> Выйти</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="main_notification_container" class="hide" ng-controller="NotificationCtrl" ng-init="init()">
+            <div ng-if="messages.length > 0">
+                <div class="alert-box info" ng-if="messages.length > 0">
+                    <div class="row" style="flex:1 0 auto;">
+                        <div class="medium-8 columns">
+                            <label class="inline">У Вас <span ng-bind="messages.length"></span> уведомления(ий)</label>
+                        </div>
+                        <div class="medium-4 columns">
+                            <a data-reveal-id="notificationModalForm" class="button tiny" ng-click="">Просмотреть</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal-modal small" id="notificationModalForm" data-reveal>
+                    <h1>Список уведомлений</h1>
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Описание</th>
+                                <th>Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="message in messages" ng-mouseover="read(message)">
+                                <td ng-class="!message._read ? 'fi-burst-new' : ''"></td>
+                                <td><b ng-bind="message.eventDescription"></b> <span ng-bind="message.description"></span></td>
+                                <td><a ng-href="~/Auctions/Index/{{message.auctionId}}">Перейти к аукциону</a></td>
+                            </tr>
+                            <tr ng-if="messages.length == 0">
+                                <td colspan="3" class="text-center">У Вас нет уведомлений</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                </div>
+            </div>
+        </div>
+
+        <!--Title-->
+        <div class="row ">
+            <div class="medium-4 columns">
+                @if (ViewBag.hideBack == null || ViewBag.hideBack == false)
+                {
+                    <a id="GoToBack" href="javascript:history.back();" class="button secondary small">Вернуться назад</a>
+                }
+            </div>
+            <div class="@(ViewBag.hideBack != null && ViewBag.hideBack == true ? "medium-offset-4" : "") medium-4 end columns text-center">
+                <h3 style="color:gray">@ViewBag.Title</h3>
+            </div>
+            <div class="medium-4 columns text-right">
+                @RenderSection("ControlPanel", false)
+            </div>
+        </div>
+        <div id="message_container" class="container-padded row align-center" style="position: relative;">
+            <div>
+                @*<div data-closable class="callout alert-box alert-callout-subtle success">
+                        <strong>Yo!</strong> Alert Success
+                    </div>*@
+            </div>
+        </div>
+        <!--Render zone-->
+        <div id="render_body" class="row" style="flex:1 0 auto;">
+            @RenderBody()
+        </div>
+        <br />
+
+        <!--Footer-->
+        <footer style="background-color:#333333;flex:0 0 auto;">
+            <div class="row text-center">
+                <img src="~/Resources/Images/whiteCompanyLogo.png" style="margin-top:15px;width:250px;" />
+                <h6 style="color:white;">© ТОО "Альта и К" 2016</h6>
+            </div>
+        </footer>
+    </div>
+    <script>
+        var baseUrl = "@WebConfigurationManager.AppSettings[MvcApplication.URL_APPLICATION]";
+
+    </script>
+    @*    @Scripts.Render("~/bundles/js/main")*@
+    <script src="~/scripts/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation.min.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.dropdown.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.topbar.js"></script>
+    <script src="~/scripts/lib/foundation/js/foundation/foundation.reveal.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script>
+        var currentDate = new Date();
+
+        var globalSettings = {
+            application: $("base").attr("href"),
+            urlToApp: baseUrl,
+            urlToArhive: baseUrl + '/api/archive',
+        };
+        $(window).ready(function () {
+            $(document).foundation({
+                dropdown: {
+                    active_class: 'open'
+                }
+            });
+        });
+    </script>
+    <script src="~/scripts/lib/requirejs/require.js"></script>
+    <script src="~/scripts/app/require-config.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

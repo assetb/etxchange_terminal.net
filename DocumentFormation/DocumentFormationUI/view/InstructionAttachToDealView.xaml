@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="DocumentFormation.view.InstructionAttachToDealView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DocumentFormation.view"
+             xmlns:toolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto">
+    <UserControl.Background>
+        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="white" Offset="0"/>
+            <GradientStop Color="Navy" Offset="1.5"/>
+        </LinearGradientBrush>
+    </UserControl.Background>
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontFamily" Value="calibri" />
+            <Setter Property="Foreground" Value="Navy" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontFamily" Value="calibri" />
+            <Setter Property="Foreground" Value="Navy" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="125" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="BorderBrush" Value="Navy" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontFamily" Value="Calibri" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontFamily" Value="calibri" />
+            <Setter Property="Foreground" Value="Navy" />
+        </Style>
+        <Style TargetType="toolkit:DateTimePicker">
+            <Setter Property="Format" Value="Custom" />
+            <Setter Property="FormatString" Value="dd.MM.yyyy" />
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Foreground" Value="Navy" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="55"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Row="0" Grid.Column="1">
+            <TextBlock Text="Дата регистрации сделки"/>
+            <toolkit:DateTimePicker Width="150" Value="{Binding DealRegDate}"/>
+        </DockPanel>
+        <DockPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock Text="Код лота"/>
+            <TextBox Width="150" Text="{Binding LotCode}"/>
+        </DockPanel>
+        <DockPanel Grid.Row="2" Grid.Column="0">
+            <TextBlock Text="Брокер"/>
+            <ComboBox Width="150"
+                      ItemsSource="{Binding MemberCodes}"
+                      DisplayMemberPath="name"
+                      SelectedItem="{Binding MemberCode}"
+                      SelectedIndex="0"/>
+        </DockPanel>
+        <DockPanel Grid.Row="2" Grid.Column="1">
+            <TextBlock Text="Код брокера"/>
+            <TextBox Width="150" Text="{Binding MemberCode.code}"/>
+        </DockPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" 
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="Поиск поставщика"/>
+            <TextBox Width="150" Text="{Binding SearchSupplier, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <DockPanel Grid.Row="4" Grid.Column="0">
+            <TextBlock Text="Поставщик"/>
+            <ComboBox Width="150" IsEditable="True"
+                      Text="{Binding SupplierName}"
+                      ItemsSource="{Binding JournalC01Companies}"
+                      DisplayMemberPath="name"
+                      SelectedItem="{Binding JournalC01CompanyInfo}"
+                      SelectedIndex="0"/>
+        </DockPanel>
+        <DockPanel Grid.Row="4" Grid.Column="1">
+            <TextBlock Text="Код поставщика"/>
+            <TextBox Width="150" Text="{Binding SupplierCode}"/>
+        </DockPanel>
+        <DockPanel Grid.Row="5" Grid.Column="0">
+            <TextBlock Text="Дата подачи"/>
+            <toolkit:DateTimePicker Width="150" Value="{Binding ComDateOut}"/>
+        </DockPanel>
+        <DockPanel Grid.Row="5" Grid.Column="1">
+            <TextBlock Text="Дата получения"/>
+            <toolkit:DateTimePicker Width="150" Value="{Binding ComDateIn}"
+                                    FormatString="dd.MM.yyyy HH:mm"/>
+        </DockPanel>
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="Трейдер"/>
+            <ComboBox Width="150"
+                      ItemsSource="{Binding Traders}"
+                      DisplayMemberPath="fullName"
+                      SelectedValue="{Binding Trader}"
+                      SelectedIndex="0"/>
+        </StackPanel>
+        <Separator Grid.Row="7" Grid.ColumnSpan="2" Background="Red"/>
+        <!--Commands panel-->
+        <Border Grid.Row="8" Grid.ColumnSpan="2" Margin="5" Background="Transparent" Padding="5">
+            <ItemsControl ItemsSource="{Binding Commands}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="5"
+                                Command="{Binding Command}"
+                                Content="{Binding DisplayName}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </Grid>
+</UserControl>

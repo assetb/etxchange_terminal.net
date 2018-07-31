@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Акт-сверки";
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/analytics/reconciliation-controller.js"></script>
+}
+
+<div id="controller_container" class="row" ng-controller="ReconciliationСtrl">
+    <p><b>Внимание!</b> Данный раздел предоставляет лишь <b>примерный</b> акт-сверки. Для получение более детального и точного акта-сверки пожалуйста обратитесь в бухгалтерию брокера.</p>
+    <form class="row panel" ng-submit="getReconciliation($event)">
+        <div class="medium-12 columns">
+            <label>Брокер</label>
+            <select required ng-model="form.brokerId" ng-options="broker.Id as broker.Name for broker in model.brokers track by broker.Id">
+                <option value="">Не выбран</option>
+            </select>
+        </div>
+        <div class="medium-12 columns">
+            <div class="row">
+                <div class="medium-6 columns">
+                    <label>Фильтровать по дате с</label>
+                    <datepicker dp-value="form.startDate" required />
+                </div>
+                <div class="medium-6 columns">
+                    <label>Фильтровать по дате до</label>
+                    <datepicker dp-value="form.toDate" required />
+                </div>
+            </div>
+            <div class="medium-offset-8 medium-4 columns end">
+                <button type="submit" class="button success small expand">Фильтровать</button>
+            </div>
+        </div>
+    </form>
+    <br />
+    <h4 class="row" ng-if="checkCredit() > 0">
+        Задолжность: <span ng-bind="checkCredit() | currency : 'тенге' : 2"></span>
+    </h4>
+    <br />
+    <div class="row">
+        <table style="width: 100%;">
+            <tr>
+                <th>№</th>
+                <th>Дата</th>
+                <th>Номер</th>
+                <th>Документ</th>
+                <th>Дебет</th>
+                <th>Кредит</th>
+            </tr>
+            <tr ng-repeat="report in model.reports track by $index">
+                <td ng-bind="$index + 1"></td>
+                <td ng-bind="report.docDate | split:' ':0 "></td>
+                <td ng-bind="report.contractNum | split:' от ':0"></td>
+                <td ng-bind="report.docName | split:' от ':0"></td>
+                <td ng-bind="report.debit | currency : '' : 2"></td>
+                <td ng-bind="report.credit | currency : '' : 2"></td>
+            </tr>
+            <tr ng-if="model.reports.lenght > 0">
+                <td colspan="3" class="text-right">Всего:</td>
+                <td ng-bind="getSum('debit') | currency : 'тенге' : 2"></td>
+                <td ng-bind="getSum('credit') | currency : 'тенге' : 2"></td>
+            </tr>
+            <tr ng-if="model.reports == null || model.reports.lenght == 0">
+                <td colspan="5" class="text-center">Нет записей</td>
+            </tr>
+        </table>
+    </div>
+</div>

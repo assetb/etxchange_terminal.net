@@ -1,0 +1,133 @@
+﻿@model int?
+
+@{
+    ViewBag.Title = "Форма приева заявок";
+}
+
+@section Scripts {
+    <script src="~/scripts/app/require-config.js"></script>
+    <script src="~/Scripts/app/controllers/order.js"></script>
+}
+
+<div id="auctionApp" class="row">
+    <div ng-controller="orderCtrl" class="row" ng-init="init(@Model)">
+        <div id="test">
+            <input type="file" id="files" accept=".xlsx,.xls" name="files" multiple />
+            <output id="list"></output>            
+        </div>
+        
+        <div>
+            <button  id="createAuction" ng-click="createAuction()">сделать все хорошо</button>
+
+        </div>
+
+        <div id="fileSelector">
+            <div title="Нажмите на меня, для обзора файла" style="overflow:hidden;
+      width:60px;
+      height:60px;
+      cursor:pointer;
+      background:url(Resources/Images/excel.png) no-repeat;">
+                <input type="file" id="files" accept=".xlsx,.xls" name="files" multiple style=" opacity:0; cursor:pointer;font-size:100px;
+      /*filter:alpha(opacity:0);
+
+     
+      padding:0px;
+      margin:0px;
+      border:none;
+      margin-left:-450px;*/
+      " />
+            </div>
+            <div title="для обзора файла" style="overflow:hidden;
+      width:60px;
+      height:60px;
+      cursor:pointer;
+      background:url(Resources/Images/word.png) no-repeat;">
+                <input type="file" id="files" accept=".docx,.doc" name="files" multiple size="1" style="opacity:0;font-size:100px;" />
+            </div>
+            <div title="Нажмите на меня, для обзора файла" style="overflow:hidden;
+      width:60px;
+      height:60px;
+      cursor:pointer;
+      background:url(Resources/Images/pdf.png) no-repeat;">
+                <input type="file" id="files" accept=".pdf" name="files" multiple size="1" style="opacity:0;font-size:100px;" />
+            </div>
+        </div>
+        <div class="row panel">            
+                <h4>РЕГЛАМЕНТ ДАТ</h4>
+                <hr />
+                <div class="medium-6 columns">
+                    <label for="number">Дата подачи заявки</label>
+                    <div class="medium-12 columns">
+                        <input id="orderDate" type="date"/>
+                    </div>
+                    <label for="site">Дата обработки</label>
+                    <div class="medium-12 columns">
+                        <input id="processingDate" type="date" />
+                    </div>
+                    <label for="trader">Срок подачи заявок на участие</label>
+                    <div class="medium-12 columns">
+                        <input id="applicantsOrderDeadline" type="date" />
+                    </div>                         
+                </div>
+                <div class="medium-6 columns">
+                    <label for="type">Дата аукциона</label>
+                    <div class="medium-12 columns">
+                        <input id="auctionDate" type="date" />
+                    </div>
+                    <label for="customer">Срок подачи списка претендентов на бирже</label>
+                    <div class="medium-12 columns">
+                        <input id="applicantsDeadline" type="date"/>
+                    </div>
+                    <label for="type">Срок внесения биржевого обеспечения</label>
+                    <div class="medium-12 columns">
+                        <input id="exchangeDate"  type="date"/>
+                    </div>
+                </div>            
+        </div>
+        <div class="row panel">
+            <h4>ИНФОРМАЦИЯ ОБ АУКЦИОНЕ</h4>
+            <hr />
+            <div class="medium-6 columns">
+                <label for="number">Секция торговли</label>
+                <div class="medium-12 columns">
+                    <input id="orderDate" type="date" />
+                </div>
+                <label for="site">Тип</label>
+                <div class="medium-12 columns">
+                    <input id="processingDate" type="date" />
+                </div>
+                <label for="trader">Номер</label>
+                <div class="medium-12 columns">
+                    <input id="number" type="text" />
+                </div>
+                <label for="trader">Статус</label>
+                <div class="medium-12 columns">
+                    <input id="applicantsOrderDeadline" type="date" />
+                </div>
+            </div>
+            <div class="medium-6 columns">
+                <label for="type">Биржа</label>
+                <div class="medium-12 columns">
+                    <input id="auctionDate" type="date" />
+                </div>
+                <label for="customer">Заказчик</label>
+                <div class="medium-12 columns">
+                    <input id="applicantsDeadline" type="date" />
+                </div>
+                <label for="type">Брокер</label>
+                <div class="medium-12 columns">
+                    <select ng-options="broker.id as broker.value for broker in brokers.brokersEnum">
+                        <option value="">Не указано</option>
+                    </select>
+                </div>
+                <label for="type">Трейдер</label>
+                <div class="medium-12 columns">
+                    <input id="exchangeDate" type="date" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+

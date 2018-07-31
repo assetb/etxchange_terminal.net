@@ -1,0 +1,20 @@
+﻿.hiding_panel_title, .hiding_panel_title ~ .hiding_panel_body {
+            display: none;
+        }
+
+            .hiding_panel_title ~ .hiding_panel_label,
+            .hiding_panel_title:checked ~ .hiding_panel_label{
+                padding: 0;
+                color: green;
+                cursor: pointer;
+                border-bottom: 1px dotted green;
+            }
+
+            .hiding_panel_title:checked  ~ .hiding_panel_label{
+                color: red;
+                border-bottom: 0;
+            }
+
+                .hiding_panel_title:checked  ~ .hiding_panel_body {
+                    display: block;
+                }

@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Торг в режиме онлайн";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/scripts/lib/foundation-datepicker/css/foundation-datepicker.min.css" />
+    <link rel="stylesheet" href="~/Content/hiding_panel.css" />
+}
+
+@section Scripts {
+    <script src="~/scripts/app/config.js"></script>
+    <script src="~/scripts/app/controllers/online/online.main.js"></script>
+}
+<div id="application_online" class="row" ng-controller="OnlineMainCrtl" ng-init="init()">
+    <div class="medium-12 column text-center">
+        <p>На данной страницы отображаются ценновые предложения в реальном времени.</p>
+        <p>Вниманиe! Торги на товарной бирже ЕТС проводятся с 15:00 до 16:00 по времени Астаны.</p>
+    </div>
+    <div class="medium-12 columns">
+        <table id="tableAuctionOnline" style="width: 100%; display: none;">
+            <thead>
+                <tr>
+                    <th width="10">№</th>
+                    <th>Компания</th>
+                    <th>Цена</th>
+                    <th>Время</th>
+                    <th width="65">
+                        <div class="switch round tiny">
+                            <input id="exampleCheckboxSwitchAll" type="checkbox" ng-model="switchSelectAll" ng-click="onSwitchSelectAll()">
+                            <label for="exampleCheckboxSwitchAll"></label>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-if="!isLoading && !lots.length">
+                <tr>
+                    <td class="text-center" colspan="5">На сегодня нет торгов</td>
+                </tr>
+            </tbody>
+            <tbody ng-if="isLoading">
+                <tr>
+                    <td class="text-center" colspan="5"><img src="Resources/Images/ajax-loader.gif" /> Загрузка...</td>
+                </tr>
+            </tbody>
+            <tbody style="border-bottom: 0.5px solid #007095;" ng-repeat="lot in lots  track by $index">
+                <tr ng-click="lot.$selected = !lot.$selected;">
+                    <td colspan="2">Номер аукциона: <b><span ng-bind="lot.$auctionNumber"></span></b></td>
+                    <td colspan="2">Номер лота: <b><span ng-bind="lot.Number"></span></b></td>
+                    <td>
+                        <div class="switch round tiny">
+                            <input id="exampleCheckboxSwitch{{lot.id}}" type="checkbox" ng-model="lot.$selected">
+                            <label for="exampleCheckboxSwitch{{lot.id}}"></label>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat="price in lot.$priceOffers | orderBy : '+lotPriceOffer'">
+                    <td ng-bind="$index + 1"></td>
+                    <td ng-bind="price.firmName"></td>
+                    <td ng-bind="price.lotPriceOffer | currency: 'тг': 2"></td>
+                    <td ng-bind="price.offerTime | date : 'medium'"></td>
+                    <td></td>
+                </tr>
+                <tr ng-if="!lot.$priceOffers.length">
+                    <td colspan="5" class="text-center">Нет ценовых предложений</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

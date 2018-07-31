@@ -1,0 +1,134 @@
+﻿using System;
+using System.IO;
+using AltaBO;
+
+namespace AltaTransport
+{
+    public class ArchiveTransport
+    {
+        #region Variables
+        private static string auctionNumber;
+        private const string archivePath = @"\\192.168.11.5\Archive\";
+        private const string utbOrderTemplateFileName = archivePath + @"\Templates\UTB\Order.docx";
+        private const string utbSupplierOrderTemplateFileName = archivePath + @"\Templates\UTB\SupplierOrder.docx";
+        private const string utbApplicantsTemplateFileName = archivePath + @"\Templates\UTB\Applicants.docx";
+        private const string utbProtocolTemplateFileName=archivePath + @"\Templates\UTB\Protocol.docx";
+        private const string utbCustomerReportTemplateFileName = archivePath + @"\Templates\UTB\CustomerReport.docx";
+        private const string utbSupplierReportTemplateFileName = archivePath + @"\Templates\UTB\SupplierReport.docx";
+        #endregion
+
+
+        #region ETS
+        public static void PutOrderToArchive(int source, string[] files, object info)
+        {
+            switch (source) {
+                case 1: // ETS - Vostok                 
+                    var order = (Order)info;
+
+                    auctionNumber = "";
+                    auctionNumber = order.Title.Substring(0, order.Title.IndexOf("от", StringComparison.Ordinal) - 1);
+                    auctionNumber = auctionNumber.Replace("/", "_");
+
+                    if (auctionNumber.Length > 4) auctionNumber = auctionNumber.Substring(auctionNumber.Length - 4, 4);
+
+                    var dateFolderName = archivePath + @"Auctions\ETS\" + order.Auction.Date.ToShortDateString();
+                    var endFolderName = archivePath + @"Auctions\ETS\" + order.Auction.Date.ToShortDateString() + @"\" + auctionNumber;
+
+                    if (!Directory.Exists(dateFolderName))
+                        Directory.CreateDirectory(dateFolderName);
+
+                    if (!Directory.Exists(endFolderName))
+                        Directory.CreateDirectory(endFolderName);
+
+                    foreach (var item in files) {
+                        var tmp = item.Substring(item.LastIndexOf(@"\", StringComparison.Ordinal) + 1, item.Length - item.LastIndexOf(@"\", StringComparison.Ordinal) - 1);
+
+                        File.Move(item, endFolderName + @"\" + tmp);
+                    }
+                    break;
+            }
+        }
+        #endregion
+
+
+        #region UTB
+        public static string PutUTBOrder(Order order)
+        {
+            var dateFolderName = archivePath + @"Auctions\UTB\" + order.Auction.Date.ToShortDateString();
+            var endFolderName = archivePath + @"Auctions\UTB\" + order.Auction.Date.ToShortDateString() + @"\" + order.Title.Replace("/","_") + @"\";
+
+            if (!Directory.Exists(dateFolderName))
+                Directory.CreateDirectory(dateFolderName);
+
+            if (!Directory.Exists(endFolderName))
+                Directory.CreateDirectory(endFolderName);
+
+            File.Copy(utbOrderTemplateFileName, endFolderName + "Заявка.docx", true);
+
+            return endFolderName + "Заявка.docx";
+        }
+
+
+        public static string PutKarazhiraSupplierOrder(string folderName, string fileName)
+        {
+            var endFolderName = archivePath + @"Auctions\UTB\" + folderName + @"\";
+
+            if (!Directory.Exists(endFolderName))
+                Directory.CreateDirectory(endFolderName);
+
+            File.Copy(utbSupplierOrderTemplateFileName, endFolderName + "Заявка на участие от " + fileName + ".docx", true);
+
+            return endFolderName + "Заявка на участие от " + fileName + ".docx";
+        }
+
+
+        public static string PutKarazhiraApplicants(string folderName)
+        {
+            var endFolderName = archivePath + @"Auctions\UTB\" + folderName + @"\";
+
+            if (!Directory.Exists(endFolderName))
+                Directory.CreateDirectory(endFolderName);
+
+            File.Copy(utbApplicantsTemplateFileName, endFolderName + "Список претендентов.docx", true);
+
+            return endFolderName + "Список претендентов.docx";
+        }
+
+
+        public static string PutKarazhiraProtocols(string folderName, string fileName)
+        {
+            var endFolderName = archivePath + @"Auctions\UTB\" + folderName + @"\";
+
+            if (!Directory.Exists(endFolderName))
+                Directory.CreateDirectory(endFolderName);
+
+            File.Copy(utbProtocolTemplateFileName, endFolderName + "Шаблон протокола по лоту №" + fileName + ".docx", true);
+
+            return endFolderName + "Шаблон протокола по лоту №" + fileName + ".docx";
+        }
+
+
+        public static string[] PutKarazhiraReports(string folderName, string fileName)
+        {
+            var fileNames = new string[2] ;
+
+            var endFolderName = archivePath + @"Auctions\UTB\" + folderName + @"\";
+
+            if (!Directory.Exists(endFolderName))
+                Directory.CreateDirectory(endFolderName);
+
+            File.Copy(utbCustomerReportTemplateFileName, endFolderName + "Отчет заказчику по лоту №" + fileName + ".docx", true);
+            File.Copy(utbSupplierReportTemplateFileName, endFolderName + "Отчет поставщику по лоту №" + fileName + ".docx", true);
+
+            fileNames[0] = endFolderName + "Отчет заказчику по лоту №" + fileName + ".docx";
+            fileNames[1] = endFolderName + "Отчет поставщику по лоту №" + fileName + ".docx";
+
+            return fileNames;
+        }
+        #endregion
+
+
+        #region Intermediary
+        #endregion
+    }
+}

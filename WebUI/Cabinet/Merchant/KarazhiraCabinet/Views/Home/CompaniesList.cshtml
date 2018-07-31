@@ -1,0 +1,69 @@
+﻿@model List<AltaBO.Supplier>
+
+@{
+    ViewBag.Title = "Список компаний";
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#companieslist').DataTable({
+                language: {
+                    "processing": "Подождите...",
+                    "search": "Поиск:",
+                    "lengthMenu": "Показать _MENU_ записей",
+                    "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+                    "infoEmpty": "Записи с 0 до 0 из 0 записей",
+                    "infoFiltered": "(отфильтровано из _MAX_ записей)",
+                    "infoPostFix": "",
+                    "loadingRecords": "Загрузка записей...",
+                    "zeroRecords": "Записи отсутствуют.",
+                    "emptyTable": "В таблице отсутствуют данные",
+                    "paginate": {
+                        "first": "Первая",
+                        "previous": "Предыдущая",
+                        "next": "Следующая",
+                        "last": "Последняя"
+                    },
+                    "aria": {
+                        "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                        "sortDescending": ": активировать для сортировки столбца по убыванию"
+                    }
+                }
+            });
+
+            $('#companieslist').show();
+            $('#companieslist').removeAttr("hidden");
+        });
+    </script>
+}
+
+<div class="row text-center">
+    <img src="~/Resources/Images/applicants.jpg" style="height:100px" />
+</div>
+
+<div class="row">
+    <table id="companieslist" hidden class="display">
+        <thead>
+            <tr>
+                <th>НАИМЕНОВАНИЕ КОМПАНИИ</th>
+                <th>БИН</th>
+                <th>СТРАНА</th>
+                <th>КОНТАКТЫ</th>
+                <th>АДРЕС</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model) {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.BIN</td>
+                    <td>@item.Country</td>
+                    <td>@item.Contacts</td>
+                    <td>@item.Address</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+</div>

@@ -1,0 +1,66 @@
+﻿@model int?
+@{
+    ViewBag.Title = "Поиск поставщиков";
+}
+@section Scripts {
+
+    <script src="~/scripts/app/app.js"></script>
+    @*<script src="~/scripts/app/directives/pagination_directive.js"></script>*@
+    @*<script src="~/scripts/app/services/search.js"></script>*@
+    <script src="~/scripts/app/supplier/orderSearch.js"></script>
+}
+
+<div id="search_container">
+    <div ng-controller="searchController" class="row" ng-init="Init()">
+        <form>
+            <div class="large-3 columns">
+                <label>Фильтр</label>
+                <select name="repeatSelect" id="repeatSelect" ng-model="form.params.method">
+                    <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+                </select>
+            </div>
+            <div class="large-7 columns">
+                <label>Значение</label>
+                <input type="text" placeholder="Введите значение" ng-model="form.params.searchText" />
+            </div>
+            <div class="large-2 columns">
+                <label>'</label>
+                <button type="submit" class="postfix button" ng-click="search()">Искать</button>
+            </div>
+        </form>
+        <div class="row">
+            <pagination pg-click="update(page, items)" pg-page="form.$currentPage" pg-count-pages="form.$countPages" pg-count-items="form.params.countItems" pg-count="form.$countItems"></pagination>
+        </div>
+
+        <div class="row">
+            <table id="resultList" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Наименование</th>
+                        <th>БИН</th>
+                        <th>Email</th>
+                        <th>Контакты</th>
+                        <th>Адресс</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in form.rows">
+                        <td><a ng-href="~/Profile/Supplier/{{row.Id}}">{{row.Name}}</a></td>
+                        <td>{{row.BIN}}</td>
+                        <td>{{row.Emails}}</td>
+                        <td>{{row.Contacts}}</td>
+                        <td>{{row.Address}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="row">
+            @*pagination bottom*@
+            <pagination pg-click="update(page, items)" pg-page="form.$currentPage" pg-count-pages="form.$countPages" pg-count-items="form.params.countItems" pg-count="form.$countItems"></pagination>
+        </div>        
+    </div>
+
+</div>
+

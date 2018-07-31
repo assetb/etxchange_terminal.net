@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageSource x:Key="AltaLogoImg">/Images/firmLogo.png</ImageSource>
+    <ImageSource x:Key="BackgroundImg">/Images/background.jpg</ImageSource>
+    <ImageSource x:Key="ArchiveTileImg">/Images/archiveTileBack.png</ImageSource>
+    <ImageSource x:Key="DocumentFormationTileImg">/Images/documentFormationTileBack.png</ImageSource>
+    <ImageSource x:Key="EtsImg">/Images/etsImg.png</ImageSource>
+    <ImageSource x:Key="UtbImg">/Images/utbImg.png</ImageSource>
+    <ImageSource x:Key="UtilitsImg">/Images/utilitsImg.png</ImageSource>
+</ResourceDictionary>

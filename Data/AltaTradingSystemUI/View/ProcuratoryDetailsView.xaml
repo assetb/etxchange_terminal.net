@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="AltaTradingSystemUI.View.ProcuratoryDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaTradingSystemUI.View"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto" MaxWidth="600">
+    
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel Orientation="Vertical" Background="WhiteSmoke">
+            <DockPanel>
+                <TextBlock Text="Лот"/>
+                <ComboBox ItemsSource="{Binding LotsList}" HorizontalAlignment="Right"
+                                  SelectedItem="{Binding SelectedLot}" VerticalAlignment="Center"                                 
+                                  DisplayMemberPath="name" Margin="5"
+                          Width="250"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Минимальная"/>
+                <TextBox Text="{Binding Procuratory.MinimalPrice}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250"/>
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

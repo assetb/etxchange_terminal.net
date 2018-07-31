@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+}
+
+<!--Navigation page-->
+<div class="row callout text-center">
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/auctions.png" style="height:100px"/>
+        <h3>Аукционы</h3>
+        <hr />
+        <p>В данном разделе можно увидеть список активных и историю прошедших торгов.</p>
+    </div>
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/companies.png" style="height:100px"/>
+        <h3>Поиск</h3>
+        <hr />
+        <p>Здесь вы сможете найти аукцион по поставщику и товару.</p>
+    </div>
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/analytics.png" style="height:100px"/>
+        <h3>Аналитика</h3>
+        <hr />
+        <p>Совокупность информации покажет Вам статистику по выбранным критериям.</p>
+    </div>
+</div>
+
+<div class="row callout text-center">
+    <div class="medium-4 columns">
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("Список активных торгов", "Active", "Auctions", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Перечень прошедих", "History", "Auctions", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Проведенные аукционы", "Played", "Auctions", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+    <div class="medium-4 columns">
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("По заказчику", "SearchByCustomer", "Search", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("По товару", "SearchByGood", "Search", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+    <div class="medium-4 columns">
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("Статистика торгов", "GeneralStatistics", "Analytics", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Анализ дохода", "WinningGraph", "Analytics", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Список протоколов", "Protocols", "Analytics", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+</div>

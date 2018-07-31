@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Список активных заявок";
+}
+@section Scripts {
+
+    <script src="~/Scripts/app/controllers/orderList.js"></script>
+}
+
+
+<div id="orderApp">
+    <div ng-controller="orderListCtrl" class="row" ng-init="init()">
+        <table>
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Дата</th>                    
+                    <th>Заказчик</th>
+                    <th>Статус</th>
+                    <th>Файлы заявки</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="Listform.rows == null">
+                    <td class="text-center" colspan="4"><img src="Resources/Images/ajax-loader.gif" /> Загрузка...</td>
+                </tr>
+                <tr ng-if="Listform.rows.length == 0">
+                    <td class="text-center" colspan ="4">Все заявки обработаны.</td>
+                </tr>
+                <tr ng-repeat="order in Listform.rows">
+                    <td><a id="link-1" ng-href= "{{orderDetails(order['<id>k__BackingField'])}}" ng-bind="order.number"></a></td>
+                    <td ng-bind="order.date | date : 'dd.MM.yyyy'"></td>                    
+                    <td ng-bind="order.initiator"></td>
+                    <td ng-bind="order.status"></td>
+                    <td>
+                        <a data-reveal-id="filesModal" ng-click="GetFiles(order['<filesListId>k__BackingField'])">Показать</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <button class="text-center" ng-click="createOrders()">Submit</button>
+        </div>
+    </div>
+</div>

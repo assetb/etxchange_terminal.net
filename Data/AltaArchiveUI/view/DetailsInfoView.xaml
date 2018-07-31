@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="AltaArchiveUI.view.DetailsInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaArchiveUI.view"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto">
+    <Grid>
+        <GroupBox Header="ДЕТАЛИ">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Брокер"/>
+                    <TextBlock Text="{Binding Document.broker}" FontWeight="Bold"/>
+                    <TextBlock Text="Компания"/>
+                    <TextBlock Text="{Binding Document.company}" FontWeight="Bold"/>
+                    <TextBlock Text="Наименование"/>
+                    <TextBlock Text="{Binding Document.name}" FontWeight="Bold"/>
+                    <TextBlock Text="Номер"/>
+                    <TextBlock Text="{Binding Document.number}" FontWeight="Bold"/>
+                    <TextBlock Text="Дата создания"/>
+                    <TextBlock Text="{Binding Document.createdDate}" FontWeight="Bold"/>
+                    <TextBlock Text="Описание"/>
+                    <TextBlock Text="{Binding Document.description}" FontWeight="Bold"/>
+                    <TextBlock Text="Автор"/>
+                    <TextBlock Text="{Binding Document.author}" FontWeight="Bold"/>
+                    <Rectangle HorizontalAlignment="Stretch" Height="1" Margin="5" Stroke="Gainsboro"/>
+                    <TextBlock Text="Архивные данные" FontWeight="Bold"/>
+                    <Rectangle HorizontalAlignment="Stretch" Height="1" Margin="5" Stroke="Gainsboro"/>
+                    <TextBlock Text="Дело"/>
+                    <TextBlock Text="{Binding Document.case_}" FontWeight="Bold"/>
+                    <TextBlock Text="Том"/>
+                    <TextBlock Text="{Binding Document.volume}" FontWeight="Bold"/>
+                    <TextBlock Text="Архивный номер"/>
+                    <TextBlock Text="{Binding Document.serialNumber}" FontWeight="Bold"/>
+                    <Rectangle HorizontalAlignment="Stretch" Height="1" Margin="5" Stroke="Gainsboro"/>
+                    <TextBlock Text="Биржевые данные" FontWeight="Bold"/>
+                    <Rectangle HorizontalAlignment="Stretch" Height="1" Margin="5" Stroke="Gainsboro"/>
+                    <TextBlock Text="Заказчик"/>
+                    <TextBlock Text="{Binding Document.customer}" FontWeight="Bold"/>
+                    <TextBlock Text="Номер аукциона"/>
+                    <TextBlock Text="{Binding Document.auctionNumber}" FontWeight="Bold"/>
+                    <TextBlock Text="Дата аукциона"/>
+                    <TextBlock Text="{Binding Document.auctionDate}" FontWeight="Bold"/>
+                    <TextBlock Text="Биржа"/>
+                    <TextBlock Text="{Binding Document.exchange}" FontWeight="Bold"/>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</UserControl>

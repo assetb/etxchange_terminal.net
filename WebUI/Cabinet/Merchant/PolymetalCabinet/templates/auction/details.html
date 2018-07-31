@@ -1,0 +1,274 @@
+﻿<div ng-controller="auction_details_controller" ng-init="Init()" class="form-horizontal">
+    <div class="row text-center">
+        <img src="Resources/Images/auctionDetails.jpg" style="height:100px" />
+    </div>
+
+    <!--<div data-magellan-expedition="fixed" data-options="active_class:'';">
+        <dl class="sub-nav">
+            <dd data-magellan-arrival="auction"><a href="#auction">Аукцион</a></dd>
+            <dd data-magellan-arrival="broker" ng-if="auction.broker"><a href="#broker">Брокер</a></dd>
+            <dd data-magellan-arrival="lots"><a href="#lots">Лоты</a></dd>
+            <dd data-magellan-arrival="LotsExtended"><a href="#LotsExtended">Техническая спецификация по лоту</a></dd>
+            <dd data-magellan-arrival="applicants"><a href="#applicants">Список участников</a></dd>
+        </dl>
+    </div>-->
+
+    <div ng-if="auction">
+        <a ng-if="$$back" ng-href="Auctions/Index#{{$$back}}">Вернуться к списку</a>
+        <div class="row panel">
+            <input class="hiding_panel_title" id="hd-1" type="checkbox">
+            <label class="hiding_panel_label" for="hd-1">Заявка</label>
+            <div class="hiding_panel_body">
+                <div ng-if="orders == null">
+                    Загрузка...
+                </div>
+                <div ng-if="orders.length == 0">
+                    Нет прикрепленных зявок
+                </div>
+                <div ng-repeat="order in orders">
+                    <hr />
+                    <div class="medium-12 columns">
+                        <div class="medium-2 columns">
+                            <label>Номер</label>
+                            <span>{{order.number}}</span>
+                        </div>
+                        <div class="medium-8 columns">
+                            <label>Инициатор</label>
+                            <span>{{order.initiator}}</span>
+                        </div>
+                        <div class="medium-1 columns">
+                            <label>Дата заявки</label>
+                            <span ng-bind="order.date | date : 'dd.MM.yyyy'"></span>
+                        </div>
+                        <div class="medium-1 columns">
+                            <label>Файл заявки</label>
+                            <a ng-if="order['<filesListId>k__BackingField'] > 0" data-reveal-id="filesModal" ng-click="GetFiles(order['<filesListId>k__BackingField'])"><i class="fi-download"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row panel">
+            <div>
+                <a data-magellan-destination="auction" name="auction"></a>
+                <h4>Аукцион</h4>
+                <hr />
+                <div class="medium-6 columns">
+                    <label for="number">Номер</label>
+                    <div class="medium-12 columns">
+                        <span id="number">{{auction.number}}</span>
+                    </div>
+                    <label for="site">Биржа/Торговая площадка</label>
+                    <div class="medium-12 columns">
+                        <span id="site">{{auction.site}}</span>
+                    </div>
+                    <label for="trader">Трейдер</label>
+                    <div class="medium-12 columns">
+                        <span id="trader">{{auction.trader}}</span>
+                    </div>
+                    <label for="customer">Заказчик</label>
+                    <div class="medium-12 columns">
+                        <span id="customer">{{auction.customer}}</span>
+                    </div>
+                    <label for="type">Тип</label>
+                    <div class="medium-12 columns">
+                        <span id="type">{{auction.type}}</span>
+                    </div>
+                </div>
+                <div class="medium-6 columns">
+                    <div class="medium-12 columns">
+                        <label for="status">Статус</label>
+                        <span id="status">{{auction.status}}</span>
+                    </div>
+                    <div class="medium-12 columns" ng-if="auction.protocolNumber">
+                        <label for="protocolNumber">Номер протокола</label>
+                        <span id="protocolNumber">{{auction.protocolNumber}}</span>
+                    </div>
+                    <div class="medium-12 columns">
+                        <label for="applicantsDeadline">Срок подачи списка претендентов</label>
+                        <span id="applicantsDeadline">{{ auction.applicantsDeadline | date : "dd.MM.yyyy"}}</span>
+                    </div>
+                    <div class="medium-12 columns">
+                        <label for="exchangeProvisionDeadline">Взнос гарантийного обеспечения до</label>
+                        <span id="exchangeProvisionDeadline">{{ auction.exchangeProvisionDeadline | date : "dd.MM.yyyy"}}</span>
+                    </div>
+                    <div class="medium-12 columns">
+                        <label for="exchangeProvisionDeadline">Дата проведения аукциона</label>
+                        <span id="exchangeProvisionDeadline">{{ auction.date | date : "dd.MM.yyyy"}}</span>
+                    </div>
+                    <div class="medium-12 columns" ng-if="model.reports">
+                        <label>Отчеты</label>
+                        <div ng-repeat="report in model.reports"><a ng-href="{{URL_ARCHIVE}}/{{ report.id }}">{{report.fileName}}</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row panel">
+            <div ng-if="auction.broker">
+                <a data-magellan-destination="broker" name="broker"></a>
+                <h4>Брокер</h4>
+                <hr />
+                <div class="medium-2 columns">
+                    <label for="broker_code">Код</label>
+                    <span id="broker_code">{{auction.broker.Code}}</span>
+                </div>
+                <div class="medium-6 columns">
+                    <label for="broker_name">Наименование</label>
+                    <span id="broker_name">{{auction.broker.Name}}</span>
+                </div>
+                <div class="medium-4 columns">
+                    <label for="broker_requisites">Реквизиты</label>
+                    <span id="broker_requisites">{{auction.broker.Requisites}}</span>
+                </div>
+            </div>
+            <div ng-if="!auction.broker">
+                <h4>Брокер не указан</h4>
+            </div>
+        </div>
+        <br />
+        <div class="row panel">
+            <div>
+                <a data-magellan-destination="lots" name="lots"></a>
+                <h4>Лоты</h4>
+                <hr />
+                <div class="row">
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Номер</th>
+                                <th>Наименование</th>
+                                <th>Кол-во</th>
+                                <th>Цена (тг.)</th>
+                                <th>Сумма (тг.)</th>
+                                <th>Ед. измерение</th>
+                                <th>Шаг понижения (%)</th>
+                                <th>Условие поставки</th>
+                                <th>Срок поставки</th>
+                                <th>Место поставки</th>
+                                <th>ДКС</th>
+                                <th>Местное содержание (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="lot in auction.lots">
+                                <td>{{lot.Number}}</td>
+                                <td>{{lot.Name}}</td>
+                                <td>{{lot.Quantity | currency : "" : 2}}</td>
+                                <td>{{lot.Price | currency : "" : 2}}</td>
+                                <td>{{(lot.Quantity * lot.Price) | currency : "" : 2}}</td>
+                                <td>{{lot.Unit}}</td>
+                                <td>{{lot.Step}}</td>
+                                <td>{{lot.PaymentTerm}}</td>
+                                <td>{{lot.DeliveryTime | date : "dd.MM.yyyy"}}</td>
+                                <td>{{lot.DeliveryPlace}}</td>
+                                <td>{{lot.Dks}}</td>
+                                <td>{{lot.LocalContent}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row panel">
+            <div>
+                <a data-magellan-destination="LotsExtended" name="LotsExtended"></a>
+                <h4>Техническая спецификация по лоту<a ng-click="excel.Export('lotExTable', 'Техническая спецификация лота')" class="right" title="Экспортировать в Excel"><i class="fi-page-export-csv"></i></a></h4>
+                <hr />
+                <div class="row">
+                    <table style="width: 100%;" id="lotExTable">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th hidden>Id</th>
+                                <th>Наименование закупаемых ТМЦ</th>
+                                <th>Ед. изм.</th>
+                                <th>Кол-во</th>
+                                <th>Цена (с учетом НДС)</th>
+                                <th>Общая сумма</th>
+                                <th>Условия поставки, места и сроков</th>
+                                <th>Порядок оплаты</th>
+                                <th>ДКС (%)</th>
+                                <th>№ контракта недропользования</th>
+                                <th>Цена победителя</th>
+                                <th>Сумма победителя</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="lotex in auction.lots[0].LotsExtended">
+                                <td>{{$index + 1}}</td>
+                                <td hidden>{{lotex.id}}</td>
+                                <td>{{lotex.name}}</td>
+                                <td>{{lotex.unit}}</td>
+                                <td>{{lotex.quantity | currency : "" : 2}}</td>
+                                <td>{{lotex.price | currency : "" : 2}}</td>
+                                <td>{{lotex.sum | currency : "" : 2}}</td>
+                                <td>{{lotex.terms}}</td>
+                                <td>{{lotex.paymentterms}}</td>
+                                <td>{{lotex.dks}}</td>
+                                <td>{{lotex.contractnumber}}</td>
+                                <td>{{auction.status=='Состоялся'?lotex.endprice:'Нет итогов'}}</td>
+                                <td>{{auction.status=='Состоялся'?lotex.endsum:'Нет итогов'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row panel">
+            <a data-magellan-destination="applicants" name="applicants"></a>
+            <h4>Список участников <a class="right" title="Скачать реестр участников" ng-if="model.applicants" ng-href="{{URL_ARCHIVE}}/{{ model.applicants.id }}"><i class="fi-save"></i></a></h4>
+            <hr />
+            <div class="medium-12 columns" ng-repeat="applicant in applicants">
+                <label class="medium-2 columns">Наименование:</label>
+                <span class="medium-6 columns">
+                    <a ng-href="Supplier/Index/{{applicant.SupplierId}}">{{applicant.supplier.Name}}</a>
+                </span>
+                <label class="medium-2 columns">Статус</label>
+                <span class="medium-2 columns">
+                    {{applicant.status.Name}} <a ng-if="((auction.applicantsDeadline | parserDate) > currentDate)" ng-click="rejectApplicant(applicant.supplier)"><i class="fi-prohibited" title="Отклонить заявку"></i></a>
+                </span>
+            </div>
+            <div class="medium-12 columns" ng-if="!applicants.length">
+                <h5 class="text-center">Список участников ещё не сформирован</h5>
+            </div>
+            <hr />
+            <div ng-if="((auction.applicantsDeadline | parserDate) > currentDate)" class="medium-12 columns">
+                <div class="row collapse">
+                    <div class="medium-8 columns">
+                        <input type="text" placeholder="БИН, наименование компании" ng-change="SearchSuppliers()" ng-model="applicant.search.text" />
+                        <div style="position: absolute; width: 100%; top:37px;">
+                            <div class="medium-12 columns text-left" style="background-color:#ffffff; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" ng-repeat="company in applicant.search.items" >
+                                <a ng-click="selectApplicant(company);" title="{{company.Name}}">{{company.BIN}} {{company.Name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="medium-4 columns">
+                        <input ng-disabled="applicant.search.$selected == null" type="button" class="button postfix" ng-click="addApplicant(applicant.search.$selected)" value="Добавить в список участников" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row panel" ng-if="!auction">
+        <h4 class="text-center">Загрузка...</h4>
+    </div>
+
+    <!-- modal view-->
+    <div class="reveal-modal small" id="filesModal" data-reveal>
+        <h1>Список файлов</h1>
+        <ul>
+            <li class="inline-list vertical" ng-repeat="file in files">
+                {{file.type | docTypes}} - <a href="{{URL_ARCHIVE}}/{{file.id}}">{{file.fileName}}</a>
+            </li>
+            <li ng-if="files == null"><img src="Resources/Images/ajax-loader.gif" /> Загрузка...</li>
+        </ul>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+</div>
+<br />

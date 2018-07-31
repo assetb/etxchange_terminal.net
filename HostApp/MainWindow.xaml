@@ -1,0 +1,13 @@
+﻿<Window x:Class="HostApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HostApp"
+        xmlns:dock="clr-namespace:AltaDock.view;assembly=AltaDock"
+        mc:Ignorable="d"
+        Title="Сириус .NET" Height="600" Width="800">
+    <Border x:Name="_border">
+        <dock:ComplexView/>
+    </Border>
+</Window>

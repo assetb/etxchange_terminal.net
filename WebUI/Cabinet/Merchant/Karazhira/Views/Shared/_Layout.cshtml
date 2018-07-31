@@ -1,0 +1,103 @@
+﻿﻿@using System.Web.Configuration
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="@(Request.ApplicationPath.Equals("/") ? Request.ApplicationPath : Request.ApplicationPath + '/')" />
+    <title>Личный кабинет Закачика - @ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/foundation.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="~/fonts/foundation-icons/foundation-icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/fonts/foundation-icons/foundation-icons.ttf" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/GeneralStyle.css" />
+    @RenderSection("Styles", false)
+</head>
+<body>
+    <div style="display:flex;flex-direction:column;height:100%;">
+        <!--Navigation menu bar-->
+        <div class="row">
+            <div class="medium-4 columns">
+                <a href="@Url.Action("Index", "Home")"><img src="~/Resources/Images/customerCabinetLogo.png" style="margin-top:10px;width:300px;" /></a>
+            </div>
+            <!--VostokCvetMet(KazMinerals)-->
+            <div class="medium-2 columns">
+                <img src="~/Resources/Images/kazMineralsVostokLogo.png" style="margin-top:10px;margin-left:80px;width:150px;" />
+            </div>
+            <div class="medium-6 columns">
+                <div class="right" style="margin-top:25px;">
+                    <a data-dropdown="auctionDrop" aria-controls="auctionDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-list-thumbnails"></i> Аукционы</a>
+                    <ul id="auctionDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li><a href="Order/Index">Управление заявками</a></li>
+                        <li><a href="Auctions/Index#/active">Список активных</a></li>
+                        <li><a href="Auctions/Index#/history">Перечень прошедших</a></li>
+                    </ul>
+                    <a data-dropdown="supplierDrop" aria-controls="supplierDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-results-demographics"></i> Поставщики</a>
+                    <ul id="supplierDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("База компаний", "Index", "Supplier", new { id = string.Empty }, null)</li>
+                        <li>@Html.ActionLink("Поиск по товару", "SearchByProduct", "Supplier", new { id = string.Empty }, null)</li>
+                    </ul>
+                    <a data-dropdown="reportDrop" aria-controls="reportDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-graph-bar"></i> Аналитика</a>
+                    <ul id="reportDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li style="padding-bottom:15px;">@Html.ActionLink("Статистика торгов", "general", "analytic", new { id = string.Empty }, null)</li>
+                        <li style="padding-bottom:15px;"><a href="/analytic/report">Отчеты</a></li>
+                    </ul>
+                    <a href="@Url.Action("Logout", "Home", new { id = string.Empty}, null)" class="topbtn"><i class="fi-x"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <!--Title-->
+        <div class="row text-center">
+            <h3 id="title_page" style="color:gray">@ViewBag.Title</h3>
+        </div>
+
+        <!--Render zone-->
+        <div class="row" style="flex:1 0 auto;">
+            @RenderBody()
+        </div>
+        <br />
+        <!--Footer-->
+        <footer style="background-color:#333333;flex:0 0 auto;">
+            <div class="row text-center">
+                <img src="~/Resources/Images/whiteCompanyLogo.png" style="margin-top:15px;width:250px;" />
+                <h6 style="color:white;">© ТОО "Альта и К" 2016</h6>
+            </div>
+        </footer>
+    </div>
+    <script src="~/scripts/jquery-2.1.0.min.js"></script>
+    <script src="~/scripts/foundation/foundation.js"></script>
+    <script src="~/scripts/modernizr-2.8.3.js"></script>
+    <script src="~/scripts/foundation/foundation.dropdown.js"></script>
+    <script src="~/scripts/foundation/foundation.topbar.js"></script>
+    <script src="~/scripts/foundation/foundation.reveal.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="~/scripts/angular.min.js"></script>
+    <script src="~/scripts/i18n/angular-locale_ru-kz.js"></script>
+    <script>
+        var baseUrl = "@WebConfigurationManager.AppSettings[MvcApplication.URL_APPLICATION]";
+        var currentDate = new Date();
+        var CUSTOMER_ID = 1; // Востокцветмет(1), Каражыра(2), Инкай(3), Казминералс(4)
+
+        var globalSettings = {
+            urlToApp: baseUrl,
+            applicationPath: $("base").attr("href"),
+            customerId: CUSTOMER_ID,
+            $title: $("#title_page")
+        }
+
+        $(window).on('load', function () {
+            $(document).foundation({
+                Dropdown: {
+                    active_class: 'open'
+                }
+            });
+            $("a#profile_logout").attr("href", baseUrl + "/api/profile/logout");
+        });
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

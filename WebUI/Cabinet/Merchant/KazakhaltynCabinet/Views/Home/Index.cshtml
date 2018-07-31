@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+}
+
+
+<div class="row callout text-center">
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/auctions.png" style="height:100px" />
+        <h3>Аукционы</h3>
+        <hr />
+        <p>В данном разделе можно организовать торг, увидеть список активных и историю прошедших.</p>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            @*<li style="padding-bottom:15px;">@Html.ActionLink("Организовать аукцион", "Create", "Auctions", null, new { @class = "indexbtn" })</li>*@
+            <li style="padding-bottom:15px;">@Html.ActionLink("Подать заявку", "Index", "Order", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Список активных", "Index", "Auctions", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Перечень прошедших", "History", "Auctions", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/companies.png" style="height:100px" />
+        <h3>Поставщики</h3>
+        <hr />
+        <p>Здесь вы сможете найти данные по компаниям участникам. Проверить их данные и организовать поиск по товару.</p>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("База компаний", "Index", "Supplier", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Поиск по товару", "SearchByProduct", "Supplier", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/analytics.png" style="height:100px" />
+        <h3>Аналитика</h3>
+        <hr />
+        <p>Совокупность информации покажет Вам статистику по выбранным критериям.</p>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("Статистика торгов", "general", "analytic", null, new { @class = "indexbtn" })</li>
+            @*<li style="padding-bottom:15px;">@Html.ActionLink("Анализ экономии", "EconomyGraph", "Analytics", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Ключевой поставщик по товару", "GoodAndSupplier", "Analytics", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Лучшие поставщики в разрезе товаров", "GoodAndSuppliers", "Analytics", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Поставщик с наибольшими поставками", "MaxGoodSupplier", "Analytics", null, new { @class = "indexbtn" })</li>*@
+        </ul>
+    </div>
+</div>

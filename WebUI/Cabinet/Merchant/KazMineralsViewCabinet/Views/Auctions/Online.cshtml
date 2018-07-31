@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/foundation/foundation-datepicker.min.css" />
+    <link rel="stylesheet" href="~/Content/hiding_panel.css" />
+}
+
+@section Scripts {
+    <script src="~/scripts/foundation/foundation.tab.js"></script>
+    <script src="~/scripts/requierjs/require.min.js"></script>
+    <script src="~/scripts/app/config.js"></script>
+    <script src="~/scripts/app/controllers/online/online.main.js"></script>
+}
+<div id="application_online" class="row" ng-controller="OnlineMainCrtl" ng-init="init()">
+    <div class="medium-12 column text-center">
+        <h3>Торг в режиме онлайн</h3>
+        <p>На данной страницы отображаются ценновые предложения в реальном времени.</p>
+        <p>Вниманиe! Торги на товарной бирже ЕТС проводятся с 15:00 до 16:00 по времени Астаны.</p>
+    </div>
+
+    <div class="medium-4 columns panel callout" style="height: 500px; overflow-y:scroll;">
+        <div ng-if="!auctions || !auctions.length" class="text-center medium-12 columns">
+            На сегодня нет торгов.
+        </div>
+        <div ng-repeat="auction in auctions track by $index" class="panel">
+            <span ng-bind="auction.number"></span>
+            <label ng-repeat="lot in auction.lots track by $index" ng-style="lot.$color != null ? 'border-left: 3px solid rgb('+lot.$color[0]+', '+lot.$color[1]+', '+lot.$color[2]+')' : ''">
+                <input type="checkbox" ng-model="lot.$selected" ng-click="selectLot()" />
+                <span ng-bind="lot.Number"></span>(<span ng-bind="lot.Name"></span>)
+            </label>
+        </div>
+    </div>
+    <div class="medium-8 columns">
+        <div class="medium-12 columns">
+            Выбраны лоты: <span ng-repeat="lot in selectedLots" ng-bind="lot.Number + ' '"></span>
+        </div>
+        <div ng-if="!selectedLots.length" class="medium-12 columns text-center">
+            <h3>Выберите лоты</h3>
+        </div>
+        <div class="medium-12 columns" ng-repeat="lot in selectedLots  track by $index">
+            <table style="width: 100%; max-height: 200px;">
+                <caption ng-bind="lot.Number"></caption>
+                <tr>
+                    <th>Позиция</th>
+                    <th>Время</th>
+                    <th>Код лота</th>
+                    <th>Компания</th>
+                    <th>Цена</th>
+                </tr>
+                <tr ng-repeat="price in lot.$priceOffers | orderBy : '+lotPriceOffer'">
+                    <td ng-bind="$index + 1"></td>
+                    <td ng-bind="price.offerTime"></td>
+                    <td ng-bind="price.lotCode"></td>
+                    <td ng-bind="price.firmName"></td>
+                    <td ng-bind="price.lotPriceOffer | currency: 'тг': 2"></td>
+                </tr>
+                <tr ng-if="!lot.$priceOffers.length">
+                    <td colspan="5" class="text-center">Нет ценовых предложений</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

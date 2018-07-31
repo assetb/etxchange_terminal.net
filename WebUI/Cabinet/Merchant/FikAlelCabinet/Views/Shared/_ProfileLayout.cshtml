@@ -1,0 +1,20 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@this.RenderSection("Styles", false)
+
+@this.RenderSection("Scripts", false)
+<div class="row">
+    <div class="medium-2 columns" style="border-right: 1px solid #DDD; height: 100%;">
+        <ul class="side-nav">
+            <li><a href="~/Profile">Карточка</a></li>
+            <li class="divider"></li>
+            <li><a href="~/Profile/Settings">Настройки профиля</a></li>
+        </ul>
+    </div>
+    <div class="medium-10 columns">
+        @RenderBody()
+    </div>
+
+</div>

@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="AltaReportsUI.view.DebtorsListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaReportsUI.view"
+             xmlns:mw="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:vm="clr-namespace:AltaReportsUI.vm"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto">
+    <UserControl.DataContext>
+        <vm:DebtorsListVM/>
+    </UserControl.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        
+        <!--Filter panel-->
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="Поиск по компании:" VerticalAlignment="Center" 
+                       Margin="5"/>
+            <TextBox Text="{Binding SearchCompany}" VerticalAlignment="Center" 
+                     Width="250" Margin="5"/>
+            <TextBlock Text="Поиск по заказчику:" VerticalAlignment="Center" 
+                       Margin="5"/>
+            <TextBox Text="{Binding SearchCustomer}" VerticalAlignment="Center" 
+                     Width="250" Margin="5"/>
+            <Button Content="Поиск" Command="{Binding SearchCmd}"/>
+        </StackPanel>
+        
+        <!--Content-->
+        <DataGrid Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False"
+                  ItemsSource="{Binding DebtorsList}" IsReadOnly="True"
+                  SelectedItem="{Binding SelectedDebtor}">
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenDebtorCmd}"/>
+            </DataGrid.InputBindings>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Поставщик" Binding="{Binding Path=companyName}"/>
+                <!--<DataGridTextColumn Header="Сумма" Binding="{Binding Path=debt}"/>-->
+                <DataGridTextColumn Header="БИН" Binding="{Binding Path=companyBin}"/>
+                <DataGridTextColumn Header="Телефоны" Binding="{Binding Path=telephones}"/>
+                <DataGridTextColumn Header="Адрес" Binding="{Binding Path=address}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Controls-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal"></StackPanel>
+        
+    </Grid>
+</UserControl>

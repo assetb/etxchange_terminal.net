@@ -1,0 +1,240 @@
+﻿@{
+    ViewBag.Title = "Перечень прошедших";
+}
+
+@section Scripts {
+    <script src="~/scripts/utils/classes.js"></script>
+    <script>
+        function AuctionParametersClass() {
+            this.customerid = null;
+            this.numberOrProduct = null;
+            this.statusid = null;
+            this.site = null;
+            this.fromDate = new Date(currentDate.getTime() - (30 * 24 * 60 * 60 * 1000));
+            this.toDate = new Date(currentDate.getTime() + (30 * 24 * 60 * 60 * 1000));
+            this.site = null;
+            this.winner = true;
+        };
+
+        var app = angular.module('app', []);
+        app.controller("auctionListController", function ($scope, $http) {
+            $scope.searchParameters = Object.assign(new SearchParametersClass(), new AuctionParametersClass());
+            $scope.table = new TableClass();
+
+            $scope.statuses = [];
+            $scope.markets = [];
+            $scope.customers = [];
+            $scope.isLoading = false;
+
+            $scope.range = function (n) {
+                return new Array(n);
+            };
+
+            $scope.search = function () {
+                $scope.update(1);
+            };
+
+            $scope.update = function (page) {
+                console.log($scope.searchParameters);
+                $scope.searchParameters.page = page;
+                $scope.isLoading = true;
+                $http({
+                    url: baseUrl + "/api/auction",
+                    method: "GET",
+                    params: $scope.searchParameters,
+                }).success(function (data, status, header, config) {
+                    console.log("Succes GetAuction request:", data);
+                    $scope.table = data;
+                    $scope.isLoading = false;
+                })
+                    .error(function (data, status, headers, config) {
+                        $scope.table = null;
+                        $scope.isLoading = false;
+                    });
+            };
+
+            $scope.GetPagesForPagination = function () {
+                var arrayPages = [];
+                var COUNT_PAGINATION_ITEMS = 7;
+                var current = $scope.table.currentPage;
+                var count = $scope.table.countPages;
+
+                if (current && count) {
+                    for (var i = 0; i < COUNT_PAGINATION_ITEMS; i++) {
+                        var page;
+                        if (current <= Math.floor(COUNT_PAGINATION_ITEMS / 2)) {
+                            page = 1;
+                        } else {
+                            if (current >= (count - Math.floor(COUNT_PAGINATION_ITEMS / 2))) {
+                                page = (count - COUNT_PAGINATION_ITEMS + 1);
+                            } else {
+                                page = current - Math.floor(COUNT_PAGINATION_ITEMS / 2);
+                            }
+                        }
+                        if (page <= 0) page = 1;
+                        page = page + i;
+                        if (page > count) {
+                            break;
+                        }
+                        arrayPages.push(page);
+                    }
+                }
+                return arrayPages;
+            };
+
+            $scope.GetMarkets = function () {
+                $http.get(baseUrl + "/api/market")
+                .success(function (data) {
+                    $scope.markets = data;
+                });
+            };
+
+            $scope.GetCustomers = function () {
+                $http.get(baseUrl + "/api/customers")
+                .success(function (data) {
+                    $scope.customers = data;
+                });
+            };
+
+            $scope.loadStatuses = function () {
+                $http({
+                    url: baseUrl + "/api/auction/statuses",
+                    method: "GET",
+                }).success(function (data, status, header, config) {
+                    $scope.statuses = data;
+                })
+                    .error(function (data, status, headers, config) {
+                        $scope.statuses = [];
+                    });
+            };
+
+            $scope.GetSumLots = function (lots) {
+                var summ = 0.0;
+                for (var i in lots) {
+                    summ += lots[i].Price * lots[i].Quantity;
+                }
+                return summ;
+            };
+
+            $scope.Init = function () {
+                $scope.loadStatuses();
+                $scope.GetMarkets();
+                $scope.GetCustomers();
+                $scope.update(1);
+            };
+        });
+    </script>
+}
+
+<div ng-app="app" class="row">
+
+    <div ng-controller="auctionListController" class="row" ng-init="Init()">
+        <div class="row">
+            <form>
+                <div class="row">
+                    <div class="large-6 columns">
+                        <label>Поиск по номеру или товару</label>
+                        <input type="text" ng-keyup="search()" ng-model="searchParameters.numberOrProduct" placeholder="Номер торга, наименование товара..." />
+                    </div>
+                    <div class="large-6 columns">
+                        <label>Заказчик</label>
+                        <select ng-change="search()" ng-model="searchParameters.customerid" ng-options="item.id as item.name for item in customers track by item.id">
+                            <option value="">Не указано</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-3 columns">
+                        <label>С</label>
+                        <input ng-change="search()" type="date" ng-model="searchParameters.fromDate" />
+                    </div>
+                    <div class="large-3 columns">
+                        <label>До</label>
+                        <input ng-change="search()" type="date" ng-model="searchParameters.toDate" />
+                    </div>
+                    <div class="large-3 columns">
+                        <label>Статус</label>
+                        <select ng-change="search()" ng-model="searchParameters.statusid">
+                            <option value="">Не указано</option>
+                            <option value="2">Состоялся</option>
+                            <option value="3">Не состоялся</option>
+                        </select>
+                    </div>
+                    <div class="large-3 columns">
+                        <label>Товарная площадка</label>
+                        <select ng-change="search()" ng-model="searchParameters.site" ng-options="item.id as item.name for item in markets track by item.id">
+                            <option value="">Не указано</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="large-5 columns">
+                <label>Кол-во отображаемых</label>
+                <ul class="pagination">
+                    <li ng-repeat="item in [10,20,50] track by $index" ng-class="{true: 'current', false: ''}[item == searchParameters.countItems]">
+                        <a ng-click="searchParameters.countItems = item; update(1)">{{item}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="large-5 columns">
+                <label>Страницы</label>
+                <ul class="pagination">
+                    <li class="pagination-previous">
+                        <a ng-click="table.currentPage != 1 && update(1)"><i class="fi-previous"></i></a>
+                    </li>
+                    <li ng-repeat="page in GetPagesForPagination() track by $index" ng-class="{true: 'current', false: ''}[page == table.currentPage]">
+                        <a ng-click="update(page)">{{page}}</a>
+                    </li>
+                    <li class="pagination-next">
+                        <a ng-click="table.countPages != table.currentPage && update(table.countPages)"><i class="fi-next"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="large-2 columns">
+                <label>Кол-во элементов</label>
+                <label>Всего найдено: {{table.countItems}}</label>
+            </div>
+            <div class="row">
+                <table id="auctionlist" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>ДАТА АУКЦИОНА</th>
+                            <th>НОМЕР</th>
+                            <th>СТАТУС</th>
+                            <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                            <th>СУММА (тг.)</th>
+                            <th>ЗАКАЗЧИК</th>
+                            <th>ИСТОЧНИК</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="!isLoading" ng-repeat="auction in table.rows">
+                            <td ng-bind="auction.date | date : 'dd.MM.yyyy'"></td>
+                            <td><a ng-href="~/Auctions/Index/{{auction['<Id>k__BackingField']}}" ng-bind="auction.number"></a></td>
+                            <td ng-switch on="auction.statusId">
+                                <span ng-switch-when="1" ng-bind="auction.status" class="label medium-12"></span>
+                                <span ng-switch-when="2" ng-bind="auction.status" class="label success medium-12"></span>
+                                <span ng-switch-when="3" ng-bind="auction.status" class="label error medium-12"></span>
+                                <span ng-switch-when="4" ng-bind="auction.status" class="label info medium-12"></span>
+                                <span ng-switch-when="5" ng-bind="auction.status" class="label warning medium-12"></span>
+                            </td>
+                            <td><span ng-repeat="lot in auction.lots">{{lot.Name}}</span></td>
+                            <td>{{GetSumLots(auction.lots)}}</td>
+                            <td ng-bind="auction.customer"></td>
+                            <td ng-bind="auction.site"></td>
+                        </tr>
+                        <tr ng-if="!isLoading && !table.rows.length">
+                            <td class="text-center" colspan="8">Нет записей</td>
+                        </tr>
+                        <tr ng-if="isLoading">
+                            <td class="text-center" colspan="8">Загрузка...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>

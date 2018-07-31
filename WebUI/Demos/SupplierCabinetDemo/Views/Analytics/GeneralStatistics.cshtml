@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SupplierCabinetDemo.Models.Auction>
+
+@{
+    ViewBag.Title = "Общая статистика торгов";
+}
+
+@section Scripts{
+    <script src="~/scripts/Utilits/dataTableFunc.js"></script>
+
+    <script>
+        google.load("visualization", "1", { packages: ["corechart"] });
+
+        $(function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: '@Url.Action("GeneralStatisticChart")',
+                data: '{}',
+                success: function (chartsdata) {
+
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'Name');
+                    data.addColumn('number', 'Number');
+
+                    for (var i = 0; i < chartsdata.length; i++) {
+                        data.addRow([chartsdata[i].Name, chartsdata[i].Number]);
+                    }
+
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                    chart.draw(data,
+                      {
+                          is3D: true,
+                          legend: { position: 'bottom' },
+                      });
+                },
+                error: function () {
+                    alert("Ошибка загрузки данных! Пожалуйста попробуйте еще.");
+                }
+            });
+        })
+    </script>
+}
+
+<div class="row">
+    <div class="medium-7 medium-centered columns">
+        <div id="chartdiv" style="width:600px;height:400px;"></div>
+    </div>
+</div>
+
+<div class="row">
+    <table id="auctionlist" class="display" hidden width="100%">
+        <thead>
+            <tr>
+                <th>ДАТА АУКЦИОНА</th>
+                <th>НОМЕР</th>
+                <th>ЗАКАЗЧИК</th>
+                <th>БИРЖА</th>
+                <th>СТАТУС</th>
+                <th>РЕЗУЛЬТАТ</th>
+                <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                <th>СТАРТОВАЯ ЦЕНА</th>
+                <th>ФИНАЛЬНАЯ СТАВКА</th>
+                <th>ФАЙЛ ОТЧЕТА</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model) {
+                <tr>
+                    <td>@item.auctionDate.ToShortDateString()</td>
+                    <td>@Html.ActionLink(item.number, "Details", "Auctions", new { auctionNumber = item.number }, null)</td>
+                    <td>@item.customer</td>
+                    <td>@item.source</td>
+                    <td>Состоялся</td>
+                    <td>Победил</td>
+                    <td>@item.lotName</td>
+                    <td>@Math.Round(item.startPrice, 2)</td>
+                    <td>@Math.Round(item.startPrice - item.startPrice / 100 * 4, 2)</td>
+                    <td class="text-center"><a href="~/Resources/Files/SupplierReport.docx"><i class="fi-save"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+</div>

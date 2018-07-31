@@ -1,0 +1,19 @@
+﻿@model KarazhiraCabinet.Models.StatusModel
+
+@{
+    ViewBag.Title = "Статус создания";
+}
+
+<div class="row text-center">
+
+    @if(Model.Status != 0) {
+        @:<p style="color:lightgreen">Заявка создана успешно!</p>
+        } else {
+        @:<p style="color:red">Во время создания произошла ошибка. Обратитесь в службу поддержки.</p>
+        }
+</div>
+
+<div class="row text-center">
+    @Html.ActionLink("Вернуться на главную", "Index", null, new { @class = "button" })
+    @Html.ActionLink("Сформировать заявку", "AuctionOrder", null, new { @class = "button" })
+</div>

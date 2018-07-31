@@ -1,0 +1,226 @@
+﻿@model int?
+
+@{
+    ViewBag.Title = "Форма аукциона";
+
+    if (Request.UrlReferrer != null)
+    {
+        ViewBag.BackUrl = Request.UrlReferrer.OriginalString;
+    }
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/Content/hiding_panel.css" />
+}
+
+@section Scripts {
+    <script src="~/scripts/app/require-config.js"></script>
+    <script src="~/scripts/app/controllers/auction/auction_application.js"></script>
+}
+
+<div id="container_application" class="row">
+    <div ng-controller="auction_details_controller" ng-init="Init(@Model)" class="form-horizontal">
+        <div ng-if="auction">
+            <div ng-messages="status">
+                <p class="row alert-box info" ng-message="confirmSupplierOrder">Вам необходимо <a href="~/Order/{{auctionId}}">заполнить заявку на участие</a></p>
+                <p class="row alert-box info" ng-message="waitingOrderDeal">Вам необходимо <a href="~/Auctions/{{auctionId}}/Procuratory">сформировать поручение на сделку</a></p>
+                <p class="row alert-box success" ng-message="winner">Поздравляем, Вы одержали победу в нескольких лотах. Пожалуйства заполните техническую спецификацию по выйгранным лотам.</p>
+            </div>
+            </br>
+            <div class="row panel">
+                <div>
+                    <h4 class="medium-6 columns">Аукцион</h4>
+                    <div class="medium-6 columns text-right">
+                        <span ng-if="supplierOrder != null && supplierOrder.status != null">Статус заявки на участие: <b ng-bind="supplierOrder.status.Name"></b></span>
+                        <a class="button small success" ng-if="status.confirmSupplierOrder" ng-href="~/Order/{{auctionId}}">Подтвердить заявку на участие</a>
+                    </div>
+                    <hr />
+                    <div class="medium-6 columns">
+                        <label for="number">Номер</label>
+                        <div class="medium-12 columns">
+                            <span id="number" ng-bind="auction.number"></span>
+                        </div>
+                        <label for="site">Биржа/Торговая площадка</label>
+                        <div class="medium-12 columns">
+                            <span id="site" ng-bind="auction.site"></span>
+                        </div>
+                        <label for="trader">Трейдер</label>
+                        <div class="medium-12 columns">
+                            <span id="trader" ng-bind="auction.trader"></span>
+                        </div>
+                        <label for="customer">Заказчик</label>
+                        <div class="medium-12 columns">
+                            <span id="customer" ng-bind="auction.customer"></span>
+                        </div>
+                        <label for="type">Тип</label>
+                        <div class="medium-12 columns">
+                            <span id="type" ng-bind="auction.type"></span>
+                        </div>
+                    </div>
+                    <div class="medium-6 columns">
+                        <div class="medium-12 columns">
+                            <label for="status">Статус</label>
+                            <span id="status" ng-bind="auction.status"></span>
+                        </div>
+                        <div class="medium-12 columns" ng-if="auction.protocolNumber">
+                            <label for="protocolNumber">Номер протокола</label>
+                            <span id="protocolNumber" ng-bind="auction.protocolNumber"></span>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label for="applicantsDeadline">Срок подачи списка претендентов</label>
+                            <span id="applicantsDeadline" ng-bind="auction.applicantsDeadline | date : 'longDate'"></span>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label for="exchangeProvisionDeadline">Взнос гарантийного обеспечения до</label>
+                            <span id="exchangeProvisionDeadline" ng-bind="auction.exchangeProvisionDeadline | date : 'longDate'"></span>
+                        </div>
+                        <div class="medium-12 columns">
+                            <label for="exchangeProvisionDeadline">Дата проведения аукциона</label>
+                            <span id="exchangeProvisionDeadline" ng-bind="auction.date | date : 'longDate'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row panel">
+                <div ng-if="auction.broker">
+                    <h4>Брокер</h4>
+                    <hr />
+                    <div class="medium-2 columns">
+                        <label for="broker_code">Код</label>
+                        <span id="broker_code" ng-bind="auction.broker.Code"></span>
+                    </div>
+                    <div class="medium-6 columns">
+                        <label for="broker_name">Наименование</label>
+                        <span id="broker_name" ng-bind="auction.broker.Name"></span>
+                    </div>
+                    <div class="medium-4 columns">
+                        <label for="broker_requisites">Реквизиты</label>
+                        <span id="broker_requisites" ng-bind="auction.broker.Requisites"></span>
+                    </div>
+                </div>
+                <div ng-if="!auction.broker">
+                    <h4>Брокер не указан</h4>
+                </div>
+            </div>
+            <br />
+            <div class="row panel">
+                <div>
+                    <div class="row">
+                        <h4 class="medium-6 columns">Лоты</h4>
+                        <div class="medium-6 columns text-right">
+                            <a class="button small success" ng-if="status.waitingOrderDeal" ng-href="~/Auctions/{{auctionId}}/Procuratory">Сформировать поручение на сделку</a>
+                        </div>
+                    </div>
+                    <hr />
+                    <table role="grid">
+                        <thead>
+                            <tr>
+                                <th hidden>Id</th>
+                                <th>Номер</th>
+                                <th>Наименование</th>
+                                <th>Кол-во</th>
+                                <th>Цена</th>
+                                <th>Сумма</th>
+                                <th>Шаг понижения</th>
+                                <th>Условие поставки</th>
+                                <th>Срок поставки</th>
+                                <th>Место поставки</th>
+                                <th>ДКС</th>
+                                <th>Местное содержание</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="lot in auction.lots">
+                                <td ng-bind="lot.Number"></td>
+                                <td ng-bind="lot.Name"></td>
+                                <td ng-bind="lot.Quantity | currency : lot.Unit "></td>
+                                <td ng-bind="lot.Price | currency : 'тг' : 2"></td>
+                                <td ng-bind="(lot.Quantity * lot.Price) | currency : 'тг' : 2"></td>
+                                <td ng-bind="lot.Step | currency : '%' : 2"></td>
+                                <td ng-bind="lot.PaymentTerm"></td>
+                                <td ng-bind="lot.DeliveryTime | date : 'dd.MM.yyyy'"></td>
+                                <td ng-bind="lot.DeliveryPlace"></td>
+                                <td ng-bind="lot.Dks"></td>
+                                <td ng-bind="lot.LocalContent | currency : '%' : 2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+
+            <div class="row panel" ng-repeat="lot in auction.lots" ng-if="lot.LotsExtended.length > 0">
+                <div>
+                    <div class="row">
+                        <h4 class="medium-6 columns">Техническая спецификация к лоту № <span ng-bind="lot.Number"></span></h4>
+                        <div class="medium-6 columns text-right">
+                            <div class="medium-3 columns end" ng-class="lot.$$winner ? 'medium-offset-6' : 'medium-offset-9'">
+                                <button type="button" class="button small expand" ng-click="generateTemplate(lot, $event)">Скачать</button>
+                            </div>
+                            <div class="medium-3 columns">
+                                <a class="button small success expand" ng-if="lot.$$winner" ng-href="~/Auctions/{{auctionId}}/TechSpecForm/{{lot.Id}}">Заполнить</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <table style="max-width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Наименование закупаемых ТМЦ</th>
+                                <th>Ед. изм.</th>
+                                <th>Кол-во</th>
+                                <th>Цена (с учетом НДС)</th>
+                                <th>Общая сумма</th>
+                                <th>Условия поставки, места и сроков</th>
+                                <th>ДКС</th>
+                                <th>№ контракта недропользования</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="lotex in lot.LotsExtended">
+                                <td ng-bind="lotex.name"></td>
+                                <td ng-bind="lotex.unit"></td>
+                                <td ng-bind="lotex.quantity | currency : '' : 2"></td>
+                                <td ng-bind="lotex.price | currency : 'тг' : 2"></td>
+                                <td ng-bind="lotex.sum | currency : 'тг' : 2"></td>
+                                <td ng-bind="lotex.terms"></td>
+                                <td ng-bind="lotex.dks  | currency : '%' : 2"></td>
+                                <td ng-bind="lotex.contractnumber"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="row panel">
+                <div>
+                    <h4>Документы</h4>
+                    <hr />
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Наименование</th>
+                                <th>Тип</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="doc in documents">
+                                <td ng-bind="doc.fileName"></td>
+                                <td ng-bind="doc.extension"></td>
+                                <td><button type="button" class="button small" ng-click="donwload(doc.id)">Скачать</button></td>
+                            </tr>
+                            <tr ng-if="documents.length == 0">
+                                <td colspan="3" class="text-center">Нет документов</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row panel" ng-if="!auction">
+                <h4 class="text-center">Загрузка...</h4>
+            </div>
+        </div>
+    </div>
+</div>

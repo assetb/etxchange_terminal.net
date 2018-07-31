@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+}
+
+
+<div class="row callout text-center">
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/auctions.png" style="height:100px" />
+        <h3>Аукционы</h3>
+        <hr />
+        <p>В данном разделе можно организовать торг, увидеть список активных и историю прошедших.</p>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("Реестр торгов", "Index", "Auctions", null, new { @class = "indexbtn" })</li>
+            <li style="padding-bottom:15px;">@Html.ActionLink("Перечень прошедших", "History", "Auctions", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/companies.png" style="height:100px" />
+        <h3>Компании</h3>
+        <hr />
+        <p>Здесь вы сможете найти данные по компаниям участникам и внести необходимые корректировки.</p>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("База организаций", "Index", "Companies", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+    <div class="medium-4 columns">
+        <img src="~/Resources/Images/analytics.png" style="height:100px" />
+        <h3>Аналитика</h3>
+        <hr />
+        <p>Совокупность информации покажет Вам статистику по выбранным критериям, позволив провести аналитику.</p>
+        <hr />
+        <ul style="list-style:none;padding-right:25px;">
+            <li style="padding-bottom:15px;">@Html.ActionLink("Отчеты по торгам", "AuctionsReport", "Analytics", null, new { @class = "indexbtn" })</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Список активных аукционов";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/foundation/foundation-datepicker.min.css" />
+}
+
+@section Scripts {
+    <script src="~/scripts/foundation/foundation-datepicker.js"></script>
+    <script src="~/scripts/utils/classes.js"></script>
+    <script src="~/scripts/app/app.js"></script>
+    <script src="~/scripts/app/auction/auction_list_controller.js"></script>
+}
+
+<div ng-app="app" class="row">
+    <div class="row text-center">
+        <img src="~/Resources/Images/activeAuctions.jpg" style="height:100px" />
+    </div>
+
+    <div ng-controller="auctionListController" class="row" ng-init="Init(1)">
+        <div class="row">
+            <form>
+                <div class="row">
+                    <div class="medium-12">
+                        <div class="row collapse">
+                            <div class="medium-12 columns">
+                                <input type="text" ng-keyup="search()" ng-model="searchParameters.numberOrProduct" placeholder="Товара, Номер, Источник..." />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="large-3 columns">
+                            <label>С</label>
+                            <input dt-changed="search()" type="date" ng-model="searchParameters.fromDate" datepicker/>
+                        </div>
+                        <div class="large-3 columns">
+                            <label>До</label>
+                            <input dt-changed="search()" type="date" ng-model="searchParameters.toDate" datepicker/>
+                        </div>
+                        <div class="large-3 columns">
+                            <label>Статус</label>
+                            <select ng-change="search()" ng-model="searchParameters.statusid">
+                                <option value="">Не указано</option>
+                                <option value="1">Новый</option>
+                                <option value="4">Ожидается</option>
+                                <option value="5">В обработке</option>
+                            </select>
+                        </div>
+                        <div class="large-3 columns">
+                            <label>Товарная площадка</label>
+                            <select ng-change="search()" ng-model="searchParameters.site" ng-options="item.id as item.name for item in markets track by item.id">
+                                <option value="">Не указано</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="large-4 columns">
+                <label>Кол-во элементов</label>
+                <ul class="pagination">
+                    <li ng-repeat="item in [10,20,50] track by $index" ng-class="{true: 'current', false: ''}[item == searchParameters.countItems]">
+                        <a ng-click="searchParameters.countItems = item; update(1)">{{item}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="large-5 columns">
+                <label>Страницы</label>
+                <ul class="pagination">
+                    <li class="pagination-previous">
+                        <a ng-click="table.currentPage != 1 && update(1)"><i class="fi-previous"></i></a>
+                    </li>
+                    <li ng-repeat="page in GetPagesForPagination() track by $index" ng-class="{true: 'current', false: ''}[page == table.currentPage]">
+                        <a ng-click="update(page)">{{page}}</a>
+                    </li>
+                    <li class="pagination-next">
+                        <a ng-click="table.countPages != table.currentPage && update(table.countPages)"><i class="fi-next"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="large-3 columns">
+                <label>Всего найдено: {{table.countItems}}</label>
+            </div>
+            <div class="row">
+                <table id="auctionlist" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>ДАТА АУКЦИОНА</th>
+                            <th>НОМЕР</th>
+                            <th>СТАТУС</th>
+                            <th>НАИМЕНОВАНИЕ ТОВАРА</th>
+                            <th>СУММА (тг.)</th>
+                            <th>ДАТА ЗАЯВКИ</th>
+                            <th>ИСТОЧНИК</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="!isLoading" ng-repeat="auction in table.rows">
+                            <td ng-bind="auction.date | date : 'dd.MM.yyyy'"></td>
+                            <td><a ng-href="~/Auctions/Index/{{auction['<Id>k__BackingField']}}" ng-bind="auction.number"></a></td>
+                            <td ng-switch on="auction.statusId">
+                                <span ng-switch-when="1" ng-bind="auction.status" class="label medium-12"></span>
+                                <span ng-switch-when="2" ng-bind="auction.status" class="label success medium-12"></span>
+                                <span ng-switch-when="3" ng-bind="auction.status" class="label error medium-12"></span>
+                                <span ng-switch-when="4" ng-bind="auction.status" class="label info medium-12"></span>
+                                <span ng-switch-when="5" ng-bind="auction.status" class="label warning medium-12"></span>
+                            </td>
+                            <td><span ng-repeat="lot in auction.lots">{{lot.Name}}</span></td>
+                            <td>{{GetSumLots(auction.lots)}}</td>
+                            <td ng-bind="auction.applicantsDeadline | date : 'dd.MM.yyyy'"></td>
+                            <td ng-bind="auction.site"></td>
+                        </tr>
+                        <tr ng-if="!isLoading && !table.rows.length">
+                            <td class="text-center" colspan="7">Нет записей</td>
+                        </tr>
+                        <tr ng-if="isLoading">
+                            <td class="text-center" colspan="7">Загрузка...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿@model SupplierCabinetDemo.Models.Good
+
+@{
+    ViewBag.Title = "Товар";
+}
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        <fieldset>
+            <legend>Новый товар</legend>
+            @using (Html.BeginForm())
+            {
+                <label>Наименование: @Html.EditorFor(m => m.name)</label>
+                <button type="submit">Добавить</button>
+            }
+        </fieldset>
+    </div>
+</div>

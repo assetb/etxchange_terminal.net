@@ -1,0 +1,122 @@
+﻿@model int
+@{
+    ViewBag.Title = "Подача заявки на участие в аукционе";
+    if (Request.UrlReferrer != null)
+    {
+        ViewBag.BackUrl = Request.UrlReferrer.OriginalString;
+    }
+}
+
+@section Scripts{
+    <script src="~/scripts/app/controllers/order/order.js"></script>
+}
+<div id="main_container" class="row" ng-controller="OrderCtrl" ng-init="init(@Model)">
+    @*<a id="backUrl" ng-href="~/Auctions/Index/{{supplierOrder.auctionId}}">Вернуться к аукциону</a>*@
+    <form ng-submit="submit($event)">
+        <div class="medium-12 columns">
+            <h3>Аукцион № <span ng-bind="supplierOrder.auctionNumber"></span></h3>
+        </div>
+
+        <div class="medium-12 columns">
+            <div class="row">
+                <div class="small-3 columns">
+                    <label class="right inline">Брокер</label>
+                </div>
+                <div class="small-9 columns"><input type="text" disabled ng-model="supplierOrder.BrokerName"></input></div>
+            </div>
+            <div class="row">
+                <div class="small-3 columns">
+                    <label class="right inline">Квалификационные требования</label>
+                </div>
+                <div class="small-9 columns">
+                    <ul class="side-nav">
+                        <li ng-repeat="qualification in qualifications" title="{{qualification.description}}">
+                            <i class="fi-info" title="Нужен файл" ng-if="qualification.file"></i>
+                            &emsp;
+                            <span ng-bind="qualification.name"></span>
+                            &emsp;
+                            <i ng-bind="qualification.note"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="medium-12 columns">
+            <div class="medium-12 columns">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Номер</th>
+                            <th>Наименование</th>
+                            <th>Кол-во</th>
+                            <th>Цена (тг.)</th>
+                            <th>Сумма (тг.)</th>
+                            <th>Ед. измерение</th>
+                            <th>Шаг понижения (%)</th>
+                            <th>Условие поставки</th>
+                            <th>Срок поставки</th>
+                            <th>Место поставки</th>
+                            <th>ДКС</th>
+                            <th>Местное содержание (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="lot in supplierOrder.lots">
+                            <td ng-bind="lot.Number"></td>
+                            <td ng-bind="lot.Name"></td>
+                            <td ng-bind="lot.Quantity | currency : '' : 2"></td>
+                            <td ng-bind="lot.Price | currency : '' : 2"></td>
+                            <td ng-bind="(lot.Quantity * lot.Price) | currency : '' : 2"></td>
+                            <td ng-bind="lot.Unit"></td>
+                            <td ng-bind="lot.Step"></td>
+                            <td ng-bind="lot.PaymentTerm"></td>
+                            <td ng-bind="lot.DeliveryTime | date : 'dd.MM.yyyy'"></td>
+                            <td ng-bind="lot.DeliveryPlace"></td>
+                            <td ng-bind="lot.Dks"></td>
+                            <td ng-bind="lot.LocalContent"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div class="medium-12 columns">
+            <div class="medium-12 columns">
+                <button type="button" class="button" ng-click="getDonwloadTempalte($event)">Сформировать шаблон</button>
+            </div>
+        </div>
+
+        <div class="medium-12 columns">
+            <h5>Укажите скан заявки и квалификационые файлы</h5>
+            <div class="medium-12 columns">
+                <div class="row">
+                    <file-input f-disabled="$formDisabled" f-value="files['supplierOrderScan']" f-required="true" f-accept=".jpeg, .png, .jpg, .pdf" f-text="Прикрепите скан заявки"></file-input>
+                </div>
+                <div class="row" ng-repeat="qualification in qualifications | filter : { 'file' : true}">
+                    <div class="medium-1 columns">
+                        <div class="switch small">
+                            <input id="qualificationSelected{{qualification.id}}" type="checkbox" ng-model="qualification._selected">
+                            <label for="qualificationSelected{{qualification.id}}">
+                                <span class="show-for-sr">Выбрать из загруженных файлов</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="medium-11 columns">
+                        <div>
+                            <select ng-model="selectedDocs[qualification.id]" ng-if="qualification._selected">
+                                <option value="0">Загруженные файлы</option>
+                                <option ng-repeat="doc in docs" value="{{doc.id}}" ng-bind="doc.fileName"></option>
+                            </select>
+                        </div>
+                        <file-input ng-init="selectedDocs[qualification.id] = null" ng-if="!qualification._selected" f-disabled="$formDisabled" f-value="files[qualification.id]" f-required="true" f-accept="*.*" f-text="{{qualification.name}}"></file-input>
+                    </div>
+                </div>
+                <button type="submit" class="button">Отправить</button>
+            </div>
+        </div>
+    </form>
+</div>
+

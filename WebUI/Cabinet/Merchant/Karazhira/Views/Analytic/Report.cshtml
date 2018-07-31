@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Отчеты";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/foundation/foundation-datepicker.min.css" />
+}
+
+@section Scripts{
+    <script src="~/scripts/requierjs/require.min.js"></script>
+    <script src="~/scripts/app/config.js"></script>
+    <script src="~/scripts/app/controllers/report/report.main.js"></script>
+}
+
+<div id="container_application" class="row">
+    <div ng-controller="TechSpecCtrl" ng-init="update()">
+        <div class="medium-3 columns">
+            <datepicker dp-value="model.startDate" dp-text="с" />
+            </div>
+        <div class="medium-3 columns">
+            <datepicker dp-value="model.endDate" dp-text="по"/>
+            </div>
+        <div class="medium-3 columns">
+            <button class="button" ng-click="update()">Обновить</button>
+        </div>
+        <div class="medium-3 columns">
+            <a ng-href="{{getUrl()}}" class="button" >Скачать</a>
+        </div>
+        <div class="medium-12 colomns">
+            <table>
+                <tr>
+                    <th>Номер аукциона</th>
+                    <th>Дата заявки</th>
+                    <th>Код лота</th>
+                    <th>Наименование продукта</th>
+                    <th>Ед. измерения</th>
+                    <th>Кол-во</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
+                    <th>Номер сделки</th>
+                    <th>Поставщик</th>
+                    <th>Дата аукциона</th>
+                    <th>Цена поставщика</th>
+                    <th>Сумма поставщика</th>
+                </tr>
+                <tr ng-repeat="row in report">
+                    <td ng-bind="row.auctionNumber"></td>
+                    <td ng-bind="row.orderDate | date : 'shortDate'"></td>
+                    <td ng-bind="row.lotCode"></td>
+                    <td ng-bind="row.productName"></td>
+                    <td ng-bind="row.unit"></td>
+                    <td ng-bind="row.quantity"></td>
+                    <td ng-bind="row.price"></td>
+                    <td ng-bind="row.productSum"></td>
+                    <td ng-bind="row.dealNumber"></td>
+                    <td ng-bind="row.name"></td>
+                    <td ng-bind="row.auctionDate | date: 'shortDate'"></td>
+                    <td ng-bind="row.productFinalPrice"></td>
+                    <td ng-bind="row.productFinalSum"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

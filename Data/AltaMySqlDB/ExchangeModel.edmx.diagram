@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="78a7b49c0616404cacff480fd00e7eea" Name="Diagram1">
+        <EntityTypeShape EntityType="ExchangeModel.applicants" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.auctions" Width="1.5" PointX="7.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.brokers" Width="1.5" PointX="3" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.companies" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.contracts" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.customers" Width="1.5" PointX="3" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.lots" Width="1.5" PointX="9.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.operauction" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.order" Width="1.5" PointX="9.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.person" Width="1.5" PointX="5.25" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.sites" Width="1.5" PointX="3" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExchangeModel.users" Width="1.5" PointX="3" PointY="26.625" IsExpanded="true" />
+        <AssociationConnector Association="ExchangeModel.fk_applicants_auctions1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_applicants_companies1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_auctions_brokers1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_auctions_companies2" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_auctions_person1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_auctions_sites1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_auctions_to_users" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_lots_to_auctions" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_order_auctions1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_brokers_companies1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_contracts_brokers1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_contracts_to_companies" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_customers_companies1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_sites_companies1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_users_to_companies" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_contracts_sites1" ManuallyRouted="false" />
+        <AssociationConnector Association="ExchangeModel.fk_person_users1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

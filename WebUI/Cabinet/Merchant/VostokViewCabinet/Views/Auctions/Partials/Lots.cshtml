@@ -1,0 +1,47 @@
+﻿@using AltaBO
+@using System.Collections.ObjectModel
+
+@model ObservableCollection<Lot>
+
+@section Scripts {
+    <script src="~/Scripts/utils/table.js"></script>
+    <script>
+        var lots = NewTable("#lots");
+        lots.show();
+        lots.removeAttr("hidden");
+    </script>
+}
+
+<div class="row">
+    <div class="medium-12 columns">
+        <table id="lots" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th hidden>Id</th>
+                    <th>Номер</th>
+                    <th>Наименование</th>
+                    <th>Кол-во</th>
+                    <th>Цена (тг.)</th>
+                    <th>Сумма (тг.)</th>
+                    <th>Ед. измерение</th>
+                    <th>Шаг понижения (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td hidden>@item.Id</td>
+                        <td>@item.Number</td>
+                        <td>@item.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price</td>
+                        <td>@(item.Quantity * item.Price)</td>
+                        <td>@item.Unit</td>
+                        <td>@item.Step</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

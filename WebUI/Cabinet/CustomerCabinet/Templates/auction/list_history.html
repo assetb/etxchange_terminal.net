@@ -1,0 +1,110 @@
+﻿<div ng-init="Init(2)">
+    <div class="large-12 columns text-center">
+        <img src="Resources/Images/endedAuctions.jpg" style="height:100px" />
+    </div>
+    <form class="large-12 columns">
+        <div class="large-12 columns">
+            <input type="text" ng-keyup="search()" ng-model="searchParameters.numberOrProduct" placeholder="Наименование товара, номер аукциона/заявки..." />
+        </div>
+        <div class="large-3 medium-6 small-6 columns">
+            <label class="hidden-for-small-down">С</label>
+            <datepicker dp-changed="search()" dp-value="searchParameters.fromDate" />
+        </div>
+        <div class="large-3 medium-6 small-6 columns">
+            <label class="hidden-for-small-down">До</label>
+            <datepicker dp-changed="search()" dp-value="searchParameters.toDate" />
+        </div>
+        <div class="large-3 medium-6 columns hidden-for-small">
+            <label>Статус</label>
+            <select ng-change="search()" ng-model="searchParameters.statusid">
+                <option value="">Не указано</option>
+                <option value="2">Состоялся</option>
+                <option value="3">Не состоялся</option>
+            </select>
+        </div>
+        <div class="large-3 medium-6 columns hidden-for-small">
+            <label>Товарная площадка</label>
+            <select ng-change="search()" ng-model="searchParameters.site" ng-options="item.id as item.name for item in markets track by item.id">
+                <option value="">Не указано</option>
+            </select>
+        </div>
+    </form>
+    <div class="medium-12 columns hidden-for-small-down">
+        <div class="medium-12 columns">
+            <span>Укажите какие файлы вы хотите скачать (<span data-tooltip class="has-tip" title="Архив вмещает в себя максимум {{model.MAX_FILE_LIST_UPDALODED}} аукционов">?</span>): </span>
+            <input type="checkbox" ng-model="model.docsType[0].$selected" id="reportFile" /><label for="reportFile">Отчет</label>
+            <input type="checkbox" ng-model="model.docsType[1].$selected" id="applicantsFile" /><label for="applicantsFile">Список претендентов</label>
+            <input type="checkbox" ng-model="model.docsType[2].$selected" id="order" /><label for="order">Заявка</label>
+        </div>
+        <div class="medium-12 columns">
+            <button class="button small" ng-disabled="!isSelectedAuctions()" ng-click="donwloadArchive();">Скачать файлы архивом</button>
+
+        </div>
+    </div>
+        <pagination pg-click="updateTable(page, items)" pg-page="searchParameters.page" pg-count-pages="table.countPages" pg-count-items="searchParameters.countItems" pg-count="table.countItems"></pagination>
+        <div class="medium-12 columns">
+            <table id="auctionlist"  class="alta">
+                    <tr>
+                        <th class="hidden-for-small-down"></th>
+                        <th>
+                            <a ng-click="orderBy('date')">
+                                <i ng-class="searchParameters.orderby == 'date' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span>ДАТА АУКЦИОНА</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a ng-click="orderBy('number')">
+                                <i ng-class="searchParameters.orderby == 'number' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span>НОМЕР АУКЦИОНА/ЗАЯВКИ</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a ng-click="orderBy('status')">
+                                <i ng-class="searchParameters.orderby == 'status' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span>СТАТУС</span>
+                            </a>
+                        </th>
+                        <th class="hidden-for-small-down">НАИМЕНОВАНИЕ ТОВАРА</th>
+                        <th class="hidden-for-small-down">
+                            <a ng-click="orderBy('sum')">
+                                <i ng-class="searchParameters.orderby == 'sum' ? searchParameters.isdesc ? 'fi-arrow-up' : 'fi-arrow-down' : ''"></i>
+                                <span>СУММА (тг.)</span>
+                            </a>
+                        </th>
+                        <th class="hidden-for-small-down">ИСТОЧНИК</th>
+                        <th class="hidden-for-small-down" width="20%">ОТЧЕТ</th>
+                    </tr>
+                    <tr ng-if="!isLoading" ng-repeat="auction in table.rows">
+                        <td class="hidden-for-small-down"><input type="checkbox" ng-model="auction.$selected" /></td>
+                        <td ng-bind="auction.date | date : 'dd.MM.yyyy'"></td>
+                        <td><a ng-href="Auctions/Index#/details/{{auction['<Id>k__BackingField']}}?referer=history" ng-bind="auction.number"></a></td>
+                        <td ng-switch on="auction.statusId">
+                            <span ng-switch-when="1" ng-bind="auction.status" class="label medium-12"></span>
+                            <span ng-switch-when="2" ng-bind="auction.status" class="label success medium-12"></span>
+                            <span ng-switch-when="3" ng-bind="auction.status" class="label error medium-12"></span>
+                            <span ng-switch-when="4" ng-bind="auction.status" class="label info medium-12"></span>
+                            <span ng-switch-when="5" ng-bind="auction.status" class="label warning medium-12"></span>
+                        </td>
+                        <td class="hidden-for-small-down"><span ng-repeat="lot in auction.lots">{{lot.Name}}</span></td>
+                        <td class="hidden-for-small-down">{{GetSumLots(auction.lots) | currency: "тг" : 2}}</td>
+                        <td class="hidden-for-small-down" ng-bind="auction.site"></td>
+                        <td class="hidden-for-small-down">
+                            <a ng-if="!auction.$reports" ng-click="loadReports(auction)">Показать</a>
+                            <span ng-if="auction.$reports.length == 0">Отчет не сформирован</span>
+                            <div ng-repeat="report in auction.$reports">
+                                <a ng-href="{{$urlToArchive}}/file/{{report.id}}">{{report.fileName}}</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="!isLoading && !table.rows.length">
+                        <td class="text-center" colspan="8">Нет записей</td>
+                    </tr>
+                    <tr ng-if="isLoading">
+                        <td class="text-center" colspan="8"><img src="Resources/Images/ajax-loader.gif" /> Загрузка...</td>
+                    </tr>
+            </table>
+        </div>
+        <pagination pg-click="updateTable(page, items)" pg-page="searchParameters.page" pg-count-pages="table.countPages" pg-count-items="searchParameters.countItems" pg-count="table.countItems"></pagination>
+
+        <br>
+</div>

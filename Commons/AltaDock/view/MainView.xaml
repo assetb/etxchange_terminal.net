@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="AltaDock.view.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:AltaDock.converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:AltaDock.view"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pane="clr-namespace:AltaDock.vm.pane"
+             xmlns:view="clr-namespace:AltaDock.view"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <xcad:DockingManager ActiveContent="{Binding ActiveDocument,
+                                                     Mode=TwoWay,
+                                                     Converter={StaticResource ActiveDocumentConverter}}"
+                             AnchorablesSource="{Binding Tools}"
+                             DocumentsSource="{Binding Panels}">
+
+            <xcad:DockingManager.Theme>
+                <xcad:MetroTheme />
+            </xcad:DockingManager.Theme>
+
+            <xcad:DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock FontFamily="Candara"
+                               FontSize="17"
+                               Text="{Binding Path=Title}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="Gray" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </DataTemplate>
+            </xcad:DockingManager.DocumentHeaderTemplate>
+
+            <xcad:DockingManager.LayoutItemContainerStyle>
+                <Style TargetType="{x:Type xcad:LayoutItem}">
+                    <Setter Property="Title" Value="{Binding Model.Description}" />
+                    <Setter Property="ToolTip" Value="{Binding Model.Description}" />
+                    <!--<Setter Property="IconSource"   Value="{Binding IconSource}" />-->
+                    <Setter Property="ContentId" Value="{Binding ContentId}" />
+                    <!--<Setter Property="CanClose" Value="False"/>-->
+                </Style>
+            </xcad:DockingManager.LayoutItemContainerStyle>
+
+            <xcad:DockingManager.LayoutItemTemplate>
+                <DataTemplate>
+                    <ContentPresenter Content="{Binding Content.View}" />
+                </DataTemplate>
+            </xcad:DockingManager.LayoutItemTemplate>
+
+            <xcad:DockingManager.LayoutUpdateStrategy>
+                <view:LayoutInitializer />
+            </xcad:DockingManager.LayoutUpdateStrategy>
+
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutDocumentPane />
+                </xcad:LayoutPanel>
+            </xcad:LayoutRoot>
+
+        </xcad:DockingManager>
+    </Grid>
+</UserControl>

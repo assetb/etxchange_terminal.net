@@ -1,0 +1,92 @@
+﻿@model CustomerCabinetDemo.Models.AuctionDetails
+
+@{
+    ViewBag.Title = "Детальная информация торга";
+}
+
+<div class="row">
+    <div class="medium-5 medium-centered columns">
+        <fieldset>
+            <legend>Данные аукциона</legend>
+            <label>Номер: <span>@Model.auction.number</span></label>
+            <label>Дата торга: <span>@Model.auction.auctionDate.ToShortDateString()</span></label>
+            @if (Model.auction.orderFile != null)
+            {
+                <a href="@Model.auction.orderFile">Скачать заявку</a>
+            }
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Данные о лоте</legend>
+            <label>Наименование: <span>@Model.auction.lotName</span></label>
+            <label>Стартовая сумма: <span>@Model.auction.startPrice</span></label>
+            <label>
+                Количество:
+                @if (@Model.lot.quantity != 0)
+                {
+                    <span>@Model.lot.quantity</span>
+                }
+                else
+                {
+                    <span>1</span>
+                }
+            </label>
+            <label>
+                Условия оплаты:
+                @if (!string.IsNullOrEmpty(Model.lot.paymentTerms))
+                {
+                    <span>@Model.lot.paymentTerms</span>
+                }
+                else
+                {
+                    <span>Согласно договору</span>
+                }
+            </label>
+            <label>
+                Условия поставки:
+                @if (!string.IsNullOrEmpty(Model.lot.deliveryTerms))
+                {
+                    <span>@Model.lot.deliveryTerms</span>
+                }
+                else
+                {
+                    <span>Согласно договору</span>
+                }
+            </label>
+            <label>
+                Время поставки:
+                @if (!string.IsNullOrEmpty(Model.lot.deliveryTime))
+                {
+                    <span>@Model.lot.deliveryTime</span>
+                }
+                else
+                {
+                    <span>Согласно договору</span>
+                }
+            </label>
+            <label>
+                Место поставки:
+                @if (!string.IsNullOrEmpty(Model.lot.deliveryPlace))
+                {
+                    <span>@Model.lot.deliveryPlace</span>
+                }
+                else
+                {
+                    <span>Согласно договору</span>
+                }
+            </label>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Участники</legend>
+            @if (!string.IsNullOrEmpty(Model.suppliers[0].name))
+            {
+                <label>Наименование компании: <span>@Model.suppliers[0].name</span></label>
+                <label>Наименование компании: <span>@Model.suppliers[1].name</span></label>
+            }
+        </fieldset>
+        <br />
+    </div>
+</div>

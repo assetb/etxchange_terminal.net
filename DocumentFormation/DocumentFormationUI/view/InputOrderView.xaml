@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="DocumentFormation.view.InputOrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:DocumentFormation.view"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:toolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:mw="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             Width="Auto"
+             Height="Auto"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontFamily" Value="calibri" />
+            <Setter Property="Foreground" Value="DodgerBlue" />
+        </Style>
+        <Style TargetType="toolkit:DateTimePicker">
+            <Setter Property="Format" Value="Custom" />
+            <Setter Property="FormatString" Value="dd.MM.yyyy" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Дата подачи заявки" />
+        <toolkit:DateTimePicker Grid.Row="0"
+                                Grid.Column="1"
+                                Value="{Binding Order.Date}" />
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Дата обработки" />
+        <toolkit:DateTimePicker Grid.Row="1"
+                                Grid.Column="1"
+                                Value="{Binding ProcessingDate}" />
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   Text="Срок подачи заявок на участие" />
+        <toolkit:DateTimePicker Grid.Row="2"
+                                Grid.Column="1"
+                                FormatString="dd.MM.yyyy HH:mm"
+                                Value="{Binding Order.Deadline}" />
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   Text="Срок подачи списка претендентов бирже" />
+        <toolkit:DateTimePicker Grid.Row="3"
+                                Grid.Column="1"
+                                Value="{Binding Order.Auction.ApplicantsDeadline}" />
+        <TextBlock Grid.Row="4"
+                   Grid.Column="0"
+                   Text="Срок внесения биржевого обеспечения" />
+        <toolkit:DateTimePicker Grid.Row="4"
+                                Grid.Column="1"
+                                Value="{Binding Order.Auction.ExchangeProvisionDeadline}" />
+        <TextBlock Grid.Row="5"
+                   Grid.Column="0"
+                   Text="Дата аукциона" />
+        <toolkit:DateTimePicker Grid.Row="5"
+                                Grid.Column="1"
+                                Value="{Binding Order.Auction.Date}" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Форма подачи заявки на организацию аукциона";
+}
+
+
+<div class="row">
+    <div class="medium-5 medium-centered columns">
+        <fieldset>
+            <legend>Данные заявки</legend>
+            <label>
+                Номер
+                <input type="text" placeholder="Введите номер заявки" />
+            </label>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Данные лота</legend>
+            <label>
+                Наименование товара
+                <input type="text" placeholder="Введите наименование товара" />
+            </label>
+            <label>
+                Количество
+                <input type="text" placeholder="Введите наименование товара" />
+            </label>
+            <label>
+                Единица измерения
+                <select>
+                    <option value="1">штука</option>
+                    <option value="2">метр</option>
+                    <option value="3">литр</option>
+                    <option value="4">тонна</option>
+                </select>
+            </label>
+            <label>
+                Цена (за единицу)
+                <input type="text" placeholder="Введите стоимость" />
+            </label>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Дополнительные данные</legend>
+            <label>
+                Условия оплаты
+                <input type="text" placeholder="Введите условия оплаты" />
+            </label>
+            <label>
+                Условия поставки
+                <input type="text" placeholder="Введите условия поставки" />
+            </label>
+            <label>
+                Место поставки
+                <input type="text" placeholder="Введите место поставки" />
+            </label>
+            <label>
+                Сроки поставки
+                <input type="text" placeholder="Введите сроки поставки" />
+            </label>
+        </fieldset>
+        <br />
+
+        <form method="post">
+            <div class="row text-center">
+                <input type="submit" value="Отправить" class="button small" />
+                @Html.ActionLink("Отмена", "Index", "Home", null, new { @class = "button small" })
+            </div>
+        </form>        
+    </div>
+</div>

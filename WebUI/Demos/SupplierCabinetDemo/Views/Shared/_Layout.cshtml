@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Личный кабинет Поставщика - @ViewBag.Title</title>
+
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/foundation.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/foundation/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="~/fonts/foundation-icons/foundation-icons.css" rel="stylesheet" type="text/css" />
+    <link href="~/fonts/foundation-icons/foundation-icons.ttf" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/DataTables/css/jquery.dataTables.css" type="text/css" />
+    <link rel="stylesheet" href="~/Content/DataTables/css/dataTables.foundation.min.css" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">   
+    <link rel="stylesheet" href="~/Content/TreeView.css" />
+    <link rel="stylesheet" href="~/Content/ModalWindow.css" />
+    <link rel="stylesheet" href="~/Content/GeneralStyle.css" />
+
+    @RenderSection("Styles", false)
+
+</head>
+<body>
+    <div style="display:flex;flex-direction:column;height:100%;">
+
+        <!--Navigation menu bar-->
+        <div class="row">
+            <div class="medium-4 columns">
+                <a href="@Url.Action("Index", "Home")"><img src="~/Resources/Images/supplierCabinetLogo.png" style="margin-top:10px;width:300px;" /></a>
+            </div>
+            <div class="medium-8 columns">
+                <div class="right" style="margin-top:25px;">
+                    <a data-dropdown="auctionDrop" aria-controls="auctionDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-list-thumbnails"></i> Аукционы</a>
+                    <ul id="auctionDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("Список активных торгов", "Active", "Auctions")</li>
+                        <li>@Html.ActionLink("Перечень прошедших", "History", "Auctions")</li>
+                        <li>@Html.ActionLink("Проведенные аукционы", "Played", "Auctions")</li>
+                    </ul>
+                    <a data-dropdown="searchDrop" aria-controls="searchDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-results-demographics"></i> Поиск</a>
+                    <ul id="searchDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("По заказчику", "SearchByCustomer", "Search")</li>
+                        <li>@Html.ActionLink("По товару", "SearchByGood", "Search")</li>
+                    </ul>
+                    <a data-dropdown="reportDrop" aria-controls="reportDrop" data-options="is_hover:true; hover_timeout:5000" aria-expanded="false" class="topbtn"><i class="fi-graph-bar"></i> Аналитика</a>
+                    <ul id="reportDrop" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+                        <li>@Html.ActionLink("Статистика торгов", "GeneralStatistics", "Analytics")</li>
+                        <li>@Html.ActionLink("Анализ дохода", "WinningGraph", "Analytics")</li>
+                        <li>@Html.ActionLink("Список протоколов", "Protocols", "Analytics")</li>
+                    </ul>
+                    <a href="@Url.Action("Index", "Profile")"><i class="fi-widget"> Профиль</i></a>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <!--Title-->
+        <div class="row text-center">
+            <h3 style="color:gray">@ViewBag.Title</h3>
+        </div>
+
+        <!--Render zone-->
+        <div class="row" style="flex:1 0 auto;">
+            @RenderBody()
+        </div>
+        <br />
+
+        <!--Footer-->
+        <footer style="background-color:#333333;flex:0 0 auto;">
+            <div class="row text-center">
+                <img src="~/Resources/Images/whiteCompanyLogo.png" style="margin-top:15px;width:250px;" />
+                <h6 style="color:white;">© ТОО "Альта и К" 2016</h6>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/scripts/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/scripts/foundation/foundation.js"></script>
+    <script src="~/scripts/foundation/foundation.dropdown.js"></script>
+    <script src="~/scripts/foundation/foundation.topbar.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+    <script src="~/scripts/jsapi.js"></script>
+    <script type="text/javascript" src="http://www.kunalbabre.com/projects/table2CSV.js"></script>
+        
+    <script>
+        $(document).foundation({
+            dropdown: {
+                active_class: 'open'
+            }
+        });
+    </script>
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

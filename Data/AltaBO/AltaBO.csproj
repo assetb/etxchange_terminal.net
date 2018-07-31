@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{19F4F68E-966A-42FF-936B-9CD435A3F862}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AltaBO</RootNamespace>
+    <AssemblyName>AltaBO</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug_test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Acl.cs" />
+    <Compile Include="AnaliticCountStatus.cs" />
+    <Compile Include="Applicant.cs" />
+    <Compile Include="ArchiveNumber.cs" />
+    <Compile Include="archive\Document.cs" />
+    <Compile Include="archive\Node.cs" />
+    <Compile Include="AttachedFiles.cs" />
+    <Compile Include="Auction.cs" />
+    <Compile Include="AuctionResult.cs" />
+    <Compile Include="AuctionType.cs" />
+    <Compile Include="Broker.cs" />
+    <Compile Include="BrokerJournal.cs" />
+    <Compile Include="Case.cs" />
+    <Compile Include="Commertical.cs" />
+    <Compile Include="Company.cs" />
+    <Compile Include="CompanyWithProducts.cs" />
+    <Compile Include="ConficurationsBroker.cs" />
+    <Compile Include="Contract.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="DebtorReport.cs" />
+    <Compile Include="DocumentRequisite.cs" />
+    <Compile Include="DocumentType.cs" />
+    <Compile Include="Employe.cs" />
+    <Compile Include="EmployesConst.cs" />
+    <Compile Include="FinalReport.cs" />
+    <Compile Include="Grade.cs" />
+    <Compile Include="IAltaBO.cs" />
+    <Compile Include="LotsExtended.cs" />
+    <Compile Include="MailDeliveryException.cs" />
+    <Compile Include="Notification.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="PostRegister.cs" />
+    <Compile Include="PriceOffer.cs" />
+    <Compile Include="Procuratory.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductCompany.cs" />
+    <Compile Include="Qualification.cs" />
+    <Compile Include="QualificationDictionary.cs" />
+    <Compile Include="Rate.cs" />
+    <Compile Include="RatesList.cs" />
+    <Compile Include="ReconcilationReport.cs" />
+    <Compile Include="Regulation.cs" />
+    <Compile Include="reports\AuctionResult.cs" />
+    <Compile Include="reports\ContractsReportView.cs" />
+    <Compile Include="reports\DealNumberInfo.cs" />
+    <Compile Include="reports\DebtorDetails.cs" />
+    <Compile Include="reports\DebtorsList.cs" />
+    <Compile Include="Section.cs" />
+    <Compile Include="Site.cs" />
+    <Compile Include="specifics\ClassificationsProductsEnum.cs" />
+    <Compile Include="specifics\DocumentSectionEnum.cs" />
+    <Compile Include="specifics\DocumentTemplateEnum.cs" />
+    <Compile Include="specifics\DocumentTypeEnum.cs" />
+    <Compile Include="specifics\MarketPlaceEnum.cs" />
+    <Compile Include="specifics\OrderPartEnum.cs" />
+    <Compile Include="specifics\StatusEnum.cs" />
+    <Compile Include="Status.cs" />
+    <Compile Include="Supplier.cs" />
+    <Compile Include="SupplierJournal.cs" />
+    <Compile Include="SupplierOrder.cs" />
+    <Compile Include="SupplierWithProduct.cs" />
+    <Compile Include="FinalReportPlmtl.cs" />
+    <Compile Include="TechSpecReportBO.cs" />
+    <Compile Include="Trader.cs" />
+    <Compile Include="EntryOrder.cs" />
+    <Compile Include="FailedAct.cs" />
+    <Compile Include="FileList.cs" />
+    <Compile Include="FormC01.cs" />
+    <Compile Include="Invoice.cs" />
+    <Compile Include="Invoice1C.cs" />
+    <Compile Include="JournalC01Company.cs" />
+    <Compile Include="MoneyTransferList.cs" />
+    <Compile Include="OurCompaniesConsts.cs" />
+    <Compile Include="OurCompany.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="HolydayEnum.cs" />
+    <Compile Include="Lot.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="PathSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report.cs" />
+    <Compile Include="ReportCommonFields.cs" />
+    <Compile Include="RequestedDoc.cs" />
+    <Compile Include="ReturnInfo1C.cs" />
+    <Compile Include="specifics\BusinessObjectsEnum.cs" />
+    <Compile Include="specifics\CustomersEnum.cs" />
+    <Compile Include="StockDealInfo.cs" />
+    <Compile Include="Unit.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="views\DocumentView.cs" />
+    <Compile Include="views\SupplierOrderView.cs" />
+    <Compile Include="WaitingList.cs" />
+    <Compile Include="WaitingListTable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="outers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\base\BaseApp\BaseApp\BaseApp.csproj">
+      <Project>{0cd46a9b-b67e-4a20-b71c-abbe157b2fe1}</Project>
+      <Name>BaseApp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Отчеты по торгам";
+}
+
+@section Scripts {
+    <script src="~/scripts/utils/classes.js"></script>
+    <script>
+        var app = angular.module('app', []);
+        app.controller("auctionsResultController", function ($scope, $http) {
+
+            $scope.isLoading = false;
+            $scope.auctionsresult = [];
+
+            $scope.GetAuctionsResult = function () {
+                $scope.isLoading = true;
+
+                $http.get(baseUrl + "/api/auction/auctionsresult")
+                .success(function (data) {
+                    $scope.auctionsresult = data;
+                    $scope.isLoading = false;
+                })
+                .error(function (data) {
+                    $scope.auctionsresult = null;
+                    $scope.isLoading = false;
+                });
+            };
+        });
+    </script>
+}
+
+<div ng-app="app" class="row">
+    <div ng-controller="auctionsResultController" class="row" ng-init="GetAuctionsResult()">
+        <div class="row">
+            <table id="auctionlist" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>ДАТА АУКЦИОНА</th>
+                        <th>НОМЕР</th>
+                        <th>НАИМЕНОВАНИЕ КОМПАНИИ ПОБЕДИТЕЛЯ</th>
+                        <th>БИН</th>
+                        <th>СТАРТОВАЯ СУММА</th>
+                        <th>ИТОГОВАЯ СУММА</th>
+                        <th>ВОЗНАГРАЖДЕНИЕ БРОКЕРА</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="!isLoading" ng-repeat="auction in auctionsresult">
+                        <td ng-bind="auction.date | date : 'dd.MM.yyyy'"></td>
+                        <td><a ng-href="~/Auctions/Index/{{auction['<Id>k__BackingField']}}" ng-bind="auction.number"></a></td>
+                        <td ng-bind="auction.name"></td>
+                        <td ng-bind="auction.bin"></td>
+                        <td ng-bind="auction.startprice"></td>
+                        <td ng-bind="auction.minimalprice"></td>
+                        <td ng-bind="auction.reward"></td>
+                    </tr>
+                    <tr ng-if="!isLoading && !auctionsresult.length">
+                        <td class="text-center" colspan="8">Нет записей</td>
+                    </tr>
+                    <tr ng-if="isLoading">
+                        <td class="text-center" colspan="8">Загрузка...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+    </div>
+</div>

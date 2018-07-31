@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="AltaTradingSystemUI.View.OrderDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AltaTradingSystemUI.View"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto" MaxWidth="600">
+    
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="GrayButton">
+            <Style.Setters>
+                <Setter Property="Button.Width" Value="125" />
+                <Setter Property="Button.Height" Value="35" />
+                <Setter Property="Button.Background" Value="Gainsboro" />
+                <Setter Property="Button.Foreground" Value="Gray" />
+                <Setter Property="Button.BorderBrush" Value="White" />
+                <Setter Property="Button.Margin" Value="5"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.FontSize" Value="13" />
+                    <Setter Property="Button.Background" Value="Gray" />
+                    <Setter Property="Button.FontWeight" Value="Bold" />
+                    <Setter Property="Button.Foreground" Value="Gainsboro" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="ЗАЯВКА ЗАКАЗЧИКА" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Background="WhiteSmoke">
+            <StackPanel.Effect>
+                <DropShadowEffect ShadowDepth="5" BlurRadius="10" 
+                                      Direction="300" Opacity="0.25"/>
+            </StackPanel.Effect>
+            <DockPanel>
+                <TextBlock Text="Дата"/>
+                <TextBox Text="{Binding Order.Date}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250" IsReadOnly="True"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Номер"/>
+                <TextBox Text="{Binding Order.Number}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250" IsReadOnly="True"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Биржа"/>
+                <TextBox Text="{Binding Order.exchangeName}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250" IsReadOnly="True"/>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Text="Заказчик"/>
+                <TextBox Text="{Binding Order.Initiator}" HorizontalAlignment="Right"
+                         VerticalAlignment="Center" Margin="5"
+                         Width="250" IsReadOnly="True"/>
+            </DockPanel>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Text="ФАЙЛЫ ЗАКАЗЧИКА" Margin="5"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="3" ItemsSource="{Binding CustomerFilesList}"
+                  SelectedItem="{Binding SelectedCustomerFile}" IsReadOnly="True"
+                  CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid.Effect>
+                <DropShadowEffect ShadowDepth="5" BlurRadius="10" 
+                                      Direction="300" Opacity="0.25"/>
+            </DataGrid.Effect>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Path=name}"/>
+                <DataGridTextColumn Header="Тип" Binding="{Binding Path=documentType}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <TextBlock Text="СФОРМИРОВАННЫЕ ФАЙЛЫ" Margin="5"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="5" ItemsSource="{Binding FilesList}"
+                  SelectedItem="{Binding SelectedFile}" IsReadOnly="True"
+                  CanUserAddRows="False" AutoGenerateColumns="False">
+            <DataGrid.Effect>
+                <DropShadowEffect ShadowDepth="5" BlurRadius="10" 
+                                      Direction="300" Opacity="0.25"/>
+            </DataGrid.Effect>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Path=name}"/>
+                <DataGridTextColumn Header="Тип" Binding="{Binding Path=documentType}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{StaticResource GrayButton}" Command="{Binding DownloadFileCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Скачать"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding DeleteFileCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Удалить"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Text="ТИП ДОКУМЕНТА" Margin="5"/>
+            <ComboBox Margin="5" VerticalAlignment="Center"
+                      ItemsSource="{Binding TypesList}" SelectedItem="{Binding SelectedType}"
+                      Width="200" DisplayMemberPath="descriptionRU"/>
+            <Button Style="{StaticResource GrayButton}" Command="{Binding UploadFileCmd}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\Images\Icons\icon_info.png"/>
+                    <TextBlock Text="Прикрепить"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

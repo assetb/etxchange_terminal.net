@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7871CDA6-FAB9-4C00-A31B-3A9BE0C9572D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AltaArchive</RootNamespace>
+    <AssemblyName>AltaArchive</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug_test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_test|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug_test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="MahApps.Metro, Version=1.3.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.Metro.1.3.0\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.Metro.1.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.2.2.0.45\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.2.2.0.45\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.2.2.0.45\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\FolderExplorer.cs" />
+    <Compile Include="Services\MultiValueConverter.cs" />
+    <Compile Include="Services\ServiceFunctions.cs" />
+    <Compile Include="view\ArchiveView.xaml.cs">
+      <DependentUpon>ArchiveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\ArchiveNumberView.xaml.cs">
+      <DependentUpon>ArchiveNumberView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\GoodSearchingView.xaml.cs">
+      <DependentUpon>GoodSearchingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\ETSOnlineView.xaml.cs">
+      <DependentUpon>ETSOnlineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\PostalRegistersView.xaml.cs">
+      <DependentUpon>PostalRegistersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\CompanyDocsView.xaml.cs">
+      <DependentUpon>CompanyDocsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\PostView.xaml.cs">
+      <DependentUpon>PostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\ClearingCenterView.xaml.cs">
+      <DependentUpon>ClearingCenterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\AuctionsView.xaml.cs">
+      <DependentUpon>AuctionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\CompaniesView.xaml.cs">
+      <DependentUpon>CompaniesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\CompanyView.xaml.cs">
+      <DependentUpon>CompanyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\ContractView.xaml.cs">
+      <DependentUpon>ContractView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\OtherReportView.xaml.cs">
+      <DependentUpon>OtherReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\ReconcilationsReportView.xaml.cs">
+      <DependentUpon>ReconcilationsReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\LotView.xaml.cs">
+      <DependentUpon>LotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\AuctionView.xaml.cs">
+      <DependentUpon>AuctionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\DebtorsReportView.xaml.cs">
+      <DependentUpon>DebtorsReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\ReportsView.xaml.cs">
+      <DependentUpon>ReportsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\SupplierOrderView.xaml.cs">
+      <DependentUpon>SupplierOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="vm\ArchiveViewModel.cs" />
+    <Compile Include="vm\ArchiveNumberViewModel.cs" />
+    <Compile Include="vm\GoodSearchingViewModel.cs" />
+    <Compile Include="vm\ETSOnlineViewModel.cs" />
+    <Compile Include="vm\CompanyDocsViewModel.cs" />
+    <Compile Include="vm\PostalRegistersViewModel.cs" />
+    <Compile Include="vm\OtherReportViewModel.cs" />
+    <Compile Include="vm\PostViewModel.cs" />
+    <Compile Include="vm\ReportsViewModel.cs" />
+    <Compile Include="vm\ClearingCenterViewModel.cs" />
+    <Compile Include="vm\AuctionsViewModel.cs" />
+    <Compile Include="vm\CompaniesViewModel.cs" />
+    <Compile Include="vm\CompanyViewModel.cs" />
+    <Compile Include="vm\ContractViewModel.cs" />
+    <Compile Include="vm\ReconcilationsReportViewModel.cs" />
+    <Compile Include="vm\LotViewModel.cs" />
+    <Compile Include="vm\AuctionViewModel.cs" />
+    <Compile Include="vm\MainViewModel.cs" />
+    <Compile Include="vm\DebtorsReportViewModel.cs" />
+    <Compile Include="vm\SupplierOrderViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\base\BaseApp\BaseApp\BaseApp.csproj">
+      <Project>{0cd46a9b-b67e-4a20-b71c-abbe157b2fe1}</Project>
+      <Name>BaseApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\API\BridgeApi\BridgeApp.csproj">
+      <Project>{bb846045-661e-40d0-ae94-a09e259d2c6a}</Project>
+      <Name>BridgeApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\API\ETSApp\ETSApp.csproj">
+      <Project>{ad9719c5-2d22-4511-b714-b55a0f539cae}</Project>
+      <Name>ETSApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Commons\AltaDock\AltaDock.csproj">
+      <Project>{154b1f08-68a0-4d7c-a179-96e7b348be36}</Project>
+      <Name>AltaDock</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Commons\AltaLog\AltaLog.csproj">
+      <Project>{ba078396-ba39-4fcf-aacb-5ec07b4daddd}</Project>
+      <Name>AltaLog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DocumentFormation\DocumentFormationApp\DocumentFormationApp.csproj">
+      <Project>{132bfbd2-74ff-452b-9c1f-fb77be14a9ad}</Project>
+      <Name>DocumentFormationApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DocumentFormation\DocumentFormationUI\DocumentFormationUI.csproj">
+      <Project>{0a5f361b-c9c2-46f1-b426-0debfa484059}</Project>
+      <Name>DocumentFormationUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Transport\AltaTransportUI\AltaTransportUI.csproj">
+      <Project>{79aa393c-563e-4ed9-a6ee-b068d6d7f627}</Project>
+      <Name>AltaTransportUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Transport\AltaTransport\AltaTransport.csproj">
+      <Project>{86774e1e-c73b-4b54-a282-b713b8833147}</Project>
+      <Name>AltaTransport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltaArchiveApp\AltaArchiveApp.csproj">
+      <Project>{e85afc47-2f32-4cd1-a81f-863fb9ee7e91}</Project>
+      <Name>AltaArchiveApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltaBO\AltaBO.csproj">
+      <Project>{19f4f68e-966a-42ff-936b-9cd435a3f862}</Project>
+      <Name>AltaBO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltaMySqlDB\AltaMySqlDB.csproj">
+      <Project>{ded6298d-fc63-470a-ae29-5dc94549dc08}</Project>
+      <Name>AltaMySqlDB</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Resources\Entypo.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Entypo-license.txt" />
+    <Content Include="Resources\WindowsIcons-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\IconsNonShared.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\ArchiveView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ArchiveNumberView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\GoodSearchingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\ETSOnlineView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\PostalRegistersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\CompanyDocsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\PostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\ClearingCenterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\AuctionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\CompaniesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\CompanyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ContractView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\OtherReportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\ReconcilationsReportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\LotView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="view\AuctionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\DebtorsReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\ReportsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\SupplierOrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.2.0.45\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

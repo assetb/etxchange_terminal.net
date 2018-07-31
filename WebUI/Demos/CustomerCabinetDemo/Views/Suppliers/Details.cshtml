@@ -1,0 +1,109 @@
+﻿@model CustomerCabinetDemo.Models.Supplier
+
+@{
+    ViewBag.Title = "Детальная информация поставщика";
+}
+
+@helper StatusSupplier(int state)
+{
+switch (state)
+{
+    case (1):
+        {
+                <span class="label success">Да</span>
+        }
+        break;
+    case (2):
+        {
+                <span class="label alert">Нет</span>
+        }
+        break;
+    case (3):
+        {
+                <span class="label warning">Не найден</span>
+        }
+        break;
+}
+}
+
+<div class="row">
+    <div class="medium-6 medium-centered columns">
+        <fieldset>
+            <legend>Данные компании</legend>
+            <label>Наименование: <span>@Model.name</span></label>
+            <label>БИН: <span>@Model.bin</span></label>
+            <label>Кбе: <span>@Model.kbe</span></label>
+            <label>Страна: <span>@Model.country</span></label>
+            <label>Адрес: <span>@Model.address</span></label>
+            <label>Телефоны: <span>@Model.telephones</span></label>
+            <label>E-mail: <span>@Model.email</span></label>
+            <label>Почтовый индекс: <span>@Model.postcode</span></label>
+            <label>Директор: <span>@Model.director</span></label>
+            <label>ИИК: <span>@Model.iik</span></label>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Поставляемые товары</legend>
+            @foreach (var item in Model.goods)
+            {
+                <label><span>@item.name</span></label>
+            }
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Комерческие и ценовые предложения</legend>
+            <label>Коммерческое предложение: <span><a href="~/Resources/Files/Commercial.docx">Скачать</a></span></label>
+        </fieldset>
+        <br />
+
+        <fieldset>
+            <legend>Проверка по гос. базам данных</legend>
+            <a href="KgdDuty?name=@Model.name" class="button tiny expanded round" style="width: 42em;">Сведения об отсутствии (наличии) налоговой задолженности</a>
+            <a href="Unreliability?name=@Model.name" class="button tiny expanded round" style="width: 42em;">Сведения о благонадежности (в стадии ликвидации, соответствие адреса и т.д.)</a>
+            <a href="Taxpayer?name=@Model.name" class="button tiny expanded round" style="width: 42em;">Проверка на сделки, совершенные без фактического выполнения работ, оказания услуг</a>
+            <a class="button tiny expanded round" style="width: 42em;" href="http://kgd.gov.kz/ru/services/taxpayer_search/legal_entity" target="_blank">Поиск компании как налогоплательщика</a>
+            <a class="button tiny expanded round" style="width: 42em;" href="http://kgd.gov.kz/ru/services/ndspayer_search" target="_blank">Поиск данных о платежах НДС</a>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Проверка по реестрам торговых площадок</legend>
+            <div class="row">
+                <div class="medium-7 columns">
+                    <label>Участник Гос. закупок:</label>
+                </div>
+                <div class="medium-5 columns end">
+                    <label>@StatusSupplier(Model.memberGos)</label>
+                </div>
+            </div><br/>
+
+            <div class="row">
+                <div class="medium-7 columns">
+                    <label>В списках недобросовестных поставщиков Гос. закупок:</label>
+                </div>
+                <div class="medium-5 columns end">
+                    <label>@StatusSupplier(Model.listConscientiousGos)</label>
+                </div>
+            </div><br/>
+
+            <div class="row">
+                <div class="medium-7 columns">
+                    <label>Участник фонда "Самрук-Казына":</label>
+                </div>
+                <div class="medium-5 columns end">
+                    <label>@StatusSupplier(Model.memberSamruk)</label>
+                </div>
+            </div><br/>
+
+            <div class="row">
+                <div class="medium-7 columns">
+                    <label>В списках ненадежных поставщиков фонда "Самрук-Казына":</label>
+                </div>
+                <div class="medium-5 columns end">
+                    <label>@StatusSupplier(Model.listUnfairSamruk)</label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

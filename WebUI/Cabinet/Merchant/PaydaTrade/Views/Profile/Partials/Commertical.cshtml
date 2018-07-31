@@ -1,0 +1,28 @@
+﻿@*<table class="table" style="width: 100%;">
+    <tr>
+        <th>Описание</th>
+        <th></th>
+    </tr>
+    <tr ng-repeat="commertical in commetricalOffers">
+        <td>{{commertical.description}}</td>
+        <td>
+            <a ng-href="commertical.file">Скачать</a>
+        </td>
+    </tr>
+</table>*@
+
+<table style="width: 100%;">
+    <tr>
+        <th>Наименование</th>
+        <th>Описание</th>
+        <th>Файл</th>
+    </tr>
+    <tr ng-repeat="file in model.files">
+        <td ng-bind="file.fileName"></td>
+        <td ng-bind="file.description"></td>
+        <td><a ng-href="{{urlToArchive}}/file/{{file.id}}">Скачать</a></td>
+    </tr>
+    <tr ng-if="!model.files.length">
+        <td colspan="3" class="text-center">Нет документов</td>
+    </tr>
+</table>

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/foundation/foundation-datepicker.min.css" />
+    <link rel="stylesheet" href="~/Content/hiding_panel.css" />
+}
+
+@section Scripts {
+    <script src="~/scripts/foundation/foundation.magellan.js"></script>
+    <script src="~/scripts/foundation/foundation.tooltip.js"></script>
+    <script src="~/scripts/foundation/foundation-datepicker.js"></script>
+    <script src="~/scripts/utils/classes.js"></script>
+    <script src="~/scripts/angular-route.min.js"></script>
+    <script src="~/scripts/app/auction/auction_application.js"></script>
+    <script src="~/scripts/app/filters/parserDate_filter.js"></script>
+    <script src="~/scripts/app/filters/doc_types_filter.js"></script>
+    <script src="~/scripts/app/services/http_factory.js"></script>
+    <script src="~/scripts/app/services/excel_factory.js"></script>
+    <script src="~/scripts/app/directives/datepiker_directive.js"></script>
+    <script src="~/scripts/app/directives/pagination_directive.js"></script>
+    <script src="~/scripts/app/auction/auction_list_controller.js"></script>
+    <script src="~/scripts/app/auction/auction_details_controller.js"></script>
+    <script src="~/scripts/app/auction/online_controller.js"></script>
+}
+
+<div ng-app="app" ng-controller="auctionListController" class="row">
+    <ng-view></ng-view>
+</div>

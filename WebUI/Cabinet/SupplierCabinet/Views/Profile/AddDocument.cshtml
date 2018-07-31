@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Добавить документ";
+    ViewBag.BackUrl = Url.Action("Document");
+}
+
+@section Scripts {
+    <script src="~/scripts/app/controllers/profile/company-docs-controller.js"></script>
+}
+
+<div ng-controller="AddDocumentCtrl">
+    <div class="row">
+        <form ng-submit="submit($event)">
+            <div ng-if="model.$errorMessage" class="row">
+                <span class="alert-box warning">
+                    {{model.$errorMessage}}
+                </span>
+            </div>
+            <div class="row collapse">
+                <div class="medium-9 columns">
+                    <label>Описание документа</label>
+                    <input required type="text" ng-model="model.description" />
+                </div>
+                <div class="medium-3 columns">
+                    <label>Тип документа</label>
+                    <select class="postfix" required ng-model="model.docTypeId" ng-options="item.id as item.name for item in model.docTypes track by item.id">
+                        <option value="" selected hidden>Не выбран</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-12 columns">
+                    <file-input f-disabled="isSubmiting" f-value="model.file" f-accept="*.*" f-text="Документ"></file-input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-4 column medium-centered text-center">
+                    <button class="button success">Добавить</button>
+                    <a class="button" href="Profile/Index#/company-docs">Назад</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
